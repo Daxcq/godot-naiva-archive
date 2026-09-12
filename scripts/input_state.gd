@@ -13,9 +13,11 @@ const SWIPE_DISTANCE := 0.16
 const SWIPE_COOLDOWN := 0.34
 const AXIS_DEADZONE := 0.08
 const KEYBOARD_OVERRIDE := 0.05
-const POINTER_RESPONSE := 14.0
-const RESYNC_RESPONSE := 3.5
-const RESYNC_DURATION := 0.45
+const POINTER_RESPONSE := 30.0
+const RESYNC_RESPONSE := 14.0
+const RESYNC_DURATION := 0.18
+const RAISED_HAND_Y := 0.30
+const RAISED_HAND_MAX_GRAB := 0.35
 
 @export var visual_recognition_path: NodePath = ^"../VisualRecognition"
 
@@ -92,6 +94,14 @@ func consume_confirm() -> bool:
 
 func is_vision_driven() -> bool:
 	return source == "vision" and active
+
+## “确定”手势：拇指与食指捏合，沿用 confirm_triggered 作为 E 键等价输入。
+func is_confirm_gesture() -> bool:
+	return is_vision_driven() and grab >= GRAB_ON
+
+## 返回手势：把松开的手掌举到摄像头画面上方。
+func is_raised_open_hand() -> bool:
+	return is_vision_driven() and pointer.y <= RAISED_HAND_Y and grab <= RAISED_HAND_MAX_GRAB
 
 func reset() -> void:
 	_latched = false
