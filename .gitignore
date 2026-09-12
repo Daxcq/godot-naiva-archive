@@ -1,4 +1,6 @@
+# Godot 导入缓存与导出产物不入库
 .godot/
+build/
 
 # Python 虚拟环境：路径绑死创建机器（pyvenv.cfg 里是绝对路径），复制到别的电脑无效。
 # 换机后由 vision/setup_vision_env.py 自动重建，无需入库。
