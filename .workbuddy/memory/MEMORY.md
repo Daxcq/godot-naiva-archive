@@ -95,3 +95,10 @@
 
 ## 视觉风格
 霓虹赛博朋克，程序化几何搭建。青/品红霓虹对比 + 故障屏幕补光 + 霓虹橙出口光；`Environment` 开了 glow（intensity 1.1 / strength 1.08）+ 高度雾。角色走卡通风格 `yellow_character.glb`（骨架节点名见上方"骨架节点名铁律"，**不是** `MilkFrog_Skeleton`）。
+
+## 交互地图与不重叠设计（2026-09-12 定稿）
+- **11 个交互源**（XZ 圆圈，不重叠判定 = 圆心距 ≥ r1+r2；常驻断言 check_interaction_map.gd，改坐标必跑）：
+  记忆点x3 (-1/11.4/23.8, -2.5) r3.2硬编码｜街机x3 (5.2/17.6/30, -2.05) r2.4｜keeper (-1,-0.65) r2.5硬编码且仅1组｜牛来 (-3.1,-1.55) 袋鼠 (0.8,1.55) r2.4=TALK_RANGE｜展板 (33,1.95) r2.4｜画廊画架 (7.9,1.55) r1.8 yaw PI 面北｜出口结算线 x≥35.6。
+- **入口簇四圈有意交叠**（牛来/袋鼠/keeper/记忆点1，最近者仲裁白名单豁免）；**南墙 x∈[3,30] 是唯一开阔带**，新增交互点先跑普查再落位。
+- 画架几何在 scenes/gallery_easel.tscn（并行会话场景化），摆放 transform 在 archive_space.tscn 实例（yaw PI basis = (-1,0,0, 0,1,0, 0,0,-1)）；**tscn 不支持注释**，选址理由写在 gallery_easel.gd 头部。
+- 离线截图三坑：set_active(false) 藏节点（强制 visible=true）；冻结用 PROCESS_MODE_DISABLED；DisplayBoard(extends Node) 视觉根是内部同名子节点。

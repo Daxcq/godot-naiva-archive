@@ -5,7 +5,11 @@ extends Node3D
 
 const UIKit := preload("res://scripts/ui_kit.gd")
 const ART_DIR := "res://assets/artworks"
-const NEAR_DISTANCE := 2.9
+## 触发半径 1.8:画架摆南墙 (7.9,1.55) 朝北(见 archive_space.tscn GalleryEasel)。
+## 北墙已被蛇机(5.2,r2.4)/记忆点2(11.4,r3.2)/方块机(17.6,r2.4)的圈排满,
+## r1.8 在北墙无解(档案员圈把窗口夹死);南墙 7.9 是全局唯一两侧余量>=0.3 的点:
+## 对蛇机余 0.30、对记忆点2 余 0.35、对袋鼠余 2.9。改位置前先跑 check_interaction_map.gd。
+const NEAR_DISTANCE := 1.8
 const SLIDE_INTERVAL := 4.2
 
 @onready var canvas: MeshInstance3D = $Canvas
@@ -28,10 +32,16 @@ func setup(owner_world: Node3D) -> void:
 	world = owner_world
 	router = world.get_node_or_null("InteractionRouter")
 	_load_artworks()
-	screen_mat = canvas.get_material_override() as StandardMaterial3D
-	if not artworks.is_empty() and screen_mat != null:
-		screen_mat.albedo_texture = artworks[0]
-		screen_mat.emission_texture = artworks[0]
+	# 防御:setup 可能在进树前被测试框架调用,@onready 还没解析。
+	if canvas == null:
+		canvas = get_node_or_null("Canvas") as MeshInstance3D
+	if glow_light == null:
+		glow_light = get_node_or_null("PictureLight") as OmniLight3D
+	if canvas != null:
+		screen_mat = canvas.get_material_override() as StandardMaterial3D
+		if not artworks.is_empty() and screen_mat != null:
+			screen_mat.albedo_texture = artworks[0]
+			screen_mat.emission_texture = artworks[0]
 	board_layer = CanvasLayer.new()
 	board_layer.name = "GalleryBoardLayer"
 	board_layer.layer = 20
@@ -103,7 +113,8 @@ func _tick_slideshow(delta: float) -> void:
 	slide_fade = minf(slide_fade + delta * 1.6, 1.0)
 	var pulse := 0.5 + sin(Time.get_ticks_msec() * 0.0016) * 0.06
 	screen_mat.emission_energy_multiplier = pulse * slide_fade
-	glow_light.light_energy = 0.85 * slide_fade
+	if glow_light != null:
+		glow_light.light_energy = 0.85 * slide_fade
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not active or board_open or world == null:

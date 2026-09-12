@@ -3065,8 +3065,10 @@ omni_range = 8.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 6.3, -2.08)
 pixel_size = 0.008
 modulate = Color(0.55, 0.95, 1, 1)
-text = "缓存不可用
-最后访问：很久以前"
+text = "成为一只平静的奶蛙 要流多少眼泪
+如果忧郁都是天赋 我奶蛙将天赋异禀
+认识一下 我是奶蛙 这条是没收到吗
+体重两吨 我他妈压死你"
 font_size = 48
 outline_size = 0
 
@@ -3104,4 +3106,4 @@ material_override = SubResource("StandardMaterial3D_gdxi3")
 mesh = SubResource("BoxMesh_x02ym")
 
 [node name="GalleryEasel" parent="." instance=ExtResource("gallery_easel_scene")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.9, 0, -3.02)
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 7.9, 0, 1.55)

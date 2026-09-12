@@ -15,9 +15,10 @@ signal board_closed
 
 const UIKit := preload("res://scripts/ui_kit.gd")
 
-const BOARD_POS := Vector3(11.4, 0.0, 1.95)
-const BOARD_YAW := PI          # 南墙,面朝走廊(北)
-const NEAR_DISTANCE := 2.6
+const BOARD_POS := Vector3(33.0, 0.0, 1.95)
+const BOARD_YAW := PI          # 南墙,面朝走廊(北)。放在尽头南墙空档:
+                                # 避开北墙打砖块街机(30,-2.05)与出口 offer(35.6)。
+const NEAR_DISTANCE := 2.4
 const CELLS_ACROSS := 3
 
 ## 六块幸福碎片。时长/文案/主色随内容定;
