@@ -28,7 +28,7 @@ project/assembly_name="奶蛙：遗忘档案馆"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/godot_mcp/plugin.cfg")
+enabled=PackedStringArray("res://addons/godot_mcp/plugin.cfg", "res://addons/godot_with_u/plugin.cfg")
 
 [input]
 

@@ -44,7 +44,14 @@
 - **6400 TCP** — 编辑器 MCP 插件，**只在 Godot 编辑器进程内监听**，游戏运行时不用。
 - **6401 UDP** — `visual_recognition.gd` 收 MediaPipe/OpenCV 手部状态 JSON。
 - **6402 UDP** — `vision_preview.gd` 收摄像头 JPEG 帧。
+- **7654 UDP(ENet)** — `godot_with_u` 编辑器协作插件 Host 默认端口（仅 Host 模式监听，Join 是客户端）。
 - 桥接进程由 `visual_recognition.gd` **自动拉起**（`OS.create_process`，解释器优先 `vision/.vision-venv/Scripts/python.exe`），退出时 `taskkill /T /F` 回收，`_process` 里有 6s 冷却的自动重启。缺失时自动回落鼠标模式。
+
+## GodotWithU 协作插件（2026-09-12 安装）
+- 来源：桌面 `addons/godot_with_u`（作者 Airysh v0.5.1），已拷入项目 `addons/` 并在 `project.godot` `[editor_plugins]` 启用（与 godot_mcp 并列）。
+- **功能**：编辑器多人实时协作——场景节点增删/属性/选择同步、脚本 CRDT 文本同步、幽灵光标、资源锁；新加入者自动收到 host 的场景初始状态。
+- **用法**：右侧上栏 Dock「🌐 GodotWithU」→ 一台点 Host（默认端口 7654），另一台填 IP 点 Join。本机双开填 127.0.0.1；局域网填主机内网 IPv4；**代码里只有 ENet 直连，没有 BitChat P2P 实现**（注释里是规划），跨机协作需同一局域网或端口转发。
+- **我改过三处**（原版刷屏）：`_on_action_captured` 未连接直接 return；删掉 SEND/RECV/APPLYING 逐包 print。**改任何插件 .gd 后必须完全重启所有编辑器实例**（.godot 脚本缓存会留旧代码——插件头注释原话）。
 
 ## MCP 接入（2026-09-12 完成）
 - `project.godot` 必须有 `[editor_plugins] enabled=PackedStringArray("res://addons/godot_mcp/plugin.cfg")` —— 原仓库漏了这行，插件从未生效过。
