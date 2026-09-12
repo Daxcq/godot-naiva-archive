@@ -22,6 +22,13 @@
 - 只写最小形式：`Object(InputEventKey,"physical_keycode":69)`。
 - 验证脚本：`--headless --script res://scripts/check_input.gd`。
 
+## ⚠️ 骨架节点名铁律（走路效果踩的坑）
+- `yellow_character.glb` 导入后，**`Skeleton3D` 的节点名就是 `"Skeleton3D"`**（不是 `MilkFrog_Skeleton`，也不是 `Armature`）。父级是 `Node3D` 叫 `MilkFrog_Rig`。
+- 完整节点路径：`MilkFrog/CharacterVisual/YellowCharacter/Reference character/MilkFrog_Rig/Skeleton3D`
+- 共 **13 根骨骼**：`root, L_thigh, L_shin, L_foot, R_thigh, R_shin, R_foot, spine, head, L_arm, L_hand, R_arm, R_hand`
+- `main.gd` 用 `_find_skeleton()` 定位（已知名优先 + 递归兜底），**不要改回硬编码单个名字**——猜错就会 `if skeleton == null: return` 静默吞掉整个骨骼动画。
+- 验证脚本：`--headless --script res://scripts/check_walk.gd`（查骨骼命中 + 4 根骨骼实际摆幅）。
+
 ## 运行时端口约定（重要，别搞混）
 - **6400 TCP** — 编辑器 MCP 插件，**只在 Godot 编辑器进程内监听**，游戏运行时不用。
 - **6401 UDP** — `visual_recognition.gd` 收 MediaPipe/OpenCV 手部状态 JSON。
@@ -35,7 +42,7 @@
 - **使用前提：Godot 编辑器打开本工程且插件启用中**，否则工具返回中文错误提示。
 
 ## 无头自检的坑（写 check_*.gd 前必读）
-- `--script`（SceneTree）模式下**节点 `_process` 不会自动跑**，必须显式驱动（如 `node._process(dt)`）。
+- `--script`（SceneTree）模式下**节点 `_process` / `_ready()` 都不会自动跑**，测试里要显式驱动（`node._process(dt)`、手动调 `_ready()`；后者可能触发重复连接告警，属噪音）。
 - `--quit-after N` 是**帧数不是秒**。
 - 状态机阶段名要跟代码对齐（开屏真实阶段是 `idle` 不是 `sleep`，写错会静默不推进 → 假失败）。
 - 结尾的 `ObjectDB instances leaked` / `resources still in use` 是 SceneTree 脚本没 free 场景导致的，属正常噪音。
@@ -43,4 +50,4 @@
 - 老项目 `Desktop/shijueshibie-jikesong-S2` 与新项目 **27 个 .gd + 6 个 .tscn 逐字节相同** —— 遇到"功能没了"先怀疑配置/打包，别先怀疑代码丢了。
 
 ## 视觉风格
-霓虹赛博朋克，程序化几何搭建。青/品红霓虹对比 + 故障屏幕补光 + 霓虹橙出口光；`Environment` 开了 glow（intensity 1.1 / strength 1.08）+ 高度雾。角色走卡通风格 `yellow_character.glb`（骨骼节点名 `MilkFrog_Skeleton`，回落 `Armature`）。
+霓虹赛博朋克，程序化几何搭建。青/品红霓虹对比 + 故障屏幕补光 + 霓虹橙出口光；`Environment` 开了 glow（intensity 1.1 / strength 1.08）+ 高度雾。角色走卡通风格 `yellow_character.glb`（骨架节点名见上方"骨架节点名铁律"，**不是** `MilkFrog_Skeleton`）。
