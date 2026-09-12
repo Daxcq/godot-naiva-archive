@@ -84,8 +84,8 @@ func _connect_camera() -> void:
 	CameraServer.set_monitoring_feeds(true)
 	var count := CameraServer.get_feed_count()
 	if count <= 0:
-		status_label.text = "桌面版未接入 webcam · 鼠标模式"
-		placeholder.text = "\n                 ◉\n          Godot 暂不提供\n       Windows USB 摄像头采集"
+		status_label.text = "摄像头桥接启动中… · 鼠标模式兜底"
+		placeholder.text = "\n                 ◉\n       正在后台启动\n         MediaPipe 识别"
 		return
 	feed = CameraServer.get_feed(0)
 	if feed == null:
@@ -131,9 +131,13 @@ func _process(_delta: float) -> void:
 			preview.texture = texture
 			placeholder.visible = false
 	if Time.get_ticks_msec() / 1000.0 - last_frame_at > 2.0 and feed == null:
-		status_label.text = "未收到画面 · 请运行摄像头桥接脚本"
+		status_label.text = "未收到画面 · 摄像头桥接未就绪"
 	var vision := get_parent().get_node_or_null("VisualRecognition")
 	if vision != null and last_frame_at > -10.0:
 		var state: Dictionary = vision.get_observation()
 		if bool(state.get("active", false)) and String(state.get("source", "")) == "vision":
 			status_label.text = "用户画面 · 手部识别已检测"
+	elif vision != null and vision.has_method("get_bridge_status"):
+		# 桥接还没出帧时，把后台进程状态显示出来，方便现场排查。
+		placeholder.text = "\n                 ◉\n       正在后台启动\n         MediaPipe 识别"
+		status_label.text = String(vision.get_bridge_status())

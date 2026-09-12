@@ -27,3 +27,40 @@ godot --path .
 注意：Godot 4.6 Windows 桌面版的 `CameraServer` 仅支持平台/AR camera feed，不会直接枚举普通 USB webcam（例如 ASUS FHD webcam）。如需在 Godot 窗口显示真实用户画面，应由浏览器 MediaPipe 页面或独立 OpenCV/MediaPipe 采集进程读取摄像头，并将视频帧通过共享纹理/本地流接入；UDP 识别状态接口仍可直接使用。
 
 Windows 桌面摄像头桥接：先启动 Godot，再运行 `py -3 scripts/godot_camera_bridge.py --device "ASUS FHD webcam"`。脚本使用系统 FFmpeg 将 640×480 JPEG 帧发送到 `127.0.0.1:6402`，右下角预览会自动显示；设备名称可用 `ffmpeg -f dshow -list_devices true -i dummy` 查询。
+
+## 编辑器 MCP 接入
+
+`addons/godot_mcp/` 是编辑器内的控制插件，在 Godot 编辑器进程里监听 `127.0.0.1:6400`，接收 `{"type": "...", "params": {...}}` 形式的 JSON 命令并返回 JSON 结果。它可以查看/创建/删除节点、读写属性、调整层级、设置材质与网格、读写脚本、打包与实例化子场景，以及控制编辑器的运行/停止。
+
+启用在 `project.godot` 的 `[editor_plugins]` 段：
+
+```ini
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/godot_mcp/plugin.cfg")
+```
+
+启用后编辑器底部会出现 **MCP** 面板；`Godot MCP Plugin activated` / `Godot MCP Server listening on port 6400` 两行日志表示已就绪。
+
+`addons/godot_mcp/mcp_server.py` 是标准 MCP (stdio) 服务，把 MCP 的 `tools/call` 翻译成上述 TCP 协议，注册了 24 个 `godot_*` 工具。WorkBuddy 侧配置在 `~/.workbuddy/mcp.json`：
+
+```json
+{
+  "mcpServers": {
+    "godotMCP": {
+      "command": "C:\\Program Files\\python\\python.exe",
+      "args": ["<工程路径>\\addons\\godot_mcp\\mcp_server.py"],
+      "env": {
+        "GODOT_MCP_HOST": "127.0.0.1",
+        "GODOT_MCP_PORT": "6400",
+        "GODOT_PROJECT_PATH": "<工程路径>"
+      }
+    }
+  }
+}
+```
+
+使用顺序：**先让 Godot 编辑器打开本工程并保持运行**，MCP 桥接才有可连接的对象；编辑器未运行时工具会返回明确的中文提示，而不是静默失败。
+
+端口占用：编辑器的 MCP 用 `6400`（TCP，仅插件启用时占用）。运行时视觉链路用 `6401`（UDP 手部状态接收）与 `6402`（UDP 摄像头帧），互不冲突——`6400` 只在编辑器进程内监听，游戏运行时并不监听它。
+

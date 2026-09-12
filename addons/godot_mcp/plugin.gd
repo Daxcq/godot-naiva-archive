@@ -6,6 +6,7 @@ const SERVER_PORT = 6400
 var server: TCPServer = null
 var active_connections = []
 var command_handler
+var panel: Control = null
 
 func _enter_tree():
 	# Initialize the plugin
@@ -25,10 +26,8 @@ func _enter_tree():
 	print("Godot MCP Server listening on port %d" % SERVER_PORT)
 	
 	# Add UI
-	add_control_to_bottom_panel(
-		preload("res://addons/godot_mcp/ui/mcp_panel.tscn").instantiate(),
-		"MCP"
-	)
+	panel = preload("res://addons/godot_mcp/ui/mcp_panel.tscn").instantiate()
+	add_control_to_bottom_panel(panel, "MCP")
 
 func _exit_tree():
 	# Clean up the plugin when disabled
@@ -42,8 +41,11 @@ func _exit_tree():
 	
 	active_connections.clear()
 	
-	# Remove UI
-	remove_control_from_bottom_panel(get_editor_interface().get_base_control().get_node("MCPPanel"))
+	# Remove UI（保留节点引用，避免依赖硬编码路径查找）
+	if panel and is_instance_valid(panel):
+		remove_control_from_bottom_panel(panel)
+		panel.queue_free()
+		panel = null
 	print("Godot MCP Plugin deactivated")
 
 func _process(delta):

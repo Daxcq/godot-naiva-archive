@@ -1,2 +1,7 @@
 .godot/
 
+# Python 虚拟环境（约 400MB，不入库；每台机器自行重建）
+vision/.vision-venv/
+__pycache__/
+*.pyc
+
