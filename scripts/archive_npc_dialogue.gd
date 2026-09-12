@@ -25,9 +25,7 @@ var line_delay := 0.0
 var dialogue_button: Button
 
 var groups := [
-    {"id":"seen_2016", "pos":Vector3(-1.0, 0.0, 0.55), "names":["档案员"], "lines":["这里保存着第一次被看见的那一秒。", "没有热搜，也没有推荐，只有一个人把它转给了另一个人。", "如果你准备好了，就让这段记忆重新亮起来。"]},
-    {"id":"imitated_2020", "pos":Vector3(11.4, 0.0, 0.55), "names":["节拍记录员"], "lines":["原来的动作只有三拍，后来每个人都留下了自己的版本。", "别急着找谁最像，先听见最初的节拍。", "对话结束后，门会在屏幕后面出现。"]},
-    {"id":"covered_2024", "pos":Vector3(23.8, 0.0, 0.55), "names":["刷新管理员"], "lines":["新内容会把旧内容推到屏幕边缘。", "但只要有人按下暂停，它仍然能回到中央。", "听完这段话，去看看出口前的旧版本。"]}
+    {"id":"seen_2016", "pos":Vector3(-1.0, 0.0, 0.55), "names":["游乐场档案员"], "lines":["这里保存着第一次被看见的那一秒。", "风会把旧热梗吹回草地，也会把新的笑声带过来。", "收集齐广场上的贴纸，记忆就会完整。"]}
 ]
 
 func setup(owner: Node3D) -> void:
@@ -316,9 +314,6 @@ func _spawn_portal(id: String) -> void:
     portal_ready.emit(id, portal)
 
 func _enter_portal(id: String) -> void:
-    if portal_consumed.has(id):
-        return
-    portal_consumed[id] = true
     portal_entered.emit(id)
 
 func _nearest_group() -> String:

@@ -199,29 +199,28 @@ func _update_destination_room(delta: float) -> void:
 	if destination_root == null:
 		return
 	destination_root.tick(delta)
-	var direction := Input.get_vector("move_left", "move_right", "move_forward", "move_back")
+	var direction: Vector2 = input_state.axis
 	var move := Vector3(direction.x, 0, direction.y)
 	player.velocity.x = move.x * 3.2
 	player.velocity.z = move.z * 3.2
 	player.velocity.y = 0.0
 	player.move_and_slide()
-	player.position.x = clampf(player.position.x, 194.2, 205.8)
-	player.position.z = clampf(player.position.z, -4.25, 4.25)
+	# 游乐园是开阔大世界，解除旧记忆房间的狭窄边界。
+	player.position.x = clampf(player.position.x, 185.0, 215.0)
+	player.position.z = clampf(player.position.z, -8.0, 8.0)
 	var focus := player.global_position + Vector3(0, 1.0, 0)
 	camera.global_position = camera.global_position.lerp(focus + Vector3(3.5, 3.0, 8.5), delta * 4.0)
 	camera.look_at(focus + Vector3(0, 0, -1.0), Vector3.UP)
 	var cue := get_node("Interface/StoryCue") as Label
 	var local_pos := player.position - destination_root.position
-	if local_pos.distance_to(destination_root.interaction_position) < 2.4:
-		cue.text = "E 读取记忆：" + destination_root.title
-		if Input.is_action_just_pressed("interact"):
-			destination_root.set_completed()
-	elif local_pos.distance_to(destination_root.return_position) < 2.4:
+	if local_pos.distance_to(destination_root.return_position) < 2.4:
 		cue.text = "E 返回档案长廊"
 		if Input.is_action_just_pressed("interact"):
 			_return_from_destination()
 	else:
-		cue.text = destination_root.title + "  ·  探索记忆空间"
+		cue.text = destination_root.get_prompt(local_pos) if destination_root.has_method("get_prompt") else destination_root.title + "  ·  探索记忆空间"
+		if Input.is_action_just_pressed("interact") and destination_root.has_method("interact"):
+			destination_root.interact(local_pos)
 
 func _return_from_destination() -> void:
 	if destination_root:
