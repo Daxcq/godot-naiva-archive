@@ -70,8 +70,14 @@ func _load_artworks() -> void:
 		return
 	var names: Array[String] = []
 	for file in dir.get_files():
+		# 导出 pck 里导入型资源以 .remap/.import 后缀名列出,剥掉才与编辑器一致;
+		# 编辑器下同名 .jpg 与 .jpg.import 并存,去重防止同一张画加载两次。
+		for suffix in [".remap", ".import", ".translation"]:
+			if file.ends_with(suffix):
+				file = file.trim_suffix(suffix)
 		if file.ends_with(".jpg") or file.ends_with(".jpeg") or file.ends_with(".png"):
-			names.append(file)
+			if not names.has(file):
+				names.append(file)
 	names.sort()
 	for file_name in names:
 		var tex := load("%s/%s" % [ART_DIR, file_name]) as Texture2D
