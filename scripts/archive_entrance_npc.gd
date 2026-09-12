@@ -1,7 +1,9 @@
 extends Node
-## 档案馆入口的梗角色组：牛来（左后墙）与美团袋鼠（右前墙）。
+## 档案馆入口的梗角色组：牛来（西北墙角）与美团袋鼠（南墙）。
 ##
-## 奶蛙从传送门落地后，走廊入口一左一右站着两个"被梗出来"的角色。
+## 奶蛙从传送门落地后，入口两侧站着两个"被梗出来"的角色。
+## 站位刻意避开落地视线锥(-4.5,4)→(-1.8,2.35,0)：牛来贴西北墙角、
+## 袋鼠贴南墙，走廊中轴保持空旷，谁也不挡谁。
 ## 交互刻意保持极简：走近显示提示，按 E 逐句读完，可重复。
 ## 只允许同时与其中一人对话——取距离最近者。
 ##
@@ -28,10 +30,14 @@ const NPCS := [
 		"id": "niu_lai",
 		"label": "牛来",
 		"model": "res://assets/character/niu_lai.glb",
-		"pos": Vector3(-1.6, 0.0, -1.25),
-		"yaw": 0.95,
+		# 贴西北墙角：原 (-1.6,-1.25) 正压走廊中轴，玩家落地(-4.5,4)→镜头
+		# 看(-1.8,2.35,0)的视线锥里它总被奶蛙挡住；挪到墙角让开出生锥角。
+		"pos": Vector3(-3.1, 0.0, -1.55),
+		"yaw": 0.88,
 		"scale": 1.18,
 		"tag_y": 1.62,
+		# 原模型米白偏灰，乘一层暖黄让它更像"奶牛黄"。
+		"tint": Color(1.0, 0.82, 0.32),
 		"lines": [
 			"……",
 			"你也是刚被送到这儿的？我看你从上面那道光里掉下来。",
@@ -46,10 +52,13 @@ const NPCS := [
 		"id": "meituan_kangaroo",
 		"label": "美团袋鼠",
 		"model": "res://assets/character/meituan_kangaroo.glb",
-		"pos": Vector3(0.8, 0.0, 1.25),
-		"yaw": PI + 0.47,
+		"pos": Vector3(0.8, 0.0, 1.55),
+		# 实测两个 glb 正面都是 +Z：yaw=1.1 时袋鼠面朝东北(背对玩家)。
+		# -1.85 让 +Z 转向 (-0.96,-0.28)——西偏北,正对走廊中轴与玩家来向。
+		"yaw": -1.85,
 		"scale": 1.18,
 		"tag_y": 1.38,
+		"tint": Color(1, 1, 1),
 		"lines": [
 			"站住。先把话放这儿：不许提我的体重。",
 			"……算了，你肯定也刷到过了。全网都说我圆滚滚、胖乎乎，还给我画胖了三圈。",
@@ -112,7 +121,7 @@ func _build_npc(index: int) -> void:
 	else:
 		var instance := packed.instantiate()
 		model_root.add_child(instance)
-		_prepare_materials(instance)
+		_prepare_materials(instance, spec.get("tint", Color(1, 1, 1)))
 
 	# 名牌。用 Label3D 而不是 UI，走近才有"空间感"。
 	var tag := Label3D.new()
@@ -188,16 +197,26 @@ func _build_placeholder(model_root: Node3D) -> void:
 
 ## 减面导出的材质回退到项目统一的粗糙度，禁用自发光——
 ## 这些角色是"实物"，不该跟着霓虹场景一起发亮。
-func _prepare_materials(node: Node) -> void:
+## tint 乘在 albedo 上做整体调色（牛来偏黄）。
+## 同一 glb 的多个 mesh 可能共享同一份 Material 资源，
+## 必须去重，否则 tint 会被重复应用、越乘越黄。
+func _prepare_materials(node: Node, tint := Color(1, 1, 1)) -> void:
+	var visited := {}
+	_prepare_materials_inner(node, tint, visited)
+
+func _prepare_materials_inner(node: Node, tint: Color, visited: Dictionary) -> void:
 	for child in node.get_children():
 		if child is MeshInstance3D:
 			var mesh_node := child as MeshInstance3D
-			var mat := mesh_node.get_active_material(0)
-			if mat is StandardMaterial3D:
-				var std := mat as StandardMaterial3D
-				std.emission_enabled = false
-				std.roughness = 0.9
-		_prepare_materials(child)
+			for s in range(mesh_node.get_surface_override_material_count()):
+				var mat := mesh_node.get_active_material(s)
+				if mat is StandardMaterial3D and not visited.has(mat):
+					visited[mat] = true
+					var std := mat as StandardMaterial3D
+					std.emission_enabled = false
+					std.roughness = 0.9
+					std.albedo_color = std.albedo_color * tint
+		_prepare_materials_inner(child, tint, visited)
 
 func _build_ui() -> void:
 	if layer == null:
@@ -255,6 +274,12 @@ func _process(delta: float) -> void:
 	if not active or player == null:
 		return
 	line_delay = maxf(0.0, line_delay - delta)
+	# 手势输入:握拳 = E(交谈 / 推进对话)。仅视觉模式生效。
+	var input_state: Node = world.input_state
+	if input_state != null and input_state.is_vision_driven():
+		if input_state.confirm_just_pressed and input_state.consume_confirm():
+			if active_index >= 0 or _can_act():
+				_interact()
 
 	# 待机：极慢的呼吸 + 说话时轻轻点头。没骨骼，只能整体动。
 	# 幅度刻意压小——他们都是"站着/坐着不动的那种角色"，动多了就滑稽了。
