@@ -1,0 +1,40 @@
+=== 启动检查 ===
+world = ForgottenArchive:<Node3D#58418267577>
+world.skeleton = Skeleton3D:<Skeleton3D#64474844342>
+CharacterVisual = CharacterVisual:<Node3D#64407735474>
+子树 Skeleton3D 数 = 1
+  'Skeleton3D' bones=13
+opening.phase -> done
+注入D: move_right=true get_vector=(1.0, 0.0)
+f  4 loco=walk   axis=(1.0, 0.0) anim= 1.00 skel=OK 摆角=  1.54° pos=(-3.5, 2.58, -0.35)
+f  6 loco=walk   axis=(1.0, 0.0) anim= 1.00 skel=OK 摆角=  3.06° pos=(-3.5, 2.58, -0.35)
+f  8 loco=walk   axis=(1.0, 0.0) anim= 1.00 skel=OK 摆角=  6.07° pos=(-3.48, 2.56, -0.35)
+f 10 loco=walk   axis=(1.0, 0.0) anim= 1.00 skel=OK 摆角=  8.85° pos=(-3.44, 2.53, -0.35)
+f 12 loco=walk   axis=(1.0, 0.0) anim= 1.00 skel=OK 摆角= 10.09° pos=(-3.43, 2.51, -0.35)
+f 14 loco=walk   axis=(1.0, 0.0) anim= 1.00 skel=OK 摆角= 12.32° pos=(-3.37, 2.45, -0.35)
+f 16 loco=walk   axis=(1.0, 0.0) anim= 1.00 skel=OK 摆角= 14.09° pos=(-3.3, 2.38, -0.35)
+f 18 loco=walk   axis=(1.0, 0.0) anim= 1.00 skel=OK 摆角= 15.31° pos=(-3.21, 2.3, -0.35)
+f 20 loco=walk   axis=(1.0, 0.0) anim= 1.00 skel=OK 摆角= 15.95° pos=(-3.12, 2.2, -0.35)
+f 22 loco=walk   axis=(1.0, 0.0) anim= 1.00 skel=OK 摆角= 15.98° pos=(-3.02, 2.09, -0.35)
+f 24 loco=walk   axis=(1.0, 0.0) anim= 1.00 skel=OK 摆角= 15.77° pos=(-3.0, 2.05, -0.35)
+f 26 loco=walk   axis=(1.0, 0.0) anim= 1.00 skel=OK 摆角= 14.89° pos=(-2.9, 1.92, -0.35)
+f 28 loco=walk   axis=(1.0, 0.0) anim= 1.00 skel=OK 摆角= 13.44° pos=(-2.81, 1.77, -0.35)
+f 30 loco=walk   axis=(1.0, 0.0) anim= 1.00 skel=OK 摆角= 11.48° pos=(-2.71, 1.61, -0.35)
+f 32 loco=walk   axis=(1.0, 0.0) anim= 1.00 skel=OK 摆角=  9.08° pos=(-2.62, 1.43, -0.35)
+f 34 loco=walk   axis=(1.0, 0.0) anim= 1.00 skel=OK 摆角=  6.33° pos=(-2.52, 1.24, -0.35)
+f 36 loco=walk   axis=(1.0, 0.0) anim= 1.00 skel=OK 摆角=  4.89° pos=(-2.5, 1.19, -0.35)
+f 38 loco=walk   axis=(1.0, 0.0) anim= 1.00 skel=OK 摆角=  1.82° pos=(-2.4, 0.98, -0.35)
+f 40 loco=walk   axis=(1.0, 0.0) anim= 1.00 skel=OK 摆角=  1.32° pos=(-2.31, 0.75, -0.35)
+f 42 loco=walk   axis=(1.0, 0.0) anim= 1.00 skel=OK 摆角=  4.41° pos=(-2.21, 0.63, -0.35)
+f 44 loco=walk   axis=(1.0, 0.0) anim= 1.00 skel=OK 摆角=  7.33° pos=(-2.12, 0.63, -0.35)
+f 46 loco=walk   axis=(1.0, 0.0) anim= 1.00 skel=OK 摆角=  9.97° pos=(-2.02, 0.63, -0.35)
+f 48 loco=walk   axis=(1.0, 0.0) anim= 1.00 skel=OK 摆角= 11.13° pos=(-2.0, 0.63, -0.35)
+f 50 loco=walk   axis=(1.0, 0.0) anim= 1.00 skel=OK 摆角= 13.16° pos=(-1.9, 0.63, -0.35)
+f 52 loco=walk   axis=(1.0, 0.0) anim= 1.00 skel=OK 摆角= 14.70° pos=(-1.81, 0.63, -0.35)
+f 54 loco=walk   axis=(1.0, 0.0) anim= 1.00 skel=OK 摆角= 15.67° pos=(-1.71, 0.63, -0.35)
+f 56 loco=walk   axis=(1.0, 0.0) anim= 1.00 skel=OK 摆角= 16.04° pos=(-1.62, 0.63, -0.35)
+f 58 loco=walk   axis=(1.0, 0.0) anim= 1.00 skel=OK 摆角= 15.80° pos=(-1.52, 0.63, -0.35)
+f 60 loco=walk   axis=(1.0, 0.0) anim= 1.00 skel=OK 摆角= 15.45° pos=(-1.5, 0.63, -0.35)
+f 62 loco=walk   axis=(1.0, 0.0) anim= 1.00 skel=OK 摆角= 14.32° pos=(-1.4, 0.63, -0.35)
+f 64 loco=walk   axis=(1.0, 0.0) anim= 1.00 skel=OK 摆角= 12.64° pos=(-1.31, 0.63, -0.35)
+f 66 loco=walk   axis=(1.0, 0.0) anim= 1.00 skel=OK 摆角= 10.47° pos=(-1.21, 0.63, -0.35)

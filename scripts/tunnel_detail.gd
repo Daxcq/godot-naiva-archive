@@ -13,21 +13,6 @@ func _build_detail_layer() -> void:
 	var fx := Node3D.new()
 	fx.name = "ArchiveTunnelFX"
 	add_child(fx)
-	# Three depth markers make the tunnel read as a corridor, rather than a flat ring.
-	for i in range(3):
-		var ring := MeshInstance3D.new()
-		ring.name = "ArchiveGate_%02d" % i
-		var torus := TorusMesh.new()
-		torus.inner_radius = 3.45 - i * 0.2
-		torus.outer_radius = 3.53 - i * 0.2
-		torus.rings = 48
-		torus.ring_segments = 12
-		ring.mesh = torus
-		ring.rotation.x = PI * 0.5
-		ring.position = Vector3(0, 3.0, -12.0 - i * 16.0)
-		ring.material_override = _glow_material(Color(0.18 + i * 0.12, 0.72, 0.86, 0.7), 2.2)
-		fx.add_child(ring)
-		rings.append(ring)
 	# A distant portal is built from two nested rings and a soft light pool.
 	var portal := MeshInstance3D.new()
 	portal.name = "ArchivePortal"
