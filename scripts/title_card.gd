@@ -7,16 +7,16 @@ extends Control
 const TITLE := ["奶", "娃", "之", "旅"]
 const VIEW := Vector2(1280, 720)
 const CENTER := Vector2(640, 468)
-const CELL := 130.0        # 单字占位宽
-const CHAR_BOX := 150.0    # 字容器边长，缩放/旋转枢轴取容器中心
-const PAIR_GAP := 84.0     # 「奶娃」与「之旅」两组之间的缝
-const FONT_SIZE := 112
+const CELL := 180.0        # 单字占位宽
+const CHAR_BOX := 200.0    # 字容器边长，缩放/旋转枢轴取容器中心
+const PAIR_GAP := 100.0    # 「奶娃」与「之旅」两组之间的缝
+const FONT_SIZE := 150
 const FLIGHT := 0.62       # 单字飞行时长
 const STAGGER := 0.16      # 逐字错峰起飞
 const FIRST_DELAY := 0.15
 const POP_TIME := 1.35     # 中央奶滴弹出时刻
 const MIN_HOLD := 3.4      # 最短保留：飞入+落位必须完整演完，唤醒再早也等演完才退场
-const FALLBACK_QUIT := 18.0
+const FALLBACK_QUIT := 12.0
 
 const MILK := Color(1.0, 0.972, 0.905)
 const PLUM := Color(0.23, 0.16, 0.4)
@@ -85,10 +85,10 @@ func _make_label(glyph: String, center: Vector2) -> Label:
 func _make_subtitle() -> Label:
 	var label := Label.new()
 	label.text = "网 络 流 行 梗 编 年 馆"
-	label.position = Vector2(0, CENTER.y + 88)
+	label.position = Vector2(0, CENTER.y + 116)
 	label.size = Vector2(VIEW.x, 30)
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	label.add_theme_font_size_override("font_size", 19)
+	label.add_theme_font_size_override("font_size", 20)
 	label.add_theme_color_override("font_color", Color(0.8, 0.77, 0.95))
 	label.add_theme_color_override("font_shadow_color", SHADOW)
 	label.add_theme_constant_override("shadow_offset_y", 2)

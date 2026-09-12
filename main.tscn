@@ -1,23 +1,18 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://c76ifrhhjj3ow"]
 
-[ext_resource type="Script" path="res://scripts/main.gd" id="1"]
-[ext_resource type="Script" path="res://scripts/opening_director.gd" id="3_lquwl"]
-[ext_resource type="AudioStream" path="res://assets/audio/gallery.wav" id="4_7mycd"]
-
-[ext_resource type="PackedScene" path="res://scenes/intro_space.tscn" id="scene_intro_space"]
-
+[ext_resource type="Script" uid="uid://bp5stukp3g8xp" path="res://scripts/main.gd" id="1"]
+[ext_resource type="Script" uid="uid://d2ge4a5ftwn5e" path="res://scripts/opening_director.gd" id="3_lquwl"]
+[ext_resource type="AudioStream" uid="uid://dd1ogx4e2eccn" path="res://assets/audio/gallery.wav" id="4_7mycd"]
+[ext_resource type="Script" uid="uid://cp2f4ysxb7msi" path="res://scripts/arrival_portal.gd" id="arrival_portal"]
+[ext_resource type="Script" uid="uid://cnira2171vg6f" path="res://scripts/camera_director.gd" id="camera_director"]
+[ext_resource type="Script" uid="uid://dvn58jl8jbauv" path="res://scripts/input_state.gd" id="input_state"]
 [ext_resource type="PackedScene" path="res://scenes/archive_space.tscn" id="scene_archive_space"]
-
-[ext_resource type="PackedScene" path="res://scenes/player.tscn" id="scene_player"]
-
-[ext_resource type="PackedScene" path="res://scenes/time_tunnel.tscn" id="scene_time_tunnel"]
-
 [ext_resource type="PackedScene" path="res://scenes/interface.tscn" id="scene_interface"]
-[ext_resource type="Script" path="res://scripts/visual_recognition.gd" id="visual_recognition"]
-[ext_resource type="Script" path="res://scripts/vision_preview.gd" id="vision_preview"]
-[ext_resource type="Script" path="res://scripts/input_state.gd" id="input_state"]
-[ext_resource type="Script" path="res://scripts/camera_director.gd" id="camera_director"]
-[ext_resource type="Script" path="res://scripts/arrival_portal.gd" id="arrival_portal"]
+[ext_resource type="PackedScene" path="res://scenes/intro_space.tscn" id="scene_intro_space"]
+[ext_resource type="PackedScene" path="res://scenes/player.tscn" id="scene_player"]
+[ext_resource type="PackedScene" path="res://scenes/time_tunnel.tscn" id="scene_time_tunnel"]
+[ext_resource type="Script" uid="uid://c5kep8r7vbydh" path="res://scripts/vision_preview.gd" id="vision_preview"]
+[ext_resource type="Script" uid="uid://b6xoumgay3w7y" path="res://scripts/visual_recognition.gd" id="visual_recognition"]
 
 [sub_resource type="Environment" id="Environment_272bh"]
 background_mode = 1
@@ -54,7 +49,7 @@ light_color = Color(0.5, 0.42, 0.86, 1)
 light_energy = 0.6
 shadow_enabled = true
 
-[node name="PresentDayGallery" parent="." instance=ExtResource("scene_intro_space")]
+[node name="PresentDayGallery" parent="." unique_id=1518861340 instance=ExtResource("scene_intro_space")]
 
 [node name="IntroGround" type="StaticBody3D" parent="." unique_id=1768531381]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.45, 0)
@@ -62,9 +57,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.45, 0)
 [node name="@CollisionShape3D@10" type="CollisionShape3D" parent="IntroGround" unique_id=120611567]
 shape = SubResource("BoxShape3D_4k2k6")
 
-[node name="ArchiveArchitecture" parent="." instance=ExtResource("scene_archive_space")]
+[node name="ArchiveArchitecture" parent="." unique_id=503804356 instance=ExtResource("scene_archive_space")]
 
-[node name="ArrivalPortal" type="Node3D" parent="."]
+[node name="ArrivalPortal" type="Node3D" parent="." unique_id=982859206]
 visible = false
 script = ExtResource("arrival_portal")
 
@@ -76,30 +71,21 @@ metadata/archive_collision = true
 [node name="@CollisionShape3D@391" type="CollisionShape3D" parent="GroundCollision" unique_id=1981209425]
 shape = SubResource("BoxShape3D_xlvj7")
 
-[node name="MilkFrog" parent="." instance=ExtResource("scene_player")]
+[node name="MilkFrog" parent="." unique_id=47505487 instance=ExtResource("scene_player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 1.125, -0.2)
 
 [node name="CinematicSideCamera" type="Camera3D" parent="." unique_id=1513814771]
-transform = Transform3D(1, 0, 0, 0, 0.9928768, 0.11914522, 0, -0.11914522, 0.9928768, 2, 4.5, 12.5)
+transform = Transform3D(1, 0, 0, 0, 0.99287677, 0.11914522, 0, -0.11914522, 0.99287677, 2, 4.5, 12.5)
 current = true
 fov = 44.0
 
-[node name="Interface" parent="." instance=ExtResource("scene_interface")]
+[node name="Interface" parent="." unique_id=1392059507 instance=ExtResource("scene_interface")]
+
+[node name="TitleCard" parent="Interface" index="3"]
+layout_mode = 3
 
 [node name="StoryDirector" type="Node" parent="." unique_id=1194013018]
 script = ExtResource("3_lquwl")
-
-[node name="VisualRecognition" type="Node" parent="."]
-script = ExtResource("visual_recognition")
-
-[node name="InputState" type="Node" parent="."]
-script = ExtResource("input_state")
-
-[node name="CameraDirector" type="Node" parent="."]
-script = ExtResource("camera_director")
-
-[node name="VisionPreview" type="CanvasLayer" parent="."]
-script = ExtResource("vision_preview")
 
 [node name="Ambience" type="AudioStreamPlayer" parent="StoryDirector" unique_id=2061284989]
 stream = ExtResource("4_7mycd")
@@ -108,15 +94,23 @@ volume_db = -12.0
 [node name="StorySound" type="AudioStreamPlayer" parent="StoryDirector" unique_id=77602026]
 volume_db = -8.0
 
-[node name="TimeTunnel" parent="." instance=ExtResource("scene_time_tunnel")]
+[node name="VisualRecognition" type="Node" parent="." unique_id=41446709]
+script = ExtResource("visual_recognition")
+
+[node name="InputState" type="Node" parent="." unique_id=351401704]
+script = ExtResource("input_state")
+
+[node name="CameraDirector" type="Node" parent="." unique_id=1127601451]
+script = ExtResource("camera_director")
+
+[node name="VisionPreview" type="CanvasLayer" parent="." unique_id=1411394813]
+script = ExtResource("vision_preview")
+
+[node name="TimeTunnel" parent="." unique_id=1206398098 instance=ExtResource("scene_time_tunnel")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 100, 0, 0)
 
 [editable path="PresentDayGallery"]
-
 [editable path="ArchiveArchitecture"]
-
 [editable path="MilkFrog"]
-
-[editable path="TimeTunnel"]
-
 [editable path="Interface"]
+[editable path="TimeTunnel"]
