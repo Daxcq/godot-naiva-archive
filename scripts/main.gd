@@ -22,6 +22,7 @@ var archive_fx: Node
 var archive_npc: Node
 var archive_arcade: Node
 var archive_entrance_npc: Node
+var interaction_router: Node
 var arcade_active := false
 var destination_root: Node3D
 var destination_id := ""
@@ -50,6 +51,13 @@ func _ready() -> void:
 		push_warning("未在 CharacterVisual 下找到 Skeleton3D，走路摆腿效果将不可见")
 	# 档案走廊玩法栈：三段记忆交互、氛围 FX、柜前 NPC、霓虹海报与三台街机。
 	meme_room = null
+	# 交互焦点仲裁器:必须先于各交互系统创建,它们 setup 时会来认领。
+	# 全场唯一交互提示条 + 每帧只选一个焦点,解决触发圈重叠时的
+	# 提示叠字与一次按键多系统同时响应的问题。
+	interaction_router = preload("res://scripts/interaction_router.gd").new()
+	interaction_router.name = "InteractionRouter"
+	add_child(interaction_router)
+	interaction_router.setup($Interface)
 	archive_interaction = preload("res://scripts/archive_interaction.gd").new()
 	archive_interaction.name = "ArchiveInteraction"
 	add_child(archive_interaction)
@@ -224,8 +232,11 @@ func _update_destination_room(delta: float) -> void:
 	var cue := get_node("Interface/StoryCue") as Label
 	var local_pos := player.position - destination_root.position
 	if local_pos.distance_to(destination_root.return_position) < 2.4:
-		cue.text = "E 返回档案长廊"
-		if Input.is_action_just_pressed("interact"):
+		# 返回点是可交互目标:走共享提示条,与其他系统一样做焦点仲裁。
+		if interaction_router:
+			interaction_router.offer("destination", "返回档案长廊", 0.0, "E")
+		cue.text = ""
+		if Input.is_action_just_pressed("interact") and (interaction_router == null or interaction_router.can_interact("destination")):
 			_return_from_destination()
 	else:
 		cue.text = destination_root.get_prompt(local_pos) if destination_root.has_method("get_prompt") else destination_root.title + "  ·  探索记忆空间"

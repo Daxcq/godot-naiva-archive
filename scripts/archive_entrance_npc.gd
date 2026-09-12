@@ -1,106 +1,132 @@
 extends Node
-## 档案馆入口的牛 NPC（"牛来"）。
+## 档案馆入口的梗角色组：牛来（左后墙）与美团袋鼠（右前墙）。
 ##
-## 奶蛙从传送门落地后，第一眼看到的就是它——站在走廊入口左边的墙边。
-## 交互刻意保持极简：走近显示提示，按 E 逐句读完。四句讲完，
-## 它会复述一句「牛来」，然后转身安静地站回去。
+## 奶蛙从传送门落地后，走廊入口一左一右站着两个"被梗出来"的角色。
+## 交互刻意保持极简：走近显示提示，按 E 逐句读完，可重复。
+## 只允许同时与其中一人对话——取距离最近者。
 ##
-## 为什么单独一个脚本而不是塞进 archive_npc_dialogue.gd：
-## 那个文件管理的是"柜前三个档案员 → 打开记忆传送门"这条主动线，
-## 每个档案员读完都会生成一个传送门。入口的牛不参与这条链路，
-## 它只负责在起点说几句不推进进度的话。混在一起会让那个 300 行的
-## 状态机多出一堆 if。
+## 两个角色是同一个时代情绪的两面：
+##   牛来 —— 靠"丑"被围观而火，从头到尾没被真正看见；
+##   袋鼠 —— 被网友画胖了三圈才火，大家爱上的是画出来的那个"它"。
+## 对话里互相提一嘴，让站在同一屋檐下的他们认出彼此的命运。
+##
+## 为什么是数据驱动而不是两个脚本：两只角色的交互流程完全一致
+## （靠近→E→逐句→结束），只有台词/模型/站位不同。复制一份 280 行
+## 脚本只改常量是最差的维护形态，所以收敛成一个 NPCS 配置表。
+## 它依旧独立于 archive_npc_dialogue.gd：那边管理"柜前三个档案员 →
+## 开记忆传送门"的主动线，这边只陪聊、不推进度。
 
-const MODEL_PATH := "res://assets/character/niu_lai.glb"
-## 站位：传送门出点 ARCHIVE_SPAWN 是 (-4.5, …)，奶蛙落地后沿 +X 进走廊。
-## 走廊可走范围 x∈[-5,37]、z∈[-1.9,1.9]（见 main.gd 的 clamp）。
-## 把牛放在 x=-1.6：离落点 2.9m，刚好在交互范围之外一点点——
-## 玩家落地后往前走两步才会亮提示，不会一睁眼就被打断。
-## z 靠后墙一侧（-1.25），既避开通路，也让奶蛙落地后回头能看见它。
-const NPC_POSITION := Vector3(-1.6, 0.0, -1.25)
-## 面朝方向的 yaw。奶蛙从 -4.5 过来，牛要侧身对着来路（略偏走廊内侧）。
-const NPC_YAW := 0.95
-## 模型自带高度 1.11m，放大到 1.31m —— 比奶蛙（约 1.05m）高一头，
-## 站在一起像个"大个子"，符合它在对话里的长辈感。
-const NPC_SCALE := 1.18
-## 交互距离：比档案员的 2.5 稍大，因为入口空间窄、牛又靠墙，太近反而难触发。
-const TALK_RANGE := 3.0
-## 台词。最后一句是留给玩家的余味，所以放在「牛来」之前。
-const LINES := [
-	"……",
-	"你也是刚被送到这儿的？我看你从上面那道光里掉下来。",
-	"我叫牛来。名字是我妈起的——她说，喊这个名字，我就能站起来。",
-	"后来我确实站起来了。只是站起来以后，大家都只顾着笑我丑。",
-	"再后来他们不笑了，开始拿我的名字许愿。牛市来、好运来、什么都来。",
-	"可从头到尾，没人问过我想不想来。",
-	"……牛来。",
+## 交互距离。原 3.0 时两个 NPC 的触发圈大面积交叠(两者仅相距 3.47m),
+## 站中间按一次 E 会同时弹两套对话。收窄到 2.4,再由
+## InteractionRouter 做距离仲裁兜底:同圈时只有最近的那个响应。
+const TALK_RANGE := 2.4
+## 台词推进的最小间隔，防手滑一按跳两句。
+const LINE_DELAY := 0.22
+
+const NPCS := [
+	{
+		"id": "niu_lai",
+		"label": "牛来",
+		"model": "res://assets/character/niu_lai.glb",
+		"pos": Vector3(-1.6, 0.0, -1.25),
+		"yaw": 0.95,
+		"scale": 1.18,
+		"tag_y": 1.62,
+		"lines": [
+			"……",
+			"你也是刚被送到这儿的？我看你从上面那道光里掉下来。",
+			"我叫牛来。名字是我妈起的——她说，喊这个名字，我就能站起来。",
+			"后来我确实站起来了。只是站起来以后，大家都只顾着笑我丑。",
+			"再后来他们不笑了，开始拿我的名字许愿。牛市来、好运来、什么都来。",
+			"可从头到尾，没人问过我想不想来。",
+			"……牛来。",
+		],
+	},
+	{
+		"id": "meituan_kangaroo",
+		"label": "美团袋鼠",
+		"model": "res://assets/character/meituan_kangaroo.glb",
+		"pos": Vector3(0.8, 0.0, 1.25),
+		"yaw": PI + 0.47,
+		"scale": 1.18,
+		"tag_y": 1.38,
+		"lines": [
+			"站住。先把话放这儿：不许提我的体重。",
+			"……算了，你肯定也刷到过了。全网都说我圆滚滚、胖乎乎，还给我画胖了三圈。",
+			"冤枉啊。我原本身形修长，是送外卖跑出来的线条。旁边那头牛靠“丑”火的，我靠“胖”火的——都不是我们本来的样子。",
+			"现在官方都不敢认瘦，只能嘴硬：“我们袋鼠本来就不胖。”你听听，连亲妈都不敢认了。",
+			"最气的还在后头——那个胖胖的我，收到的喜爱比我本人多十倍。大家爱的，是画出来的那个。",
+			"所以在档案馆门口多啰嗦一句：哪天你也被大家记成了别的样子，记得偶尔，纠正一下他们。",
+			"好啦，不耽误你了……敢一个人翻旧档案，你胆子真是肥嘟嘟的。",
+		],
+	},
 ]
+
+const UIKit := preload("res://scripts/ui_kit.gd")
 
 var world: Node3D
 var player: CharacterBody3D
 var layer: CanvasLayer
-var prompt: Label
+var router: Node
+var card_title: Label
+var card_panel: Control
 var card: Label
 var button: Button
 
-var npc_root: Node3D
-var model_root: Node3D
-var label_3d: Label3D
+## 每个 NPC 一份运行时状态，与 NPCS 下标一一对应。
+var entries: Array = []
 
 var active := false
-var talking := false
-var line_index := -1
+var active_index := -1
 var line_delay := 0.0
-var idle_time := 0.0
-## 读完一次后不再重复整段，只留一句短回应。
-var finished_once := false
-var near := false
 
 func setup(owner: Node3D) -> void:
 	world = owner
 	player = owner.player
 	layer = owner.get_node_or_null("Interface") as CanvasLayer
-	_build_npc()
+	router = owner.get_node_or_null("InteractionRouter")
+	for i in range(NPCS.size()):
+		_build_npc(i)
 	_build_ui()
 	set_active(false)
 
-## 建造场景里的牛。模型是静态高模减面而来的，没有骨骼，
-## 所以"呼吸"和"说话时点头"全部靠整体 transform 驱动。
-func _build_npc() -> void:
-	npc_root = Node3D.new()
-	npc_root.name = "EntranceNPC_NiuLai"
-	npc_root.position = NPC_POSITION
-	npc_root.rotation.y = NPC_YAW
+## 建造场景里的角色。模型都是静态减面 glb，没有骨骼，
+## "呼吸"和"说话点头"全靠整体 transform 驱动。
+func _build_npc(index: int) -> void:
+	var spec: Dictionary = NPCS[index]
+	var npc_root := Node3D.new()
+	npc_root.name = "EntranceNPC_%s" % String(spec.id)
+	npc_root.position = spec.pos
+	npc_root.rotation.y = float(spec.yaw)
 	world.archive_root.add_child(npc_root)
 
-	model_root = Node3D.new()
+	var model_root := Node3D.new()
 	model_root.name = "Model"
-	model_root.scale = Vector3.ONE * NPC_SCALE
+	model_root.scale = Vector3.ONE * float(spec.scale)
 	npc_root.add_child(model_root)
 
-	var packed := load(MODEL_PATH) as PackedScene
+	var packed := load(String(spec.model)) as PackedScene
 	if packed == null:
-		push_warning("入口牛模型缺失：%s（将用占位方块代替）" % MODEL_PATH)
-		_build_placeholder()
+		push_warning("入口 NPC 模型缺失：%s（将用占位方块代替）" % String(spec.model))
+		_build_placeholder(model_root)
 	else:
 		var instance := packed.instantiate()
 		model_root.add_child(instance)
 		_prepare_materials(instance)
 
-	# 名牌。用 Label3D 而不是 UI，这样走近才有"空间感"。
-	label_3d = Label3D.new()
-	label_3d.name = "NameTag"
-	label_3d.text = "牛来"
-	label_3d.position = Vector3(0, 1.62, 0)
-	label_3d.font_size = 22
-	label_3d.pixel_size = 0.005
-	label_3d.modulate = Color("ffd9a0")
-	label_3d.outline_size = 0
-	npc_root.add_child(label_3d)
+	# 名牌。用 Label3D 而不是 UI，走近才有"空间感"。
+	var tag := Label3D.new()
+	tag.name = "NameTag"
+	tag.text = String(spec.label)
+	tag.position = Vector3(0, float(spec.tag_y), 0)
+	tag.font_size = 22
+	tag.pixel_size = 0.005
+	tag.modulate = Color("ffd9a0")
+	tag.outline_size = 0
+	npc_root.add_child(tag)
 
-	# 一盏暖色小灯，把牛从走廊的冷光里"托"出来，也是视觉引导。
-	# 走廊整体是青/品红的低照度环境，0.7 的亮度根本不够——
-	# 实测牛会整个沉进背景。这里给足亮度 + 贴近模型，让它在暗场里能读出来。
+	# 暖色主灯 + 后侧轮廓光：走廊是青/品红低照度环境，
+	# 实测不给足亮度角色会整个沉进背景。
 	var light := OmniLight3D.new()
 	light.name = "NPCLight"
 	light.light_color = Color("ffc78a")
@@ -108,8 +134,6 @@ func _build_npc() -> void:
 	light.omni_range = 3.2
 	light.position = Vector3(0.35, 1.35, 0.85)
 	npc_root.add_child(light)
-
-	# 后侧轮廓光：勾一道暖边，避免牛和深紫色背景糊在一起。
 	var rim := OmniLight3D.new()
 	rim.name = "NPCRimLight"
 	rim.light_color = Color("ff9a4d")
@@ -118,8 +142,6 @@ func _build_npc() -> void:
 	rim.position = Vector3(-0.5, 1.15, -0.9)
 	npc_root.add_child(rim)
 
-	# 交互触发区。用 Area3D 只是为了让判定跟模型对齐，
-	# 真正判断距离仍走 _process 里的 _distance()，行为更可控。
 	var area := Area3D.new()
 	area.name = "TalkArea"
 	var shape := CollisionShape3D.new()
@@ -131,23 +153,19 @@ func _build_npc() -> void:
 	area.add_child(shape)
 	npc_root.add_child(area)
 
-## 模型是 Blender 减面导出的，材质回退到项目统一的粗糙度，
-## 避免跟着现有霓虹场景一起发亮——这头牛是"实物"，不该自发光。
-func _prepare_materials(node: Node) -> void:
-	for child in node.get_children():
-		if child is MeshInstance3D:
-			var mesh_node := child as MeshInstance3D
-			for i in range(mesh_node.get_surface_override_material_count()):
-				pass
-			var mat := mesh_node.get_active_material(0)
-			if mat is StandardMaterial3D:
-				var std := mat as StandardMaterial3D
-				std.emission_enabled = false
-				std.roughness = 0.9
-		_prepare_materials(child)
+	entries.append({
+		"root": npc_root,
+		"model": model_root,
+		"tag": tag,
+		"idle_time": randf() * 10.0,
+		"talking": false,
+		"line_index": -1,
+		"finished_once": false,
+		"near": false,
+	})
 
-## 模型缺失时的兜底：一个捏出来的奶油色方块小牛，保证玩法不崩。
-func _build_placeholder() -> void:
+## 模型缺失时的兜底：奶油色方块小人，保证玩法不崩。
+func _build_placeholder(model_root: Node3D) -> void:
 	var body_mat := StandardMaterial3D.new()
 	body_mat.albedo_color = Color("f0dba8")
 	body_mat.roughness = 0.9
@@ -168,130 +186,174 @@ func _build_placeholder() -> void:
 	head.position.y = 1.15
 	model_root.add_child(head)
 
+## 减面导出的材质回退到项目统一的粗糙度，禁用自发光——
+## 这些角色是"实物"，不该跟着霓虹场景一起发亮。
+func _prepare_materials(node: Node) -> void:
+	for child in node.get_children():
+		if child is MeshInstance3D:
+			var mesh_node := child as MeshInstance3D
+			var mat := mesh_node.get_active_material(0)
+			if mat is StandardMaterial3D:
+				var std := mat as StandardMaterial3D
+				std.emission_enabled = false
+				std.roughness = 0.9
+		_prepare_materials(child)
+
 func _build_ui() -> void:
 	if layer == null:
 		return
-	# 位置与字号跟 archive_npc_dialogue.gd / archive_interaction.gd 对齐，
-	# 三套系统的提示不能跳来跳去。
-	prompt = Label.new()
-	prompt.position = Vector2(38, 530)
-	prompt.add_theme_font_size_override("font_size", 18)
-	layer.add_child(prompt)
+	# 统一 UIKit 卡片区(左上)与按钮行(底中),与档案员/记忆柜共用锚位。
+	var card_ui := UIKit.make_card(layer, 720.0)
+	card = card_ui.body
+	card_title = card_ui.title
+	card_panel = card_ui.panel
+	card_panel.visible = false
 
-	card = Label.new()
-	card.position = Vector2(38, 104)
-	card.size = Vector2(850, 150)
-	card.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	card.add_theme_font_size_override("font_size", 21)
-	layer.add_child(card)
-
-	button = Button.new()
-	button.position = Vector2(38, 576)
-	button.custom_minimum_size = Vector2(260, 42)
+	button = UIKit.make_button("E  交谈")
+	button.custom_minimum_size = Vector2(260, UIKit.BTN_HEIGHT)
 	button.focus_mode = Control.FOCUS_NONE
 	button.pressed.connect(_interact)
+	UIKit.anchor_button_row(button)
+	button.visible = false
 	layer.add_child(button)
 
 func set_active(value: bool) -> void:
 	active = value
 	set_process(value)
-	if npc_root:
-		npc_root.visible = value
-	if prompt:
-		prompt.visible = value
-	if card:
-		card.visible = false
+	for entry in entries:
+		var root_node: Node3D = entry.root
+		root_node.visible = value
+		entry.talking = false
+		entry.line_index = -1
+	if card_panel:
+		card_panel.visible = false
+		card.text = ""
+		card_title.text = ""
 	if button:
 		button.visible = false
-	if not value:
-		talking = false
-		line_index = -1
+	active_index = -1
 
 func _input(event: InputEvent) -> void:
 	if not active or player == null:
 		return
 	if event is InputEventKey and event.pressed and not event.echo:
 		if event.is_action_pressed("interact"):
-			if talking or near:
+			# 触发互斥:对话进行中独占焦点;否则必须是交互焦点才响应,
+			# 避免与柜前档案员/记忆柜同帧双触发。
+			if active_index >= 0 or _can_act():
 				get_viewport().set_input_as_handled()
 				_interact()
 
+func _can_act() -> bool:
+	return router == null or router.can_interact("entrance")
+
+func _offer(key: String, body: String, distance: float, holding := false) -> void:
+	if router:
+		router.offer("entrance", body, distance, key, 0, holding)
+
 func _process(delta: float) -> void:
-	if not active or player == null or npc_root == null:
+	if not active or player == null:
 		return
-	idle_time += delta
 	line_delay = maxf(0.0, line_delay - delta)
 
-	# 待机：极慢的呼吸 + 一点点左右晃。没骨骼，只能整体动。
-	# 幅度刻意压得很小——牛是"站着不动的那种角色"，动多了就滑稽了。
-	var breath := sin(idle_time * 1.5)
-	var nod := 0.0
-	if talking:
-		# 说话时按台词节奏轻轻点头，权当"在讲话"的视觉提示。
-		nod = sin(idle_time * 6.0) * 0.035
-	model_root.scale = Vector3.ONE * NPC_SCALE * (1.0 + breath * 0.008)
-	model_root.rotation.x = nod
-	model_root.position.y = breath * 0.012
+	# 待机：极慢的呼吸 + 说话时轻轻点头。没骨骼，只能整体动。
+	# 幅度刻意压小——他们都是"站着/坐着不动的那种角色"，动多了就滑稽了。
+	for i in range(entries.size()):
+		var entry: Dictionary = entries[i]
+		entry.idle_time = float(entry.idle_time) + delta
+		var model: Node3D = entry.model
+		var scale_value := float(NPCS[i].scale)
+		var breath := sin(float(entry.idle_time) * 1.5)
+		var nod := sin(float(entry.idle_time) * 6.0) * 0.035 if entry.talking else 0.0
+		model.scale = Vector3.ONE * scale_value * (1.0 + breath * 0.008)
+		model.rotation.x = nod
+		model.position.y = breath * 0.012
+		var tag: Label3D = entry.tag
+		tag.position.y = float(NPCS[i].tag_y) + sin(float(entry.idle_time) * 1.2) * 0.02
 
-	# 名牌总是转向镜头方向做微弱浮动，避免被墙挡住看不见。
-	if label_3d:
-		label_3d.position.y = 1.62 + sin(idle_time * 1.2) * 0.02
-
-	var distance := _distance()
-	near = distance <= TALK_RANGE
-	if talking:
-		_update_prompt()
+	if active_index >= 0:
+		_update_prompt(entries[active_index])
 		return
-	if near:
-		prompt.text = "E 和牛来说两句"
-		button.text = prompt.text
-		button.visible = true
+	var nearest := _nearest_entry()
+	if nearest >= 0:
+		var spec: Dictionary = NPCS[nearest]
+		var distance := _distance(nearest)
+		_offer("E", "和%s说两句" % String(spec.label), distance)
+		if _can_act():
+			button.text = "E  和%s说两句" % String(spec.label)
+			button.visible = true
+		else:
+			button.visible = false
 	else:
-		prompt.text = ""
 		button.visible = false
 
-func _update_prompt() -> void:
-	prompt.text = "牛来 · %d / %d" % [line_index + 1, LINES.size()]
-	card.visible = true
-	card.text = "%s\n\nE  继续" % String(LINES[line_index])
+func _update_prompt(entry: Dictionary) -> void:
+	var spec: Dictionary = NPCS[active_index]
+	var lines: Array = spec.lines
+	_offer("", "%s · %d / %d" % [String(spec.label), int(entry.line_index) + 1, lines.size()], 0.0, true)
+	card_panel.visible = true
+	card_title.text = String(spec.label)
+	card.text = String(lines[entry.line_index])
 	button.visible = true
-	button.text = "E  下一句" if line_index < LINES.size() - 1 else "E  道别"
+	button.text = "E  下一句" if int(entry.line_index) < lines.size() - 1 else "E  道别"
+
+func _advance() -> void:
+	var entry: Dictionary = entries[active_index]
+	var spec: Dictionary = NPCS[active_index]
+	entry.line_index = int(entry.line_index) + 1
+	if int(entry.line_index) >= (spec.lines as Array).size():
+		_end_talk(entry)
+	else:
+		_show_line(entry)
+
+func _show_line(entry: Dictionary) -> void:
+	_update_prompt(entry)
+	line_delay = LINE_DELAY
+
+func _end_talk(entry: Dictionary) -> void:
+	entry.talking = false
+	entry.line_index = -1
+	entry.finished_once = true
+	card.text = ""
+	card_title.text = ""
+	card_panel.visible = false
+	button.visible = false
+	active_index = -1
 
 func _interact() -> void:
 	if line_delay > 0.0:
 		return
-	if not talking:
-		if not near:
-			return
-		talking = true
-		line_index = 0
-		_show_line()
+	# 已在对话中：推进当前对象。
+	if active_index >= 0:
+		_advance()
 		return
-	line_index += 1
-	if line_index >= LINES.size():
-		_end_talk()
-	else:
-		_show_line()
+	var nearest := _nearest_entry()
+	if nearest < 0:
+		return
+	active_index = nearest
+	var entry: Dictionary = entries[nearest]
+	entry.talking = true
+	entry.line_index = 0
+	_show_line(entry)
 
-func _show_line() -> void:
-	_update_prompt()
-	line_delay = 0.22
+## 交互范围内最近的 NPC 下标,都不在范围内返回 -1。
+func _nearest_entry() -> int:
+	var nearest := -1
+	var best := TALK_RANGE
+	for i in range(entries.size()):
+		var distance := _distance(i)
+		if distance < best:
+			best = distance
+			nearest = i
+	return nearest
 
-func _end_talk() -> void:
-	talking = false
-	line_index = -1
-	card.text = ""
-	card.visible = false
-	button.visible = false
-	finished_once = true
-
-func _distance() -> float:
-	if npc_root == null or player == null:
+## 距离判定。无头自检里节点当帧可能还没进树，
+## global_position 会退化成原点，所以按 in_tree 分流（真机永远走 global 分支）。
+func _distance(index: int) -> float:
+	var entry: Dictionary = entries[index]
+	var root_node: Node3D = entry.root
+	if root_node == null or player == null:
 		return INF
-	# 正常运行时两者都在场景树里，用 global_position 最准。
-	# 但在无头自检（--script / SceneTree）里，add_child 之后节点当帧还没真正进树，
-	# global_position 会退化成单位变换、全部读成原点，导致距离恒为 0、判定永远"靠近"。
-	# 这里用 in_tree 判定后回落到局部坐标，让自检和真机行为一致。
-	if npc_root.is_inside_tree() and player.is_inside_tree():
-		return player.global_position.distance_to(npc_root.global_position)
-	return player.position.distance_to(npc_root.position)
+	if root_node.is_inside_tree() and player.is_inside_tree():
+		return player.global_position.distance_to(root_node.global_position)
+	return player.position.distance_to(root_node.position)

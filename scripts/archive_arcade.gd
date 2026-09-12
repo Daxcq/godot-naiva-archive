@@ -11,13 +11,15 @@ const MACHINES := [
 ]
 const NEAR_DISTANCE := 2.4
 
+const UIKit := preload("res://scripts/ui_kit.gd")
+
 var world: Node3D
 var player: CharacterBody3D
 var active := false
 var playing_id := ""
 var machines_root: Node3D
 var screens: Dictionary = {}
-var prompt: Label
+var router: Node
 var overlay: CanvasLayer
 var game_holder: Control
 var current_game: Control
@@ -30,11 +32,8 @@ func setup(owner: Node3D) -> void:
 	owner.archive_root.add_child(machines_root)
 	for spec in MACHINES:
 		_build_machine(spec)
-	var layer := owner.get_node_or_null("Interface") as CanvasLayer
-	prompt = Label.new()
-	prompt.position = Vector2(38, 500)
-	prompt.add_theme_font_size_override("font_size", 18)
-	layer.add_child(prompt)
+	# 交互提示统一走 InteractionRouter 的共享提示条,不再自建 Label。
+	router = owner.get_node_or_null("InteractionRouter")
 	overlay = CanvasLayer.new()
 	overlay.name = "ArcadeOverlay"
 	overlay.layer = 20
@@ -106,9 +105,6 @@ func _box(parent: Node3D, title: String, at: Vector3, size: Vector3, color: Colo
 func set_active(value: bool) -> void:
 	active = value
 	set_process(value)
-	if prompt:
-		prompt.visible = value
-		prompt.text = ""
 	if not value and playing_id != "":
 		_close_game()
 
@@ -122,10 +118,13 @@ func _process(_delta: float) -> void:
 		var mat := (screens[id] as MeshInstance3D).material_override as StandardMaterial3D
 		mat.emission_energy_multiplier = 0.7 + sin(t * 2.2 + i * 2.1) * 0.35
 	if playing_id != "":
-		prompt.text = ""
 		return
 	var nearest := _nearest_machine()
-	prompt.text = "E 开始游戏：" + String(nearest.title) if not nearest.is_empty() else ""
+	if nearest.is_empty():
+		return
+	var distance: float = player.position.distance_to(Vector3(float(nearest.x), player.position.y, -2.05))
+	if router:
+		router.offer("arcade", "开始游戏:" + String(nearest.title), distance, "E")
 
 func _nearest_machine() -> Dictionary:
 	var best: Dictionary = {}
@@ -146,7 +145,8 @@ func _unhandled_input(event: InputEvent) -> void:
 				get_viewport().set_input_as_handled()
 				_close_game()
 			return
-		if event.is_action_pressed("interact"):
+		# 触发互斥:只有拿到交互焦点才响应开局按键。
+		if event.is_action_pressed("interact") and (router == null or router.can_interact("arcade")):
 			var nearest := _nearest_machine()
 			if not nearest.is_empty():
 				get_viewport().set_input_as_handled()
@@ -159,7 +159,6 @@ func _open_game(spec: Dictionary) -> void:
 	game_holder.add_child(current_game)
 	current_game.reset()
 	overlay.visible = true
-	prompt.text = ""
 	game_started.emit(playing_id)
 
 func _close_game() -> void:

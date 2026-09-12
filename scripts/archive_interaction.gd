@@ -6,11 +6,16 @@ signal interaction_started(id: String)
 signal interaction_feedback(id: String, event: String)
 signal ending_chosen(kind: String)
 
+const UIKit := preload("res://scripts/ui_kit.gd")
+
 var world: Node3D
 var player: CharacterBody3D
-var prompt: Label
+var router: Node
 var card: Label
+var card_title: Label
+var card_panel: Control
 var count: Label
+var count_panel: Control
 var active := false
 var solved: Dictionary = {}
 var active_id := ""
@@ -33,6 +38,7 @@ var seen_frog: Node3D
 var completion_screen: Label3D
 var card_time := 0.0
 var sync_visual_until := 0.0
+var action_row: HBoxContainer
 var main_ids := ["seen_2016", "imitated_2020", "covered_2024"]
 var nodes := [
 	{"id":"seen_2016", "pos":Vector3(-1.0,1.1,-2.5), "title":"2016 / 第一次被看见", "text":"那时候，只要有人笑了，就算被看见。"},
@@ -44,40 +50,42 @@ func setup(owner: Node3D) -> void:
 	world = owner
 	player = owner.player
 	var layer := owner.get_node("Interface")
-	prompt = Label.new()
-	prompt.position = Vector2(38, 570)
-	prompt.add_theme_font_size_override("font_size", 18)
-	layer.add_child(prompt)
-	card = Label.new()
-	card.position = Vector2(38, 92)
-	card.add_theme_font_size_override("font_size", 21)
-	layer.add_child(card)
-	count = Label.new()
-	count.position = Vector2(1010, 40)
-	count.add_theme_font_size_override("font_size", 17)
-	layer.add_child(count)
-	action_button = Button.new()
-	action_button.position = Vector2(38, 620)
-	action_button.custom_minimum_size = Vector2(210, 42)
-	action_button.focus_mode = Control.FOCUS_NONE
+	router = owner.get_node_or_null("InteractionRouter")
+	# 左上档案卡:标题 + 正文,统一样式与锚位(UIKit 卡片区)。
+	var card_ui := UIKit.make_card(layer)
+	card = card_ui.body
+	card_title = card_ui.title
+	card_panel = card_ui.panel
+	# 右上记忆计数徽章。
+	var badge := UIKit.make_badge(layer, UIKit.CYAN)
+	count = badge.label
+	count_panel = badge.panel
+	# 底部中央按钮行:读取/结尾双按钮与节拍三按钮共用一行,互斥显示。
+	action_button = UIKit.make_button("E  读取档案")
+	action_button.custom_minimum_size = Vector2(210, UIKit.BTN_HEIGHT)
 	action_button.pressed.connect(interact)
-	layer.add_child(action_button)
-	network_button = Button.new()
-	network_button.position = Vector2(266, 620)
-	network_button.custom_minimum_size = Vector2(210, 42)
+	network_button = UIKit.make_button("Q  放回网络", UIKit.MAGENTA)
+	network_button.custom_minimum_size = Vector2(210, UIKit.BTN_HEIGHT)
 	network_button.text = "Q  放回网络"
 	network_button.focus_mode = Control.FOCUS_NONE
 	network_button.pressed.connect(func(): _finish_ending("network"))
-	layer.add_child(network_button)
+	action_row = HBoxContainer.new()
+	action_row.add_theme_constant_override("separation", 14)
+	action_row.add_child(action_button)
+	action_row.add_child(network_button)
+	UIKit.anchor_button_row(action_row)
+	action_row.visible = false
+	layer.add_child(action_row)
 	beat_buttons = HBoxContainer.new()
-	beat_buttons.position = Vector2(38, 620)
+	beat_buttons.add_theme_constant_override("separation", 12)
 	for i in range(1, 4):
-		var button := Button.new()
-		button.text = ["1  快 · 快 · 停", "2  慢 · 慢 · 快", "3  快 · 停 · 快"][i - 1]
-		button.custom_minimum_size = Vector2(190, 42)
+		var button := UIKit.make_button(["1  快 · 快 · 停", "2  慢 · 慢 · 快", "3  快 · 停 · 快"][i - 1])
+		button.custom_minimum_size = Vector2(190, UIKit.BTN_HEIGHT)
 		button.focus_mode = Control.FOCUS_NONE
 		button.pressed.connect(choose_beat.bind(i))
 		beat_buttons.add_child(button)
+	UIKit.anchor_button_row(beat_buttons)
+	beat_buttons.visible = false
 	layer.add_child(beat_buttons)
 	_build_stage_markers()
 	archive_drawers = preload("res://scripts/archive_drawers.gd").new()
@@ -205,19 +213,21 @@ func _pixel_frog(parent: Node3D, title: String, position: Vector3) -> Node3D:
 func set_active(value: bool) -> void:
 	active = value
 	set_process(value)
-	if prompt:
-		prompt.visible = value
-	if card:
-		card.visible = value
-	if count:
-		count.visible = value
+	if card_panel:
+		card_panel.visible = value
+	if count_panel:
+		count_panel.visible = value
 	if action_button:
 		action_button.visible = false
 		network_button.visible = false
+		action_row.visible = false
 		beat_buttons.visible = false
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not active or ending_done:
+		return
+	# 触发互斥:只有拿到交互焦点的系统才响应键盘,防止多系统同帧响应。
+	if not _can_show():
 		return
 	if event is InputEventKey and event.pressed and not event.echo:
 		if event.is_action_pressed("interact"):
@@ -243,8 +253,10 @@ func tick(delta: float) -> void:
 		card_time -= delta
 		if card_time <= 0:
 			card.text = ""
+			card_title.text = ""
 	action_button.visible = false
 	network_button.visible = false
+	action_row.visible = false
 	beat_buttons.visible = false
 	if active_id != "":
 		_process_active(delta)
@@ -252,21 +264,35 @@ func tick(delta: float) -> void:
 	nearest_index = _nearest()
 	if _at_exit():
 		ending_elapsed += delta
-		prompt.text = "出口已开启 · E 保存  Q 放回网络 · 停留 %.0f 秒" % max(0.0, 12.0 - ending_elapsed)
+		_offer("E", "保存记忆,或放回网络 · 停留 %.0f 秒" % maxf(0.0, 12.0 - ending_elapsed), maxf(0.0, player.position.x - 35.6))
 		action_button.text = "E  保存记忆"
-		action_button.visible = true
-		network_button.visible = true
+		if _can_show():
+			action_button.visible = true
+			network_button.visible = true
+			action_row.visible = true
 		if ending_elapsed >= 12.0:
 			_finish_ending("stay")
 	elif nearest_index >= 0:
 		ending_elapsed = 0.0
 		var item: Dictionary = nodes[nearest_index]
-		prompt.text = "E 拉开抽屉：" + String(item.title) if item.id == "seen_2016" else ("E 暂停刷新：" + String(item.title) if item.id == "covered_2024" else "E 读取档案：" + String(item.title))
+		var verb := "拉开抽屉" if item.id == "seen_2016" else ("暂停刷新" if item.id == "covered_2024" else "读取档案")
+		_offer("E", verb + ":" + String(item.title), player.position.distance_to(item.pos))
 		action_button.text = "E  读取档案"
-		action_button.visible = true
+		if _can_show():
+			action_button.visible = true
+			action_row.visible = true
 	else:
 		ending_elapsed = 0.0
-		prompt.text = "找回三段被遗忘的记忆" if main_count() < 3 else "出口已开启，前往尽头"
+		_offer("", "找回三段被遗忘的记忆" if main_count() < 3 else "出口已开启,前往尽头", 999.0)
+
+## 向仲裁器申请显示唯一交互提示;未接 Router 时静默降级。
+func _offer(key: String, body: String, distance: float, holding := false) -> void:
+	if router:
+		router.offer("memory", body, distance, key, 0, holding)
+
+## 是否允许显示按钮 / 响应键盘:拿到焦点即可。
+func _can_show() -> bool:
+	return router == null or router.can_interact("memory")
 
 func _nearest() -> int:
 	var nearest := -1
@@ -307,16 +333,16 @@ func _begin(item: Dictionary) -> void:
 	interaction_started.emit(active_id)
 	if active_id == "seen_2016":
 		active_state = "drawer"
-		prompt.text = "抽屉正在打开…"
+		card_title.text = "2016 / 低清影像"
+		card.text = "抽屉正在打开…"
 		interaction_feedback.emit(active_id, "drawer_open")
 	elif active_id == "imitated_2020":
 		active_state = "beat"
-		card.text = "原始档案的节拍：慢 · 慢 · 快\n听节拍，也可以看屏幕上的提示。选择一致的记录。"
+		card_title.text = "节拍档案"
+		card.text = "原始记录的节拍是:慢 · 慢 · 快。听节拍,或看屏幕提示,选择一致的记录。"
 		card_time = 0.0
-		prompt.text = "1 快·快·停    2 慢·慢·快    3 快·停·快"
 	elif active_id == "covered_2024":
 		active_state = "pause"
-		prompt.text = "刷新已暂停 · 再按 E 保存旧版本"
 		interaction_feedback.emit(active_id, "refresh_paused")
 	else:
 		_solve(item)
@@ -327,25 +353,27 @@ func _process_active(delta: float) -> void:
 		if drawer:
 			drawer.position.z = lerpf(-2.58, -2.02, smoothstep(0.0, 1.15, state_elapsed))
 		seen_frog.visible = state_elapsed > 0.7
-		prompt.text = "低清影像恢复中…" if state_elapsed > 1.15 else "抽屉正在打开…"
+		_offer("", "低清影像恢复中…" if state_elapsed > 1.15 else "抽屉正在打开…", 0.0, true)
 		if state_elapsed >= 1.15:
 			_solve(_item_by_id(active_id))
 	elif active_id == "imitated_2020":
 		if active_state == "sync":
-			prompt.text = "原始动作与模仿重合了…"
+			_offer("", "原始动作与模仿重合了…", 0.0, true)
 			if state_elapsed >= 1.8:
 				_solve(_item_by_id(active_id))
 		else:
-			beat_buttons.visible = true
-			prompt.text = "1 快·快·停    2 慢·慢·快    3 快·停·快"
+			_offer("", "选择与原始记录一致的节拍", 0.0, true)
+			beat_buttons.visible = _can_show()
 	elif active_id == "covered_2024":
-		prompt.text = "刷新已暂停 · E 保存旧版本  %.1f 秒" % maxf(0.0, pause_window - state_elapsed)
+		_offer("E", "保存旧版本 · %.1f 秒" % maxf(0.0, pause_window - state_elapsed), 0.0, true)
 		action_button.text = "E  保存旧版本"
-		action_button.visible = true
+		if _can_show():
+			action_button.visible = true
 		if state_elapsed > pause_window:
 			interaction_feedback.emit(active_id, "refresh_resumed")
 			_clear_active()
-			card.text = "暂停窗口结束，热搜继续刷新。靠近后可再次尝试。"
+			card_title.text = "刷新恢复"
+			card.text = "暂停窗口结束,热搜继续刷新。靠近后可再次尝试。"
 			card_time = 6.0
 
 func choose_beat(choice: int) -> void:
@@ -398,7 +426,8 @@ func _solve(item: Dictionary) -> void:
 		return
 	var before := main_count()
 	solved[id] = true
-	card.text = String(item.title) + "\n" + String(item.text)
+	card_title.text = String(item.title)
+	card.text = String(item.text)
 	card_time = 12.0
 	if id == "seen_2016":
 		seen_frog.visible = true
@@ -450,15 +479,15 @@ func _finish_ending(kind: String) -> void:
 	ending_done = true
 	action_button.visible = false
 	network_button.visible = false
+	action_row.visible = false
 	beat_buttons.visible = false
+	var titles := {"save": "记忆已归档", "network": "传播仍在继续", "stay": "下一次访问,仍未确定"}
+	card_title.text = String(titles.get(kind, "结局"))
 	if kind == "save":
-		prompt.text = "记忆已归档"
 		card.text = "三段记忆被放回档案盒。\n奶蛙的轮廓稳定下来。"
 	elif kind == "network":
-		prompt.text = "传播仍在继续"
 		card.text = "记忆重新拆成头像、弹幕和短片段。\n奶蛙融入了网络背景。"
 	else:
-		prompt.text = "下一次访问，仍未确定"
-		card.text = "房间重新开始加载。\n奶蛙看向玩家，等待下一次访问。"
+		card.text = "房间重新开始加载。\n奶蛙看向玩家,等待下一次访问。"
 	interaction_feedback.emit("ending", kind)
 	ending_chosen.emit(kind)

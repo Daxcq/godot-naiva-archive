@@ -53,30 +53,33 @@ python vision/setup_vision_env.py
 
 依赖版本固定在 `setup_vision_env.py` 的 `REQUIREMENTS` 里（numpy 1.26.4 / opencv-contrib-python 4.10.0.84 / mediapipe 1.0.1），与开发机一致。
 
-## 入口的牛 NPC（牛来）
+## 入口的梗角色 NPC（牛来 + 美团袋鼠）
 
-传送门落地后，走廊入口左边站着那头牛。走近 3 米内按 `E` 可以跟它说话，说完自动结束，可重复。
+传送门落地后，走廊入口一左一右站着两个"被梗出来"的角色：左后墙的**牛来**、右前墙的**美团袋鼠**。走近 2.4 米内按 `E` 交谈，逐句读完自动结束，可重复；两人触发圈有部分交叠，取距离最近者响应（InteractionRouter 做焦点仲裁兜底）。
 
-| 项 | 说明 |
-|---|---|
-| 脚本 | `scripts/archive_entrance_npc.gd` |
-| 模型 | `assets/character/niu_lai.glb`（3.8 MB，2.4 万面，贴图内嵌） |
-| 站位 | `(-1.6, 0, -1.25)`，朝向 yaw 0.95 |
-| 自检 | `--headless --script res://scripts/check_entrance_npc.gd` |
+| 项 | 牛来 | 美团袋鼠 |
+|---|---|---|
+| 脚本 | `scripts/archive_entrance_npc.gd`（双 NPC 数据驱动，`NPCS` 配置表） | 同左 |
+| 模型 | `assets/character/niu_lai.glb`（3.8 MB，2.4 万面） | `assets/character/meituan_kangaroo.glb`（2.3 MB，2.4 万面） |
+| 站位 | `(-1.6, 0, -1.25)`，yaw 0.95 | `(0.8, 0, 1.25)`，yaw π+0.47 |
+| 台词 | 7 句，末句留白「……牛来。」 | 7 句，末句甩梗「你胆子真是肥嘟嘟的」 |
+| 自检 | `--headless --script res://scripts/check_entrance_npc.gd`（57 项断言，双角色全覆盖） | 同左 |
 
-它和 `archive_npc_dialogue.gd` 里的三个档案员是**两套独立系统**：档案员读完会开记忆传送门、推进主线；入口的牛只陪聊，不碰进度。所以它单独一个脚本，避免把那 300 行的状态机搞复杂。
+两个角色是同一个时代情绪的两面：牛来靠"丑"被围观而火、从头到尾没被真正看见；袋鼠被网友画胖三圈才火、大家爱上的是画出来的那个。对话里互相提一嘴（"旁边那头牛靠'丑'火的，我靠'胖'火的"）。
 
-**模型来源与优化**：原始素材是一个 123 MB 的 FBX 高模（75 万顶点 / 150 万三角面 / 4 张 4096² 贴图），直接进 Godot 会严重掉帧。已用 Blender 处理成 2.4 万面 + 1024² 贴图：
+它们和 `archive_npc_dialogue.gd` 里的三个档案员是**两套独立系统**：档案员读完会开记忆传送门、推进主线；入口的两位只陪聊，不碰进度。
+
+**模型来源与优化**：两个原始素材都是几十上百 MB 的 FBX 高模，直接进 Godot 会严重掉帧。已用 Blender 统一减面 + 贴图降采样：
 
 ```
-面数    1,498,869  →  23,999   (62×)
-体积    123.5 MB   →  3.8 MB   (32×)
-贴图    4×4096²    →  4×1024²
+牛来    1,498,869 面 / 123.5 MB  →  23,999 面 / 3.8 MB   (62× / 32×)
+袋鼠       49,996 面 /  21.8 MB  →  24,000 面 / 2.3 MB   (2.1× / 9.5×)
 ```
 
-外观基本无差别（减面用的是 collapse，保留了原有的角/耳/圆肚子轮廓）。若将来还要换模型，注意两点：
-- 导出 GLB 时保持 `+Y up`，从 Blender 的 Z-up 转换后高度应落在 Godot 的 Y 轴上（本模型高 1.11 m，原点在脚底，直接摆地面即可）。
-- `niu_lai.glb.import` 里 `gltf/embedded_image_handling` 要设 **0**（保持贴图内嵌）。设成 1 会把贴图解包成一堆散落的 PNG 扔进 `assets/character/`。
+外观基本无差别（减面用的是 collapse，保留了原有的角/耳/圆肚子轮廓）。若将来还要换模型，注意三点：
+- 导出 GLB 时保持 `+Y up`，从 Blender 的 Z-up 转换后高度应落在 Godot 的 Y 轴上（模型原点在脚底，直接摆地面即可）。
+- `<模型>.glb.import` 里 `gltf/embedded_image_handling` 要设 **0**（保持贴图内嵌）。设成 1 会把贴图解包成一堆散落的 PNG 扔进 `assets/character/`。
+- 新模型入项目后先 `--headless --path . --import --quit-after 200` 生成 `.import`，否则运行时报 `No loader found for resource`。
 
 ## 编辑器 MCP 接入
 
