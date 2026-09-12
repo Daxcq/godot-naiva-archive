@@ -70,7 +70,10 @@ func _test_nodes() -> void:
 			continue
 		_check(root_node.visible == false, "%s 未激活时默认不可见" % String(spec.label))
 
-		var model := root_node.get_node_or_null("Model") as Node3D
+		# 模型引用以 entries[i].model 为准（与 _process 呼吸动画同一来源）：
+		# 主场景实例化模式下是包装场景首个子节点（NiuLaiModel/MeituanKangarooModel），
+		# 只有运行时兜底生成才有名为 "Model" 的容器，按名字找会误报。
+		var model := _entry(i).model as Node3D
 		_check(model != null, "%s Model 容器存在" % String(spec.label))
 		if model != null:
 			_check(model.get_child_count() > 0, "%s 模型实例已载入（非空）" % String(spec.label))
