@@ -23,7 +23,11 @@ var archive_npc: Node
 var archive_arcade: Node
 var archive_entrance_npc: Node
 var interaction_router: Node
+var gallery_easel: Node3D
+var display_board: Node
 var arcade_active := false
+## 奶娃画廊画板打开时冻结世界移动(与街机同机制)。
+var board_active := false
 var destination_root: Node3D
 var destination_id := ""
 var destination_active := false
@@ -90,9 +94,24 @@ func _ready() -> void:
 	archive_arcade.set_active(false)
 	archive_arcade.game_started.connect(_on_arcade_started)
 	archive_arcade.game_closed.connect(_on_arcade_closed)
+	# 奶娃画廊画架:造型是场景资产(archive_space.tscn 内靠墙实例),
+	# 这里只取节点接上交互逻辑,落地后可交互。
+	gallery_easel = archive_root.get_node_or_null("GalleryEasel")
+	if gallery_easel != null:
+		gallery_easel.setup(self)
+		gallery_easel.set_active(false)
+	# 奶娃展板「幸福碎片」:南墙上的视频展板,与画廊画架共用 board_active 冻结通道。
+	display_board = preload("res://scripts/archive_display_board.gd").new()
+	display_board.name = "DisplayBoard"
+	add_child(display_board)
+	display_board.setup(self)
+	display_board.set_active(false)
 
 func _physics_process(delta: float) -> void:
-	if arcade_active:
+	# InputState 全局每帧轮询:街机 / 画廊 / 记忆房间打开时也要喂手势数据,
+	# 否则 cancel_just_pressed / confirm_just_pressed 会永远不更新。
+	input_state.poll(delta)
+	if arcade_active or board_active:
 		return
 	if destination_active or in_destination:
 		if destination_active:
@@ -100,15 +119,14 @@ func _physics_process(delta: float) -> void:
 		else:
 			_update_destination_room(delta)
 		return
-	# InputState 先于剧情推进，保证两侧读到同一帧输入。
-	input_state.poll(delta)
 	camera_director.process_shake(delta)
 	if opening.update(delta):
 		return
 	phase_time += delta
 	# 移动方向已由 InputState 归一化：键鼠优先，视觉识别兜底。
 	var direction: Vector2 = input_state.axis
-	var sprinting := Input.is_key_pressed(KEY_SHIFT)
+	# 冲刺:SHIFT 或视觉模式持续握拳;爬行保持键盘 CTRL。
+	var sprinting: bool = Input.is_key_pressed(KEY_SHIFT) or (input_state.is_vision_driven() and input_state.confirm_pressed)
 	var crawling := Input.is_key_pressed(KEY_CTRL)
 	var speed := direction.length()
 	locomotion = "crawl" if crawling else ("run" if sprinting and speed > 0.05 else ("walk" if speed > 0.05 else "idle"))
@@ -120,8 +138,12 @@ func _physics_process(delta: float) -> void:
 	player.velocity.z = horizontal_velocity.y
 	if not player.is_on_floor():
 		player.velocity.y -= 18.0 * delta
-	elif Input.is_action_just_pressed("jump") or input_state.confirm_just_pressed:
-		player.velocity.y = 6.4
+	else:
+		# 捏手指(握拳)在靠近交互点时 = 点击交互,不再触发跳跃;
+		# 只有周围没有任何可交互内容时,握拳才等于起跳。
+		var near_interactable: bool = interaction_router != null and interaction_router.focus_id != ""
+		if Input.is_action_just_pressed("jump") or (input_state.confirm_just_pressed and not near_interactable):
+			player.velocity.y = 6.4
 	player.move_and_slide()
 	player.position.x = clamp(player.position.x, -5.0, 37.0)
 	# 留出角色半径，保持在柜前通道及地面碰撞范围内。
@@ -172,6 +194,10 @@ func _on_memory_portal_entered(id: String) -> void:
 		archive_entrance_npc.set_active(false)
 	if archive_arcade:
 		archive_arcade.set_active(false)
+	if gallery_easel:
+		gallery_easel.set_active(false)
+	if display_board:
+		display_board.set_active(false)
 	var tunnel := get_node("TimeTunnel") as Node3D
 	tunnel.visible = true
 	player.position = Vector3(100, 2.1, 2)
@@ -236,11 +262,12 @@ func _update_destination_room(delta: float) -> void:
 		if interaction_router:
 			interaction_router.offer("destination", "返回档案长廊", 0.0, "E")
 		cue.text = ""
-		if Input.is_action_just_pressed("interact") and (interaction_router == null or interaction_router.can_interact("destination")):
+		var gate: bool = interaction_router == null or interaction_router.can_interact("destination")
+		if gate and (Input.is_action_just_pressed("interact") or input_state.confirm_just_pressed):
 			_return_from_destination()
 	else:
 		cue.text = destination_root.get_prompt(local_pos) if destination_root.has_method("get_prompt") else destination_root.title + "  ·  探索记忆空间"
-		if Input.is_action_just_pressed("interact") and destination_root.has_method("interact"):
+		if (Input.is_action_just_pressed("interact") or input_state.confirm_just_pressed) and destination_root.has_method("interact"):
 			destination_root.interact(local_pos)
 
 func _return_from_destination() -> void:
@@ -256,6 +283,10 @@ func _return_from_destination() -> void:
 	archive_interaction.set_active(true)
 	if archive_arcade:
 		archive_arcade.set_active(true)
+	if gallery_easel:
+		gallery_easel.set_active(true)
+	if display_board:
+		display_board.set_active(true)
 	player.position = Vector3(23.8, 0.65, 0.0)
 	camera.position = Vector3(26.5, 4.5, 12.5)
 	camera.look_at(Vector3(26.5, 3, 0))

@@ -7,9 +7,9 @@ extends Control
 const TITLE := ["奶", "娃", "之", "旅"]
 const VIEW := Vector2(1280, 720)
 const CENTER := Vector2(640, 468)
-const CELL := 180.0        # 单字占位宽
+const CELL := 200.0        # 单字占位宽
 const CHAR_BOX := 200.0    # 字容器边长，缩放/旋转枢轴取容器中心
-const PAIR_GAP := 100.0    # 「奶娃」与「之旅」两组之间的缝
+const PAIR_GAP := 230.0    # 「奶娃」与「之旅」两组之间的缝
 const FONT_SIZE := 150
 const FLIGHT := 0.62       # 单字飞行时长
 const STAGGER := 0.16      # 逐字错峰起飞

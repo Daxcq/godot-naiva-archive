@@ -6,6 +6,8 @@ signal source_changed(new_source: String)
 const GRAB_ON := 0.62
 const GRAB_OFF := 0.32
 const CONFIRM_COOLDOWN := 0.32
+const CANCEL_ON := 0.78
+const CANCEL_OFF := 0.48
 const AXIS_DEADZONE := 0.08
 const KEYBOARD_OVERRIDE := 0.05
 const POINTER_RESPONSE := 14.0
@@ -25,10 +27,14 @@ var confidence := 0.0
 var confirm_pressed := false
 var confirm_just_pressed := false
 var confirm_just_released := false
+## 张开手掌 = 取消/退出(仅视觉模式)。鼠标模拟的 spread 恒为 0.5,不会误触。
+var cancel_just_pressed := false
 
 var _vision: Node
 var _latched := false
 var _cooldown := 0.0
+var _cancel_latched := false
+var _cancel_cooldown := 0.0
 var _resync := 0.0
 var _seeded := false
 
@@ -66,6 +72,7 @@ func poll(delta: float) -> void:
 	steer = (pointer - Vector2(0.5, 0.5)) * 2.0
 	axis = _resolve_axis()
 	_resolve_confirm(delta)
+	_resolve_cancel(delta)
 
 func consume_confirm() -> bool:
 	if confirm_just_pressed:
@@ -79,6 +86,8 @@ func is_vision_driven() -> bool:
 func reset() -> void:
 	_latched = false
 	_cooldown = 0.0
+	_cancel_latched = false
+	_cancel_cooldown = 0.0
 	_resync = 0.0
 	_seeded = false
 	axis = Vector2.ZERO
@@ -87,6 +96,7 @@ func reset() -> void:
 	confirm_pressed = false
 	confirm_just_pressed = false
 	confirm_just_released = false
+	cancel_just_pressed = false
 
 func _read_observation() -> Dictionary:
 	if _vision != null and _vision.has_method("peek_observation"):
@@ -126,3 +136,20 @@ func _resolve_confirm(delta: float) -> void:
 			confirm_triggered.emit()
 	elif was_latched and not _latched:
 		confirm_just_released = true
+
+## 张开手掌的上升沿 = 取消/退出。与握拳(确认)天然互斥:握拳时 spread 低。
+func _resolve_cancel(delta: float) -> void:
+	_cancel_cooldown = maxf(_cancel_cooldown - delta, 0.0)
+	cancel_just_pressed = false
+	if not is_vision_driven():
+		_cancel_latched = false
+		return
+	var was := _cancel_latched
+	if _cancel_latched:
+		if spread < CANCEL_OFF:
+			_cancel_latched = false
+	elif spread > CANCEL_ON:
+		_cancel_latched = true
+	if _cancel_latched and not was and _cancel_cooldown <= 0.0:
+		_cancel_cooldown = CONFIRM_COOLDOWN
+		cancel_just_pressed = true

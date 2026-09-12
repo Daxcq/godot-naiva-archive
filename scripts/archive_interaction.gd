@@ -214,7 +214,8 @@ func set_active(value: bool) -> void:
 	active = value
 	set_process(value)
 	if card_panel:
-		card_panel.visible = value
+		# 档案卡只在有内容时显示,避免激活后左上角挂着一块空面板。
+		card_panel.visible = value and (card_title.text != "" or card.text != "")
 	if count_panel:
 		count_panel.visible = value
 	if action_button:
@@ -254,6 +255,10 @@ func tick(delta: float) -> void:
 		if card_time <= 0:
 			card.text = ""
 			card_title.text = ""
+	# 档案卡跟随内容显隐:没有正文的空面板不再挂在左上角。
+	if card_panel:
+		card_panel.visible = card_title.text != "" or card.text != ""
+	_tick_gesture()
 	action_button.visible = false
 	network_button.visible = false
 	action_row.visible = false
@@ -289,6 +294,33 @@ func tick(delta: float) -> void:
 func _offer(key: String, body: String, distance: float, holding := false) -> void:
 	if router:
 		router.offer("memory", body, distance, key, 0, holding)
+
+## 手势输入:握拳 = E(读取/保存/保存旧版本),节拍选择看指针悬停;
+## 张开手掌 = Q 放回网络。仅视觉模式生效,键鼠路径不受影响。
+func _tick_gesture() -> void:
+	var input_state: Node = world.input_state
+	if input_state == null or not input_state.is_vision_driven() or not _can_show():
+		return
+	if input_state.confirm_just_pressed and input_state.consume_confirm():
+		if beat_buttons.visible:
+			var beat := _beat_under_pointer(input_state)
+			if beat > 0:
+				choose_beat(beat)
+		else:
+			interact()
+	if input_state.cancel_just_pressed and _at_exit():
+		_finish_ending("network")
+
+## 视觉指针悬停在哪个节拍按钮上(0 = 无)。
+func _beat_under_pointer(input_state: Node) -> int:
+	var viewport := player.get_viewport()
+	var size := viewport.get_visible_rect().size
+	var pos := Vector2(float(input_state.pointer.x) * size.x, float(input_state.pointer.y) * size.y)
+	for i in range(beat_buttons.get_child_count()):
+		var button := beat_buttons.get_child(i) as Control
+		if button != null and button.get_global_rect().has_point(pos):
+			return i + 1
+	return 0
 
 ## 是否允许显示按钮 / 响应键盘:拿到焦点即可。
 func _can_show() -> bool:

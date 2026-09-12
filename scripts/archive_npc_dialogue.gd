@@ -167,6 +167,12 @@ func _process(delta: float) -> void:
 	if not active or player == null:
 		return
 	line_delay = maxf(0.0, line_delay - delta)
+	# 手势输入:握拳 = E(交谈 / 推进对话 / 进入传送门)。仅视觉模式生效。
+	var input_state: Node = world.input_state
+	if input_state != null and input_state.is_vision_driven():
+		if input_state.confirm_just_pressed and input_state.consume_confirm():
+			if active_id != "" or _can_act():
+				_interact()
 	for entry in npc_groups.values():
 		var members: Array = entry.members
 		for i in range(members.size()):

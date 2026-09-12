@@ -287,6 +287,10 @@ func update(delta: float) -> bool:
 					world.archive_entrance_npc.set_active(true)
 				if world.archive_arcade != null:
 					world.archive_arcade.set_active(true)
+				if world.gallery_easel != null:
+					world.gallery_easel.set_active(true)
+				if world.display_board != null:
+					world.display_board.set_active(true)
 				enter("done")
 	return true
 

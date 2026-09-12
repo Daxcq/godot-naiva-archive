@@ -18,9 +18,14 @@ var score := 0
 var balls_left := 3
 var finished := false
 var win := false
+## 手势输入(InputState),由街机层注入;为空时纯键盘。
+var gesture: Node
 
 func _ready() -> void:
 	set_process(true)
+
+func _gesture_confirm() -> bool:
+	return gesture != null and gesture.is_vision_driven() and gesture.confirm_just_pressed and gesture.consume_confirm()
 
 func reset() -> void:
 	bricks.clear()
@@ -45,14 +50,17 @@ func _rest_ball() -> void:
 
 func _process(delta: float) -> void:
 	if finished:
-		if Input.is_action_just_pressed("interact"):
+		if Input.is_action_just_pressed("interact") or _gesture_confirm():
 			reset()
 		return
 	var x_axis := Input.get_axis("move_left", "move_right")
 	paddle_x = clampf(paddle_x + x_axis * 420.0 * delta, PADDLE_SIZE.x * 0.5, BOARD.x - PADDLE_SIZE.x * 0.5)
+	# 手势:指针横移直接映射挡板位置(绝对映射,更直觉)。
+	if gesture != null and gesture.is_vision_driven():
+		paddle_x = clampf(float(gesture.pointer.x) * BOARD.x, PADDLE_SIZE.x * 0.5, BOARD.x - PADDLE_SIZE.x * 0.5)
 	if not launched:
 		ball_pos.x = paddle_x
-		if Input.is_action_just_pressed("interact"):
+		if Input.is_action_just_pressed("interact") or _gesture_confirm():
 			launched = true
 			ball_velocity = Vector2(0.35 if randf() > 0.5 else -0.35, -1.0).normalized() * BALL_SPEED
 		queue_redraw()

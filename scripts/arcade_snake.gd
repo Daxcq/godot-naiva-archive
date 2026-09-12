@@ -14,9 +14,14 @@ var score := 0
 var dead := false
 var step_timer := 0.0
 var rng := RandomNumberGenerator.new()
+## 手势输入(InputState),由街机层注入;为空时纯键盘。
+var gesture: Node
 
 func _ready() -> void:
 	set_process(true)
+
+func _gesture_confirm() -> bool:
+	return gesture != null and gesture.is_vision_driven() and gesture.confirm_just_pressed and gesture.consume_confirm()
 
 func reset() -> void:
 	snake = [Vector2i(5, 6), Vector2i(4, 6), Vector2i(3, 6)]
@@ -35,14 +40,27 @@ func _spawn_food() -> void:
 			return
 
 func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("interact") and dead:
+	if (Input.is_action_just_pressed("interact") or _gesture_confirm()) and dead:
 		reset()
 		return
-	var input := Vector2i(int(Input.get_axis("move_left", "move_right")), int(Input.get_axis("move_forward", "move_back")))
-	if input.x != 0 and input.x != -direction.x:
-		pending_direction = Vector2i(input.x, 0)
-	elif input.y != 0 and input.y != -direction.y:
-		pending_direction = Vector2i(0, input.y)
+	if gesture != null and gesture.is_vision_driven():
+		# 手势:手掌偏移决定转向(取主轴),相当于推摇杆。
+		var lean: Vector2 = gesture.steer
+		if lean.length() > 0.4:
+			if absf(lean.x) >= absf(lean.y):
+				var gx := int(signf(lean.x))
+				if gx != 0 and gx != -direction.x:
+					pending_direction = Vector2i(gx, 0)
+			else:
+				var gy := int(signf(lean.y))
+				if gy != 0 and gy != -direction.y:
+					pending_direction = Vector2i(0, gy)
+	else:
+		var input := Vector2i(int(Input.get_axis("move_left", "move_right")), int(Input.get_axis("move_forward", "move_back")))
+		if input.x != 0 and input.x != -direction.x:
+			pending_direction = Vector2i(input.x, 0)
+		elif input.y != 0 and input.y != -direction.y:
+			pending_direction = Vector2i(0, input.y)
 	if dead:
 		return
 	step_timer += delta
@@ -82,4 +100,4 @@ func _draw() -> void:
 	draw_string(font, origin + Vector2(0, -20), "贪吃蛇  ·  得分 %d" % score, HORIZONTAL_ALIGNMENT_LEFT, -1, 24, Color("5cff6e"))
 	draw_string(font, origin + Vector2(board.x - 260, -20), "WASD/方向键 移动 · ESC 退出", HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color("c9d4f2"))
 	if dead:
-		draw_string(font, origin + board * 0.5 + Vector2(-120, 0), "信号中断  ·  E 重开", HORIZONTAL_ALIGNMENT_LEFT, -1, 30, Color("ff4fd8"))
+		draw_string(font, origin + board * 0.5 + Vector2(-120, 0), "信号中断  ·  E 握拳重开", HORIZONTAL_ALIGNMENT_LEFT, -1, 30, Color("ff4fd8"))

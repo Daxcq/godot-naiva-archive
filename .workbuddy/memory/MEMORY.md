@@ -46,6 +46,7 @@
 - **6402 UDP** — `vision_preview.gd` 收摄像头 JPEG 帧。
 - **7654 UDP(ENet)** — `godot_with_u` 编辑器协作插件 Host 默认端口（仅 Host 模式监听，Join 是客户端）。
 - 桥接进程由 `visual_recognition.gd` **自动拉起**（`OS.create_process`，解释器优先 `vision/.vision-venv/Scripts/python.exe`），退出时 `taskkill /T /F` 回收，`_process` 里有 6s 冷却的自动重启。缺失时自动回落鼠标模式。
+- **⚠️ 摄像头"不打开"排查顺序（2026-09-12 第二次踩坑后总结）**：① 先查 `netstat -ano -p udp | findstr 640`——6401 被占 = 有残留游戏实例（**编辑器里 F5 跑完游戏忘关**最常见），报错"端口 6401 不可用"就是这个，`taskkill /PID <游戏PID> /T /F` 清掉；② 再查 `visual_recognition.gd` 的 `_start_bridge` 路径是否仍是工程内 `res://vision/...`——它已被并行会话两次回退成工程外 `res://../...` 错路径（第二次连带删了自动安装器/自动重启/退出回收/`_dismiss_title`/落地 NPC 激活，靠 checkout HEAD 恢复）；③ venv 本身是否在（见上节）。真窗口验证套路：Popen 启动 `--log-file <tmp>`，每 5s 轮询 6401/6402 应 5 秒内出现，terminate 后 6s 端口应释放；Windows GUI 模式 stdout 抓不到 print，**验证看端口和进程，别指望日志**；netstat/tasklist 输出 GBK 解码。
 
 ## GodotWithU 协作插件（2026-09-12 安装）
 - 来源：桌面 `addons/godot_with_u`（作者 Airysh v0.5.1），已拷入项目 `addons/` 并在 `project.godot` `[editor_plugins]` 启用（与 godot_mcp 并列）。
@@ -79,9 +80,16 @@
 
 ## 入口梗角色 NPC：牛来 + 美团袋鼠（2026-09-12）
 - `archive_entrance_npc.gd` = **NPCS 配置表双 NPC 数据驱动**（只建一份脚本，台词/模型/站位全在表里）。**独立于 `archive_npc_dialogue.gd`**：档案员开传送门推进主线，入口两位只陪聊，别合并。自检 `check_entrance_npc.gd`（57 项断言，双 NPC 全覆盖）。
-- **牛来**：`(-1.6,0,-1.25)` yaw 0.95，niu_lai.glb 3.8MB/2.4万面，末句留白"……牛来。"。2026-08 爆火动画《牛来》主角（母子手搓五年、9 天票房 7169 元、谐音"牛市来"、绊倒体=半导体、官号排队玩"X来"）。立意：靠被围观被记住，却没被真正看见。
-- **美团袋鼠**：`(0.8,0,1.25)` yaw PI+0.47，meituan_kangaroo.glb 2.3MB/2.4万面，末句"你胆子真是肥嘟嘟的"。梗：捡手机文学"胆子肥嘟嘟" + 网友把原本修长的袋鼠**画胖三圈**才火、官方嘴硬"我们袋鼠本来就不胖"。立意：大家爱的是画出来的假它。台词第 3 句与牛来互文。
+- **牛来**：`(-3.1,0,-1.55)` yaw 0.88 + 暖黄 tint `Color(1.0,0.82,0.32)`（原米白偏灰），niu_lai.glb 3.8MB/2.4万面，末句留白"……牛来。"。2026-08 爆火动画《牛来》主角（母子手搓五年、9 天票房 7169 元、谐音"牛市来"、绊倒体=半导体、官号排队玩"X来"）。立意：靠被围观被记住，却没被真正看见。原位 (-1.6,-1.25) 正压走廊中轴，玩家落地视线锥总被挡，2026-09-12 挪西北墙角。
+- **美团袋鼠**：`(0.8,0,1.55)` yaw -1.85（原 PI+0.47 面朝东北背对玩家），meituan_kangaroo.glb 2.3MB/2.4万面，末句"你胆子真是肥嘟嘟的"。梗：捡手机文学"胆子肥嘟嘟" + 网友把原本修长的袋鼠**画胖三圈**才火、官方嘴硬"我们袋鼠本来就不胖"。立意：大家爱的是画出来的假它。台词第 3 句与牛来互文。
+- **⚠️ 两个 glb 正面都是 +Z**（实测：yaw=1.1 时两者都面朝东北/东南侧，名牌正对即朝向正）：Godot 中 yaw θ 时 +Z 指向 (sinθ, 0, cosθ)。配朝向先假设 +Z，截图看名牌是否镜像即可判断正反。
 - 两人间隔 3.47m > TALK_RANGE 2.4（从 3.0 收窄过，触发圈交叠靠最近者 + InteractionRouter 仲裁兜底）。传送门落点 `(-4.5,4.0,0)`，走廊可走 `x∈[-5,37] z∈[-1.9,1.9]`。
+
+## 奶娃展板「幸福碎片」（2026-09-12 交付）
+- `archive_display_board.gd`：南墙 x=11.4 z=1.95 立式视频展板，走近 E 揭开全屏板 → A/D 六格 → E 播放 → ESC 合板；与画廊画架共用 `world.board_active` 冻结通道互斥。自检 `check_display_board.gd` 29 项。
+- 六块碎片 ogv 在 `assets/video/`（星月夜/夜路/天台摇摆/认真跳/夜街/变强，各 8-10s，共 10.8MB）。ffmpeg 转 Theora：`-vf scale=640:-2 -c:v libtheora -q:v 7 -c:a libvorbis -q:a 4`。**ogv 运行时 loader 直接 load，无需 .import**。Godot 4.6 原生只支持 Theora(.ogv)。
+- **全屏板 UI 层用 layer=95**（Interface/VisionPreview 是默认 layer=1 但实证压在 layer=20 的 dim 上，提 95 后被盖住）。UI 布局铁律（1280x720）：chips 单行 6 格 x=52+i*200 y=640、stage 880x450@134、caption y=596——两行布局 y=716/782 会被屏底裁掉。
+- **⚠️ 同一文件多个 Edit 并行 = lost update 竞态**：4 个 Edit 并行同文件，互相覆盖只剩最后写盘的 1 个（截图渲染旧布局才暴露）。同文件多处修改必须逐个串行 Edit。
 
 ## 视觉风格
 霓虹赛博朋克，程序化几何搭建。青/品红霓虹对比 + 故障屏幕补光 + 霓虹橙出口光；`Environment` 开了 glow（intensity 1.1 / strength 1.08）+ 高度雾。角色走卡通风格 `yellow_character.glb`（骨架节点名见上方"骨架节点名铁律"，**不是** `MilkFrog_Skeleton`）。

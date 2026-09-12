@@ -31,9 +31,14 @@ var dead := false
 var fall_timer := 0.0
 var move_cooldown := 0.0
 var rng := RandomNumberGenerator.new()
+## 手势输入(InputState),由街机层注入;为空时纯键盘。
+var gesture: Node
 
 func _ready() -> void:
 	set_process(true)
+
+func _gesture_confirm() -> bool:
+	return gesture != null and gesture.is_vision_driven() and gesture.confirm_just_pressed and gesture.consume_confirm()
 
 func reset() -> void:
 	board.clear()
@@ -110,18 +115,29 @@ func _try_rotate() -> void:
 
 func _process(delta: float) -> void:
 	if dead:
-		if Input.is_action_just_pressed("interact"):
+		if Input.is_action_just_pressed("interact") or _gesture_confirm():
 			reset()
 		return
 	move_cooldown = maxf(0.0, move_cooldown - delta)
 	if move_cooldown <= 0.0:
-		var x_axis := int(Input.get_axis("move_left", "move_right"))
-		if x_axis != 0 and _try_move(Vector2i(x_axis, 0)):
-			move_cooldown = 0.12
+		# 手势:手移到左/右侧区即向该方向移动一格;键盘走 move_* 轴。
+		var dir := 0
+		if gesture != null and gesture.is_vision_driven():
+			var px: float = gesture.pointer.x
+			if px < 0.38:
+				dir = -1
+			elif px > 0.62:
+				dir = 1
+		else:
+			dir = int(Input.get_axis("move_left", "move_right"))
+		if dir != 0 and _try_move(Vector2i(dir, 0)):
+			move_cooldown = 0.13
 			queue_redraw()
-	if Input.is_action_just_pressed("move_forward"):
+	# 旋转:W 或握拳。
+	if Input.is_action_just_pressed("move_forward") or _gesture_confirm():
 		_try_rotate()
 		queue_redraw()
+	# 硬降:SPACE(手势端靠自然下落,不设硬降手势,张掌已留给退出)。
 	if Input.is_action_just_pressed("jump"):
 		while _try_move(Vector2i(0, 1)):
 			pass

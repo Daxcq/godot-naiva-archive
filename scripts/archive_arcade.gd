@@ -46,6 +46,14 @@ func setup(owner: Node3D) -> void:
 	game_holder = Control.new()
 	game_holder.set_anchors_preset(Control.PRESET_FULL_RECT)
 	overlay.add_child(game_holder)
+	# 退出提示：键鼠 ESC,手势张开手掌。
+	var hint := Label.new()
+	hint.name = "ExitHint"
+	hint.text = "ESC / 张开手掌  退出游戏"
+	hint.add_theme_font_size_override("font_size", 15)
+	hint.add_theme_color_override("font_color", UIKit.DIM)
+	hint.position = Vector2(24, 20)
+	overlay.add_child(hint)
 	set_active(false)
 
 func _build_machine(spec: Dictionary) -> void:
@@ -118,6 +126,10 @@ func _process(_delta: float) -> void:
 		var mat := (screens[id] as MeshInstance3D).material_override as StandardMaterial3D
 		mat.emission_energy_multiplier = 0.7 + sin(t * 2.2 + i * 2.1) * 0.35
 	if playing_id != "":
+		# 手势退出:游玩中张开手掌 = ESC。
+		var input_state: Node = world.input_state
+		if input_state != null and input_state.is_vision_driven() and input_state.cancel_just_pressed:
+			_close_game()
 		return
 	var nearest := _nearest_machine()
 	if nearest.is_empty():
@@ -125,6 +137,11 @@ func _process(_delta: float) -> void:
 	var distance: float = player.position.distance_to(Vector3(float(nearest.x), player.position.y, -2.05))
 	if router:
 		router.offer("arcade", "开始游戏:" + String(nearest.title), distance, "E")
+	# 手势开始:握拳 = E,投币开局。
+	var gesture_input: Node = world.input_state
+	if gesture_input != null and gesture_input.is_vision_driven() and gesture_input.confirm_just_pressed and gesture_input.consume_confirm():
+		if router == null or router.can_interact("arcade"):
+			_open_game(nearest)
 
 func _nearest_machine() -> Dictionary:
 	var best: Dictionary = {}
@@ -155,6 +172,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func _open_game(spec: Dictionary) -> void:
 	playing_id = String(spec.id)
 	current_game = (load(String(spec.script)) as GDScript).new()
+	current_game.gesture = world.input_state
 	current_game.set_anchors_preset(Control.PRESET_FULL_RECT)
 	game_holder.add_child(current_game)
 	current_game.reset()
