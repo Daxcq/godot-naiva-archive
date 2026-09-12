@@ -40,9 +40,13 @@ func _ready() -> void:
 	# 没有登录界面：开机是世界里的一个物理动作，由 BootTerminal 承担。
 	opening.phase = "idle"
 	opening.setup(self)
-	skeleton = frog_visual.find_child("MilkFrog_Skeleton", true, false) as Skeleton3D
+	# 骨架定位：glb 导入后 Skeleton3D 的节点名就是 "Skeleton3D"（父级叫 MilkFrog_Rig），
+	# 并不存在 "MilkFrog_Skeleton" / "Armature" 这两个名字。
+	# 先按已知名字试，最后递归兜底找任意 Skeleton3D —— 少了兜底会导致
+	# apply_locomotion_pose() 里的摆腿/摆臂被 if skeleton == null: return 静默跳过。
+	skeleton = _find_skeleton(frog_visual)
 	if skeleton == null:
-		skeleton = frog_visual.find_child("Armature", true, false) as Skeleton3D
+		push_warning("未在 CharacterVisual 下找到 Skeleton3D，走路摆腿效果将不可见")
 	# 档案走廊玩法栈：三段记忆交互、氛围 FX、柜前 NPC、霓虹海报与三台街机。
 	meme_room = null
 	archive_interaction = preload("res://scripts/archive_interaction.gd").new()
@@ -234,6 +238,24 @@ func _return_from_destination() -> void:
 	camera.position = Vector3(26.5, 4.5, 12.5)
 	camera.look_at(Vector3(26.5, 3, 0))
 	get_node("Interface/StoryCue").text = ""
+
+# 骨架定位：已知名字优先，找不到就递归兜底。
+# 不同 glb 导出/导入方式给出的节点名不一致，硬编码单一名字极易静默失效。
+func _find_skeleton(root_node: Node) -> Skeleton3D:
+	for known in ["MilkFrog_Skeleton", "MilkFrog_Rig", "Armature", "Skeleton3D"]:
+		var hit := root_node.find_child(known, true, false) as Skeleton3D
+		if hit != null:
+			return hit
+	return _find_skeleton_recursive(root_node)
+
+func _find_skeleton_recursive(node: Node) -> Skeleton3D:
+	if node is Skeleton3D:
+		return node as Skeleton3D
+	for c in node.get_children():
+		var r := _find_skeleton_recursive(c)
+		if r != null:
+			return r
+	return null
 
 func apply_locomotion_pose() -> void:
 	var moving := locomotion != "idle"
