@@ -87,7 +87,9 @@
 
 ## 奶娃展板「幸福碎片」（2026-09-12 交付）
 - `archive_display_board.gd`：南墙 x=11.4 z=1.95 立式视频展板，走近 E 揭开全屏板 → A/D 六格 → E 播放 → ESC 合板；与画廊画架共用 `world.board_active` 冻结通道互斥。自检 `check_display_board.gd` 29 项。
-- 六块碎片 ogv 在 `assets/video/`（星月夜/夜路/天台摇摆/认真跳/夜街/变强，各 8-10s，共 10.8MB）。ffmpeg 转 Theora：`-vf scale=640:-2 -c:v libtheora -q:v 7 -c:a libvorbis -q:a 4`。**ogv 运行时 loader 直接 load，无需 .import**。Godot 4.6 原生只支持 Theora(.ogv)。
+- 六块碎片 ogv 在 `assets/video/`（星月夜/夜路/天台摇摆/认真跳/夜街/变强，各 8-10s）。ffmpeg 转 Theora。**ogv 运行时 loader 直接 load，无需 .import**。Godot 4.6 原生只支持 Theora(.ogv)。
+- **⚠️ ffmpeg 8.1 (Gyan full build) 的 libtheora 编 P 帧必坏**：`-g` 默认/30/force_key_frames 全产出 `error in unpack_block_qpis / unpack_dct_coeffs` 损坏流（Godot 播放花屏大色块，ffmpeg 自己解码也报错，rc=69）。**唯一干净出路 `-g 1`（每帧关键帧 intra 直出）**，q 模式/码率模式/有无音频都无关。体积约 1.5MB/s@640x352 q7。**验证 ogv 是否完好：`ffmpeg -v error -i x.ogv -f null -` 看 decode rc 和报错行数**。
+- Theora 兼容参数：`scale=640:-2,crop=iw:trunc(ih/16)*16`（16 宏块对齐，Godot theora 解码器对非对齐尺寸不可靠）+ `-r 30 -pix_fmt yuv420p -ar 44100 -ac 2`。
 - **全屏板 UI 层用 layer=95**（Interface/VisionPreview 是默认 layer=1 但实证压在 layer=20 的 dim 上，提 95 后被盖住）。UI 布局铁律（1280x720）：chips 单行 6 格 x=52+i*200 y=640、stage 880x450@134、caption y=596——两行布局 y=716/782 会被屏底裁掉。
 - **⚠️ 同一文件多个 Edit 并行 = lost update 竞态**：4 个 Edit 并行同文件，互相覆盖只剩最后写盘的 1 个（截图渲染旧布局才暴露）。同文件多处修改必须逐个串行 Edit。
 

@@ -202,7 +202,7 @@ func _build_ui() -> void:
 	# 待机提示(播放器空闲时显示)。
 	var idle_hint := Label.new()
 	idle_hint.name = "IdleHint"
-	idle_hint.text = "\n\n选择一块碎片 · A / D 移动 · E 播放"
+	idle_hint.text = "\n\nA / D 切换碎片 · E 暂停 / 继续 · ESC 合上"
 	idle_hint.add_theme_font_size_override("font_size", 22)
 	idle_hint.add_theme_color_override("font_color", UIKit.DIM)
 	idle_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -287,15 +287,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		if event.is_action_pressed("move_left") or event.is_action_pressed("move_right"):
 			var dir := -1 if event.is_action_pressed("move_left") else 1
 			cell_index = wrapi(cell_index + dir, 0, CLIPS.size())
-			if playing_index >= 0:
-				_stop_clip()
+			_play_clip(cell_index)   # 切格即换片,保持自动播放
 			get_viewport().set_input_as_handled()
 		elif event.is_action_pressed("interact"):
 			get_viewport().set_input_as_handled()
-			if playing_index >= 0:
-				_stop_clip()
-			else:
-				_play_clip(cell_index)
+			_toggle_pause()
 		elif event.keycode == KEY_ESCAPE:
 			get_viewport().set_input_as_handled()
 			_close_board()
@@ -313,7 +309,7 @@ func _open_board() -> void:
 	world.board_active = true
 	cell_index = maxi(cell_index, 0)
 	playing_index = -1
-	_show_idle()
+	_play_clip(cell_index)   # 揭开即自动播放当前碎片
 	layer.visible = true
 	board_started.emit()
 
@@ -336,6 +332,7 @@ func _play_clip(index: int) -> void:
 		return
 	playing_index = index
 	cell_index = index
+	player.paused = false   # 换片时清掉暂停态
 	player.stream = stream
 	player.visible = true
 	player.play()
@@ -351,7 +348,16 @@ func _stop_clip() -> void:
 	_show_idle()
 
 func _on_clip_finished() -> void:
-	_stop_clip()
+	# 一块播完自动接下一块,循环往复。
+	_play_clip((playing_index + 1) % CLIPS.size())
+
+func _toggle_pause() -> void:
+	if playing_index < 0:
+		return
+	player.paused = not player.paused
+	var spec: Dictionary = CLIPS[cell_index]
+	var base := "「%s」  %s" % [String(spec.title), String(spec.caption)]
+	caption.text = base + ("   ·   已暂停（E 继续）" if player.paused else "")
 
 func _show_idle() -> void:
 	player.visible = false

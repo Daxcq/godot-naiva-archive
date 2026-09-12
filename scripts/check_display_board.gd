@@ -75,7 +75,8 @@ func check() -> void:
 	_check(layer.visible, "打开后全屏层可见")
 	_check(scene.board_active, "main.board_active 被置位(冻结角色)")
 	_check(board.cells_ui.size() == 6, "六块选择格")
-	_check(board.player != null and not board.player.visible, "待机时播放器隐藏")
+	_check(board.player.visible and board.playing_index == 0, "揭开即自动播放第 1 块")
+	_check(not board.caption.text.is_empty(), "自动播放显示文案")
 
 	# ---- 4. 播放状态机(无头不真播,验证资源与状态) ----
 	board._play_clip(2)
@@ -85,6 +86,14 @@ func check() -> void:
 	board.cell_index = 0
 	board._play_clip(0)
 	_check(board.playing_index == 0, "切播另一块")
+	# 播完自动连播下一块。
+	board._on_clip_finished()
+	_check(board.playing_index == 1, "播完自动连播下一块")
+	# 暂停 / 继续。
+	board._toggle_pause()
+	_check(board.player.paused, "E 暂停")
+	board._toggle_pause()
+	_check(not board.player.paused, "再按 E 继续")
 	board._stop_clip()
 	_check(board.playing_index == -1 and not board.player.visible, "停止后回到待机")
 	board._play_clip(99)
