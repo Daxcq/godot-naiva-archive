@@ -1,7 +1,19 @@
 .godot/
 
-# Python 虚拟环境（约 400MB，不入库；每台机器自行重建）
+# Python 虚拟环境：路径绑死创建机器（pyvenv.cfg 里是绝对路径），复制到别的电脑无效。
+# 换机后由 vision/setup_vision_env.py 自动重建，无需入库。
 vision/.vision-venv/
+vision/.vision-venv-BAK/
 __pycache__/
 *.pyc
+
+# 临时诊断产物（不要提交）
+_probe.log
+_proc_check.txt
+shot_*.png
+shot_*.png.import
+scripts/_probe*.gd
+scripts/_probe*.gd.uid
+scripts/diag_*.gd
+scripts/diag_*.gd.uid
 

@@ -2,11 +2,17 @@
 
 由 scripts/visual_recognition.gd 在游戏启动时自动拉起，游戏退出时被回收。
 手部状态发到 UDP 6401，带骨架标注的画面发到 UDP 6402。
+
+额外保险：监听父进程（Godot），父进程一旦消失就自行退出。
+这样即使 Godot 被强制结束（崩溃 / 任务管理器结束进程）没能回收本进程，
+摄像头也不会被一直占着。
 """
 import json
+import os
 import signal
 import socket
 import struct
+import sys
 from pathlib import Path
 
 import cv2
@@ -23,6 +29,8 @@ MODEL_CANDIDATES = [
 
 HAND_PORT = 6401
 FRAME_PORT = 6402
+# 每隔多少帧检查一次父进程是否还活着（约 2 秒一次）
+PARENT_CHECK_INTERVAL = 60
 _running = True
 
 
@@ -30,6 +38,33 @@ def _stop(*_args):
     """收到终止信号时干净退出，释放摄像头。"""
     global _running
     _running = False
+
+
+def parent_alive() -> bool:
+    """检查父进程是否还在。拿不到父进程信息时视为存活，避免误退出。"""
+    if os.name != "nt":
+        # 类 Unix：父进程被回收后会变成 1（init），此时说明原父进程已退出
+        try:
+            return os.getppid() != 1
+        except OSError:
+            return True
+    try:
+        import ctypes
+
+        # 传 0 句柄即可查询；PROCESS_QUERY_LIMITED_INFORMATION = 0x1000
+        kernel32 = ctypes.windll.kernel32
+        handle = kernel32.OpenProcess(0x1000, False, os.getppid())
+        if not handle:
+            return False
+        try:
+            code = ctypes.c_ulong()
+            ok = kernel32.GetExitCodeProcess(handle, ctypes.byref(code))
+            # STILL_ACTIVE = 259
+            return bool(ok) and code.value == 259
+        finally:
+            kernel32.CloseHandle(handle)
+    except Exception:
+        return True
 
 
 def d(a, b):
@@ -72,7 +107,14 @@ def main():
           % (HAND_PORT, FRAME_PORT), flush=True)
 
     try:
+        tick = 0
         while _running:
+            tick += 1
+            # 父进程（Godot）消失就自行退出，避免摄像头被残留进程长期占用。
+            if tick % PARENT_CHECK_INTERVAL == 0 and not parent_alive():
+                print("[mediapipe-bridge] 宿主进程已退出，桥接自行关闭", flush=True)
+                break
+
             ok, frame = cap.read()
             if not ok:
                 continue

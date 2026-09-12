@@ -24,9 +24,34 @@ godot --path .
 
 `x/y` 为 0—1 的画面坐标，`grab` 和 `spread` 为 0—1，`confidence` 低于 0.2 的帧会被丢弃。收到有效帧时，角色移动由手掌位置驱动；识别进程断开超过 0.35 秒后自动切回鼠标模式。
 
-注意：Godot 4.6 Windows 桌面版的 `CameraServer` 仅支持平台/AR camera feed，不会直接枚举普通 USB webcam（例如 ASUS FHD webcam）。如需在 Godot 窗口显示真实用户画面，应由浏览器 MediaPipe 页面或独立 OpenCV/MediaPipe 采集进程读取摄像头，并将视频帧通过共享纹理/本地流接入；UDP 识别状态接口仍可直接使用。
+注意：Godot 4.6 Windows 桌面版的 `CameraServer` 仅支持平台/AR camera feed，不会直接枚举普通 USB webcam（例如 ASUS FHD webcam）。因此真实用户画面由工程内的独立 OpenCV/MediaPipe 采集进程读取摄像头，再把识别状态与画面通过 UDP 送回引擎；UDP 识别状态接口也可直接使用。
 
-Windows 桌面摄像头桥接：先启动 Godot，再运行 `py -3 scripts/godot_camera_bridge.py --device "ASUS FHD webcam"`。脚本使用系统 FFmpeg 将 640×480 JPEG 帧发送到 `127.0.0.1:6402`，右下角预览会自动显示；设备名称可用 `ffmpeg -f dshow -list_devices true -i dummy` 查询。
+### 摄像头自动启动（换电脑无需手动配置）
+
+游戏启动时会**自动拉起**摄像头桥接进程，退出时自动回收，不需要另外开终端跑脚本。
+
+桥接实现在 `vision/` 下，随仓库一起迁移：
+
+| 文件 | 作用 |
+|---|---|
+| `vision/mediapipe_camera_bridge.py` | 主桥接：OpenCV 读摄像头 + MediaPipe 手部识别，状态发 UDP 6401、画面发 UDP 6402 |
+| `vision/godot_camera_bridge.py` | 备用桥接：仅转发摄像头画面，不跑手部识别 |
+| `vision/hand_landmarker.task` | MediaPipe 手部模型（7.8MB，随仓库携带） |
+| `vision/setup_vision_env.py` | 依赖自动安装器 |
+
+**换电脑后第一次运行**：`vision/.vision-venv` 不入库（虚拟环境里的路径绑死创建它的那台机器，复制过去也无法使用）。游戏检测到依赖缺失时会**自动在后台运行 `setup_vision_env.py`**，重新建虚拟环境并安装依赖（首次约需几分钟，需要能访问 PyPI）。装好后桥接会自动启动，无需重启游戏。
+
+界面右下角的预览面板会显示当前状态，例如「摄像头已在后台启动」「正在安装摄像头依赖…」「需要安装 Python」等。
+
+手动触发安装（比如想提前装好，或自动安装失败时排错）：
+
+```powershell
+python vision/setup_vision_env.py
+```
+
+前置条件：本机需有 **Python 3.10 ~ 3.12**（mediapipe 1.0.1 暂不支持 3.13+）。若只有更高版本，请另装一个 3.12 再运行上面的命令。
+
+依赖版本固定在 `setup_vision_env.py` 的 `REQUIREMENTS` 里（numpy 1.26.4 / opencv-contrib-python 4.10.0.84 / mediapipe 1.0.1），与开发机一致。
 
 ## 编辑器 MCP 接入
 
