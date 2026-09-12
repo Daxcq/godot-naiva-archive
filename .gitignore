@@ -16,4 +16,12 @@ scripts/_probe*.gd
 scripts/_probe*.gd.uid
 scripts/diag_*.gd
 scripts/diag_*.gd.uid
+# 下划线开头的是临时/一次性脚本（截图、探针、调试），不要入库。
+# 长期保留的回归自检都叫 check_*.gd，不受此规则影响。
+scripts/_*.gd
+scripts/_*.gd.uid
+# 外部工具（如 opencode）生成的一次性截图/探针脚本，不要入库。
+test_shot.gd
+test_shot.gd.uid
+test_shot.tscn
 

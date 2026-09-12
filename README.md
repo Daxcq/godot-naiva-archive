@@ -53,6 +53,31 @@ python vision/setup_vision_env.py
 
 依赖版本固定在 `setup_vision_env.py` 的 `REQUIREMENTS` 里（numpy 1.26.4 / opencv-contrib-python 4.10.0.84 / mediapipe 1.0.1），与开发机一致。
 
+## 入口的牛 NPC（牛来）
+
+传送门落地后，走廊入口左边站着那头牛。走近 3 米内按 `E` 可以跟它说话，说完自动结束，可重复。
+
+| 项 | 说明 |
+|---|---|
+| 脚本 | `scripts/archive_entrance_npc.gd` |
+| 模型 | `assets/character/niu_lai.glb`（3.8 MB，2.4 万面，贴图内嵌） |
+| 站位 | `(-1.6, 0, -1.25)`，朝向 yaw 0.95 |
+| 自检 | `--headless --script res://scripts/check_entrance_npc.gd` |
+
+它和 `archive_npc_dialogue.gd` 里的三个档案员是**两套独立系统**：档案员读完会开记忆传送门、推进主线；入口的牛只陪聊，不碰进度。所以它单独一个脚本，避免把那 300 行的状态机搞复杂。
+
+**模型来源与优化**：原始素材是一个 123 MB 的 FBX 高模（75 万顶点 / 150 万三角面 / 4 张 4096² 贴图），直接进 Godot 会严重掉帧。已用 Blender 处理成 2.4 万面 + 1024² 贴图：
+
+```
+面数    1,498,869  →  23,999   (62×)
+体积    123.5 MB   →  3.8 MB   (32×)
+贴图    4×4096²    →  4×1024²
+```
+
+外观基本无差别（减面用的是 collapse，保留了原有的角/耳/圆肚子轮廓）。若将来还要换模型，注意两点：
+- 导出 GLB 时保持 `+Y up`，从 Blender 的 Z-up 转换后高度应落在 Godot 的 Y 轴上（本模型高 1.11 m，原点在脚底，直接摆地面即可）。
+- `niu_lai.glb.import` 里 `gltf/embedded_image_handling` 要设 **0**（保持贴图内嵌）。设成 1 会把贴图解包成一堆散落的 PNG 扔进 `assets/character/`。
+
 ## 编辑器 MCP 接入
 
 `addons/godot_mcp/` 是编辑器内的控制插件，在 Godot 编辑器进程里监听 `127.0.0.1:6400`，接收 `{"type": "...", "params": {...}}` 形式的 JSON 命令并返回 JSON 结果。它可以查看/创建/删除节点、读写属性、调整层级、设置材质与网格、读写脚本、打包与实例化子场景，以及控制编辑器的运行/停止。

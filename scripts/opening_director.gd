@@ -61,6 +61,12 @@ func sound(name: String) -> void:
 	effect.stream = load("res://assets/audio/%s.wav" % name)
 	effect.play()
 
+## 奶蛙睁眼的一刻，开场标题融化退场。
+func _dismiss_title() -> void:
+	var card: Node = world.get_node_or_null("Interface/TitleCard")
+	if card != null and card.has_method("dismiss"):
+		card.dismiss()
+
 func setup(owner_world: Node3D) -> void:
 	world = owner_world
 	input_state = world.input_state
@@ -106,7 +112,9 @@ func enter(next: String) -> void:
 	phase = next
 	elapsed = 0.0
 	match next:
-		"seen": sound("signal")
+		"seen":
+			sound("signal")
+			_dismiss_title()
 		"boot":
 			terminal.power_on()
 			camera_director.add_shake(0.42)
@@ -275,6 +283,8 @@ func update(delta: float) -> bool:
 					world.archive_interaction.set_active(true)
 				if world.archive_npc != null:
 					world.archive_npc.set_active(true)
+				if world.archive_entrance_npc != null:
+					world.archive_entrance_npc.set_active(true)
 				if world.archive_arcade != null:
 					world.archive_arcade.set_active(true)
 				enter("done")

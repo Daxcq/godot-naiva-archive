@@ -21,6 +21,7 @@ var archive_interaction: Node
 var archive_fx: Node
 var archive_npc: Node
 var archive_arcade: Node
+var archive_entrance_npc: Node
 var arcade_active := false
 var destination_root: Node3D
 var destination_id := ""
@@ -66,6 +67,13 @@ func _ready() -> void:
 	archive_npc.set_active(false)
 	archive_npc.dialogue_started.connect(_on_npc_dialogue_started)
 	archive_npc.portal_entered.connect(_on_memory_portal_entered)
+	# 入口的牛：独立于档案员的主动线，只在走廊起点陪聊。
+	# 它不产生传送门、不推进进度，所以不参与 archive_npc 的状态机。
+	archive_entrance_npc = preload("res://scripts/archive_entrance_npc.gd").new()
+	archive_entrance_npc.name = "ArchiveEntranceNPC"
+	add_child(archive_entrance_npc)
+	archive_entrance_npc.setup(self)
+	archive_entrance_npc.set_active(false)
 	preload("res://scripts/archive_posters.gd").new().setup(archive_root)
 	archive_arcade = preload("res://scripts/archive_arcade.gd").new()
 	archive_arcade.name = "ArchiveArcade"
@@ -152,6 +160,8 @@ func _on_memory_portal_entered(id: String) -> void:
 		archive_interaction.set_active(false)
 	if archive_npc:
 		archive_npc.set_active(false)
+	if archive_entrance_npc:
+		archive_entrance_npc.set_active(false)
 	if archive_arcade:
 		archive_arcade.set_active(false)
 	var tunnel := get_node("TimeTunnel") as Node3D
@@ -230,6 +240,8 @@ func _return_from_destination() -> void:
 	destination_id = ""
 	archive_root.visible = true
 	archive_npc.set_active(true)
+	if archive_entrance_npc:
+		archive_entrance_npc.set_active(true)
 	archive_interaction.set_active(true)
 	if archive_arcade:
 		archive_arcade.set_active(true)
