@@ -1,0 +1,9 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/cinema_room.gd" id="1_cinema"]
+
+[node name="CinemaRoom" type="Node3D"]
+script = ExtResource("1_cinema")
+position = Vector3(29.5, 0, 1.55)
+scale = Vector3(0.58, 0.58, 0.58)
+metadata/editable_description = "奶蛙影院电影机入口；模型由 cinema_room.gd 构建，可在场景树中直接编辑。"

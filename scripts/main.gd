@@ -14,6 +14,9 @@ extends Node3D
 var story_phase := 0
 var phase_time := 0.0
 var skeleton: Skeleton3D
+var animated_parts: Array[Node3D] = []
+var animated_part_base: Dictionary = {}
+var frog_visual_base_y := 0.0
 var locomotion := "idle"
 var anim_time := 0.0
 var meme_room: Node3D
@@ -25,6 +28,8 @@ var archive_entrance_npc: Node
 var interaction_router: Node
 var gallery_easel: Node3D
 var display_board: Node
+var cinema_room: Node
+var text_archive_station: Node
 var arcade_active := false
 ## 奶娃画廊画板打开时冻结世界移动(与街机同机制)。
 var board_active := false
@@ -51,6 +56,8 @@ func _ready() -> void:
 	# 先按已知名字试，最后递归兜底找任意 Skeleton3D —— 少了兜底会导致
 	# apply_locomotion_pose() 里的摆腿/摆臂被 if skeleton == null: return 静默跳过。
 	skeleton = _find_skeleton(frog_visual)
+	frog_visual_base_y = frog_visual.position.y
+	_collect_animated_parts(frog_visual)
 	if skeleton == null:
 		push_warning("未在 CharacterVisual 下找到 Skeleton3D，走路摆腿效果将不可见")
 	# 档案走廊玩法栈：三段记忆交互、氛围 FX、柜前 NPC、霓虹海报与三台街机。
@@ -62,6 +69,14 @@ func _ready() -> void:
 	interaction_router.name = "InteractionRouter"
 	add_child(interaction_router)
 	interaction_router.setup($Interface)
+	interaction_router.register_target("entrance", Vector3(-3.1, 0.0, -1.55))
+	interaction_router.register_target("keeper", Vector3(-1.0, 0.0, 0.55))
+	interaction_router.register_target("memory", Vector3(11.4, 0.0, -2.5))
+	interaction_router.register_target("arcade", Vector3(30.0, 0.0, -2.05))
+	interaction_router.register_target("board", Vector3(11.4, 0.0, 1.95))
+	interaction_router.register_target("cinema", Vector3(29.5, 0.0, 1.55))
+	interaction_router.register_target("text_archive", Vector3(26.2, 0.0, 1.45))
+	interaction_router.register_target("easel", Vector3(20.0, 0.0, 1.7))
 	archive_interaction = preload("res://scripts/archive_interaction.gd").new()
 	archive_interaction.name = "ArchiveInteraction"
 	add_child(archive_interaction)
@@ -106,6 +121,15 @@ func _ready() -> void:
 	add_child(display_board)
 	display_board.setup(self)
 	display_board.set_active(false)
+	# 奶蛙影院：后段空地的可编辑电影机与全屏放映页。
+	cinema_room = get_node_or_null("CinemaRoom")
+	if cinema_room != null:
+		cinema_room.setup(self)
+		cinema_room.set_active(false)
+	text_archive_station = get_node_or_null("TextArchiveStation")
+	if text_archive_station != null:
+		text_archive_station.setup(self)
+		text_archive_station.set_active(false)
 
 func _physics_process(delta: float) -> void:
 	# InputState 全局每帧轮询:街机 / 画廊 / 记忆房间打开时也要喂手势数据,
@@ -198,6 +222,10 @@ func _on_memory_portal_entered(id: String) -> void:
 		gallery_easel.set_active(false)
 	if display_board:
 		display_board.set_active(false)
+	if cinema_room:
+		cinema_room.set_active(false)
+	if text_archive_station:
+		text_archive_station.set_active(false)
 	var tunnel := get_node("TimeTunnel") as Node3D
 	tunnel.visible = true
 	player.position = Vector3(100, 2.1, 2)
@@ -287,6 +315,10 @@ func _return_from_destination() -> void:
 		gallery_easel.set_active(true)
 	if display_board:
 		display_board.set_active(true)
+	if cinema_room:
+		cinema_room.set_active(true)
+	if text_archive_station:
+		text_archive_station.set_active(true)
 	player.position = Vector3(23.8, 0.65, 0.0)
 	camera.position = Vector3(26.5, 4.5, 12.5)
 	camera.look_at(Vector3(26.5, 3, 0))
@@ -310,6 +342,17 @@ func _find_skeleton_recursive(node: Node) -> Skeleton3D:
 			return r
 	return null
 
+func _collect_animated_parts(node: Node) -> void:
+	# 某些 GLB 导入设置会把骨骼展开成普通 Node3D；兼容这类模型，
+	# 通过节点名找到手臂/腿部并保留它们的原始旋转。
+	for child in node.get_children():
+		if child is Node3D:
+			var key := String(child.name).to_lower()
+			if (key.contains("arm") or key.contains("leg") or key.contains("thigh") or key.contains("foot")) and not (child is Skeleton3D):
+				animated_parts.append(child as Node3D)
+				animated_part_base[child] = (child as Node3D).rotation
+			_collect_animated_parts(child)
+
 func apply_locomotion_pose() -> void:
 	var moving := locomotion != "idle"
 	var phase := sin(anim_time)
@@ -319,16 +362,24 @@ func apply_locomotion_pose() -> void:
 	else:
 		frog_visual.rotation.x = lerp(frog_visual.rotation.x, 0.0, 0.16)
 		frog_visual.scale = frog_visual.scale.lerp(Vector3.ONE, 0.16)
-	frog_visual.position.y += (abs(phase) * 0.045 if moving else sin(anim_time) * 0.008)
-	if skeleton == null: return
-	var names := {"L_thigh": "L_thigh", "R_thigh": "R_thigh", "L_arm": "L_arm", "R_arm": "R_arm", "spine": "spine"}
+	var bob: float = abs(phase) * (0.045 if moving else 0.008)
+	frog_visual.position.y = frog_visual_base_y + bob
 	var stride := 0.0 if locomotion == "idle" else (0.28 if locomotion == "walk" else (0.55 if locomotion == "run" else 0.18))
-	if locomotion == "crawl":
-		skeleton.set_bone_pose_rotation(skeleton.find_bone("spine"), Quaternion(Vector3.RIGHT, -0.48))
-	else:
-		skeleton.set_bone_pose_rotation(skeleton.find_bone("spine"), Quaternion.IDENTITY)
-	for pair in [["L_thigh", 1.0], ["R_thigh", -1.0], ["L_arm", -0.8], ["R_arm", 0.8]]:
-		var index := skeleton.find_bone(pair[0])
-		if index >= 0:
-			var amount: float = float(pair[1]) * stride * phase
-			skeleton.set_bone_pose_rotation(index, Quaternion(Vector3.RIGHT, amount))
+	if skeleton != null:
+		var spine_index := skeleton.find_bone("spine")
+		if locomotion == "crawl":
+			if spine_index >= 0: skeleton.set_bone_pose_rotation(spine_index, Quaternion(Vector3.RIGHT, -0.48))
+		elif spine_index >= 0: skeleton.set_bone_pose_rotation(spine_index, Quaternion.IDENTITY)
+		for pair in [["L_thigh", 1.0], ["R_thigh", -1.0], ["L_arm", -0.8], ["R_arm", 0.8]]:
+			var index := skeleton.find_bone(pair[0])
+			if index >= 0:
+				var amount: float = float(pair[1]) * stride * phase
+				skeleton.set_bone_pose_rotation(index, Quaternion(Vector3.RIGHT, amount))
+	# 无 Skeleton3D 时，直接摆动展开后的肢体节点。
+	if skeleton == null and not animated_parts.is_empty():
+		for i in range(animated_parts.size()):
+			var part := animated_parts[i]
+			var base: Vector3 = animated_part_base.get(part, part.rotation)
+			var sign := -1.0 if i % 2 == 0 else 1.0
+			var amount := sign * stride * phase * (0.85 if String(part.name).to_lower().contains("arm") else 0.65)
+			part.rotation = base + Vector3(amount, 0.0, 0.0)

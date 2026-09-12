@@ -1,0 +1,10 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://assets/character/meituan_kangaroo.glb" id="1_model"]
+
+[node name="EntranceNPC_MeituanKangaroo" type="Node3D"]
+
+[node name="MeituanKangarooModel" parent="." instance=ExtResource("1_model")]
+
+[node name="EditNotes" type="Node" parent="."]
+metadata/_edit_note = "美团袋鼠可编辑包装场景：直接调整 MeituanKangarooModel 的变换、材质和子节点。"

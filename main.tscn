@@ -9,6 +9,10 @@
 [ext_resource type="PackedScene" path="res://scenes/archive_space.tscn" id="scene_archive_space"]
 [ext_resource type="PackedScene" path="res://scenes/interface.tscn" id="scene_interface"]
 [ext_resource type="PackedScene" path="res://scenes/intro_space.tscn" id="scene_intro_space"]
+[ext_resource type="PackedScene" path="res://scenes/entrance_npc_meituan_kangaroo.tscn" id="scene_npc_meituan"]
+[ext_resource type="PackedScene" path="res://scenes/entrance_npc_niu_lai.tscn" id="scene_npc_niu_lai"]
+[ext_resource type="PackedScene" path="res://scenes/cinema_room.tscn" id="scene_cinema_room"]
+[ext_resource type="PackedScene" path="res://scenes/text_archive_station.tscn" id="scene_text_archive"]
 [ext_resource type="PackedScene" path="res://scenes/player.tscn" id="scene_player"]
 [ext_resource type="PackedScene" path="res://scenes/time_tunnel.tscn" id="scene_time_tunnel"]
 [ext_resource type="Script" uid="uid://c5kep8r7vbydh" path="res://scripts/vision_preview.gd" id="vision_preview"]
@@ -51,6 +55,9 @@ shadow_enabled = true
 
 [node name="PresentDayGallery" parent="." unique_id=1518861340 instance=ExtResource("scene_intro_space")]
 
+[node name="WhiteFloor" parent="PresentDayGallery" index="0" unique_id=936862445]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.47572213, 0)
+
 [node name="IntroGround" type="StaticBody3D" parent="." unique_id=1768531381]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.45, 0)
 
@@ -72,7 +79,6 @@ metadata/archive_collision = true
 shape = SubResource("BoxShape3D_xlvj7")
 
 [node name="MilkFrog" parent="." unique_id=47505487 instance=ExtResource("scene_player")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 1.125, -0.2)
 
 [node name="CinematicSideCamera" type="Camera3D" parent="." unique_id=1513814771]
 transform = Transform3D(1, 0, 0, 0, 0.99287677, 0.11914522, 0, -0.11914522, 0.99287677, 2, 4.5, 12.5)
@@ -107,10 +113,29 @@ script = ExtResource("camera_director")
 script = ExtResource("vision_preview")
 
 [node name="TimeTunnel" parent="." unique_id=1206398098 instance=ExtResource("scene_time_tunnel")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 100, 0, 0)
+
+[node name="EntranceNPC_niu_lai" parent="." unique_id=716656805 instance=ExtResource("scene_npc_niu_lai")]
+transform = Transform3D(0.6371511, 0, 0.7707389, 0, 1, 0, -0.7707389, 0, 0.6371511, -3.1, 0, -1.55)
+
+[node name="NiuLaiModel" parent="EntranceNPC_niu_lai" index="0"]
+transform = Transform3D(1.1222394, 0, 0, 0, 1.1123165, 0, 0, 0, 1.1732215, 0.030826688, 0, 0.3044989)
+
+[node name="EntranceNPC_meituan_kangaroo" parent="." unique_id=1412093734 instance=ExtResource("scene_npc_meituan")]
+transform = Transform3D(-0.27559027, 0, -0.9612752, 0, 1, 0, 0.9612752, 0, -0.27559027, 0.8, 0, 1.55)
+
+[node name="MeituanKangarooModel" parent="EntranceNPC_meituan_kangaroo" index="0"]
+transform = Transform3D(0.7046837, 0, 0.70952153, 0, 1, 0, -0.70952153, 0, 0.7046837, 0, 0, 0)
+
+[node name="CinemaRoom" parent="." instance=ExtResource("scene_cinema_room")]
+
+[node name="TextArchiveStation" parent="." instance=ExtResource("scene_text_archive")]
 
 [editable path="PresentDayGallery"]
 [editable path="ArchiveArchitecture"]
 [editable path="MilkFrog"]
 [editable path="Interface"]
 [editable path="TimeTunnel"]
+[editable path="EntranceNPC_niu_lai"]
+[editable path="EntranceNPC_meituan_kangaroo"]
+[editable path="CinemaRoom"]
+[editable path="TextArchiveStation"]

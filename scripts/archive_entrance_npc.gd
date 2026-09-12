@@ -29,15 +29,16 @@ const NPCS := [
 	{
 		"id": "niu_lai",
 		"label": "牛来",
-		"model": "res://assets/character/niu_lai.glb",
+		# 使用可编辑包装场景；打开 scenes/entrance_npc_niu_lai.tscn 可直接调整模型。
+		"model": "res://scenes/entrance_npc_niu_lai.tscn",
 		# 贴西北墙角：原 (-1.6,-1.25) 正压走廊中轴，玩家落地(-4.5,4)→镜头
 		# 看(-1.8,2.35,0)的视线锥里它总被奶蛙挡住；挪到墙角让开出生锥角。
 		"pos": Vector3(-3.1, 0.0, -1.55),
 		"yaw": 0.88,
 		"scale": 1.18,
 		"tag_y": 1.62,
-		# 原模型米白偏灰，乘一层暖黄让它更像"奶牛黄"。
-		"tint": Color(1.0, 0.82, 0.32),
+		# 保留模型原始材质，不再叠加金黄色染色。
+		"tint": Color(1, 1, 1),
 		"lines": [
 			"……",
 			"你也是刚被送到这儿的？我看你从上面那道光里掉下来。",
@@ -51,7 +52,8 @@ const NPCS := [
 	{
 		"id": "meituan_kangaroo",
 		"label": "美团袋鼠",
-		"model": "res://assets/character/meituan_kangaroo.glb",
+		# 使用可编辑包装场景；打开 scenes/entrance_npc_meituan_kangaroo.tscn 可直接调整模型。
+		"model": "res://scenes/entrance_npc_meituan_kangaroo.tscn",
 		"pos": Vector3(0.8, 0.0, 1.55),
 		# 实测两个 glb 正面都是 +Z：yaw=1.1 时袋鼠面朝东北(背对玩家)。
 		# -1.85 让 +Z 转向 (-0.96,-0.28)——西偏北,正对走廊中轴与玩家来向。
@@ -103,25 +105,34 @@ func setup(owner: Node3D) -> void:
 ## "呼吸"和"说话点头"全靠整体 transform 驱动。
 func _build_npc(index: int) -> void:
 	var spec: Dictionary = NPCS[index]
-	var npc_root := Node3D.new()
-	npc_root.name = "EntranceNPC_%s" % String(spec.id)
-	npc_root.position = spec.pos
-	npc_root.rotation.y = float(spec.yaw)
-	world.archive_root.add_child(npc_root)
-
-	var model_root := Node3D.new()
-	model_root.name = "Model"
-	model_root.scale = Vector3.ONE * float(spec.scale)
-	npc_root.add_child(model_root)
-
-	var packed := load(String(spec.model)) as PackedScene
-	if packed == null:
-		push_warning("入口 NPC 模型缺失：%s（将用占位方块代替）" % String(spec.model))
-		_build_placeholder(model_root)
+	var node_name := "EntranceNPC_%s" % String(spec.id)
+	var npc_root := world.get_node_or_null(node_name) as Node3D
+	var model_root: Node3D
+	var authored_instance := npc_root != null
+	if npc_root != null:
+		# 主场景中的可编辑实例：保留编辑器里的位置/旋转/模型层级。
+		model_root = npc_root.get_child(0) as Node3D
 	else:
-		var instance := packed.instantiate()
-		model_root.add_child(instance)
-		_prepare_materials(instance, spec.get("tint", Color(1, 1, 1)))
+		npc_root = Node3D.new()
+		npc_root.name = node_name
+		npc_root.position = spec.pos
+		npc_root.rotation.y = float(spec.yaw)
+		world.archive_root.add_child(npc_root)
+		model_root = Node3D.new()
+		model_root.name = "Model"
+		model_root.scale = Vector3.ONE * float(spec.scale)
+		npc_root.add_child(model_root)
+		var packed := load(String(spec.model)) as PackedScene
+		if packed == null:
+			push_warning("入口 NPC 模型缺失：%s（将用占位方块代替）" % String(spec.model))
+			_build_placeholder(model_root)
+		else:
+			var instance := packed.instantiate()
+			model_root.add_child(instance)
+	# 动态生成的旧模式使用配置缩放；主场景实例保留编辑器里作者设定的变换。
+	if not authored_instance:
+		model_root.scale = Vector3.ONE * float(spec.scale)
+	_prepare_materials(model_root, spec.get("tint", Color(1, 1, 1)))
 
 	# 名牌。用 Label3D 而不是 UI，走近才有"空间感"。
 	var tag := Label3D.new()
@@ -165,6 +176,7 @@ func _build_npc(index: int) -> void:
 	entries.append({
 		"root": npc_root,
 		"model": model_root,
+		"base_scale": model_root.scale,
 		"tag": tag,
 		"idle_time": randf() * 10.0,
 		"talking": false,
@@ -197,7 +209,7 @@ func _build_placeholder(model_root: Node3D) -> void:
 
 ## 减面导出的材质回退到项目统一的粗糙度，禁用自发光——
 ## 这些角色是"实物"，不该跟着霓虹场景一起发亮。
-## tint 乘在 albedo 上做整体调色（牛来偏黄）。
+## tint 乘在 albedo 上做整体调色；当前两个角色默认保留原始颜色。
 ## 同一 glb 的多个 mesh 可能共享同一份 Material 资源，
 ## 必须去重，否则 tint 会被重复应用、越乘越黄。
 func _prepare_materials(node: Node, tint := Color(1, 1, 1)) -> void:
@@ -287,10 +299,10 @@ func _process(delta: float) -> void:
 		var entry: Dictionary = entries[i]
 		entry.idle_time = float(entry.idle_time) + delta
 		var model: Node3D = entry.model
-		var scale_value := float(NPCS[i].scale)
+		var base_scale: Vector3 = entry.get("base_scale", Vector3.ONE * float(NPCS[i].scale))
 		var breath := sin(float(entry.idle_time) * 1.5)
 		var nod := sin(float(entry.idle_time) * 6.0) * 0.035 if entry.talking else 0.0
-		model.scale = Vector3.ONE * scale_value * (1.0 + breath * 0.008)
+		model.scale = base_scale * (1.0 + breath * 0.008)
 		model.rotation.x = nod
 		model.position.y = breath * 0.012
 		var tag: Label3D = entry.tag

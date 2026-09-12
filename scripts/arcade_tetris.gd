@@ -137,8 +137,11 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("move_forward") or _gesture_confirm():
 		_try_rotate()
 		queue_redraw()
-	# 硬降:SPACE(手势端靠自然下落,不设硬降手势,张掌已留给退出)。
-	if Input.is_action_just_pressed("jump"):
+	# 硬降:SPACE 或 快速向下挥手(张掌仍留给退出,不冲突)。
+	var hard_drop := Input.is_action_just_pressed("jump")
+	if gesture != null and gesture.is_vision_driven() and gesture.swipe_just.y > 0:
+		hard_drop = true
+	if hard_drop:
 		while _try_move(Vector2i(0, 1)):
 			pass
 		_lock_piece()
@@ -169,7 +172,7 @@ func _draw() -> void:
 			_cell(origin, cell + piece_pos, SHAPE_COLORS[piece_kind])
 	var font := ThemeDB.fallback_font
 	draw_string(font, origin + Vector2(0, -20), "俄罗斯方块  ·  得分 %d  ·  消行 %d" % [score, lines], HORIZONTAL_ALIGNMENT_LEFT, -1, 24, Color("b26bff"))
-	draw_string(font, origin + Vector2(0, board_size.y + 30), "A/D 移动 · W 旋转 · S 软降 · 空格 硬降 · ESC 退出", HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color("c9d4f2"))
+	draw_string(font, origin + Vector2(0, board_size.y + 30), "A/D 移动 · W/握拳 旋转 · S 软降 · 空格/下挥手 硬降 · ESC 退出", HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color("c9d4f2"))
 	if dead:
 		draw_string(font, origin + board_size * 0.5 + Vector2(-110, 0), "堆栈溢出  ·  E 重开", HORIZONTAL_ALIGNMENT_LEFT, -1, 28, Color("ff5c8a"))
 

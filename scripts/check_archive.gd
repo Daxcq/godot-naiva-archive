@@ -119,6 +119,13 @@ func check() -> void:
 	assert(interaction.ending_done and endings.back() == "save")
 	interaction.ending_done = false
 	interaction.set_active(true)
+	# 新增的展板/影院/文字站会在捕获循环期间抢占焦点;
+	# 这里跑一帧 tick 刷新 memory 的 offer,再让仲裁器结算一次焦点。
+	interaction.tick(1.0 / 60.0)
+	await process_frame
+	var router := scene.get_node_or_null("InteractionRouter")
+	if router != null:
+		router._process(1.0 / 60.0)
 	var release := InputEventKey.new()
 	release.keycode = KEY_Q
 	release.pressed = true

@@ -60,28 +60,6 @@ func _build_detail_layer() -> void:
 		line.material_override = _glow_material(Color(0.24, 0.72, 0.78, 0.23), 0.45)
 		fx.add_child(line)
 		scan_lines.append(line)
-	# A stream of tiny archive pixels travels toward the loading portal.
-	var particles := GPUParticles3D.new()
-	particles.name = "ArchivePixelStream"
-	particles.amount = 180
-	particles.lifetime = 2.8
-	particles.randomness = 0.8
-	var particle_mesh := QuadMesh.new()
-	particle_mesh.size = Vector2(0.045, 0.045)
-	particle_mesh.material = _glow_material(Color(0.42, 0.88, 0.96, 0.7), 1.4)
-	particles.draw_pass_1 = particle_mesh
-	var process := ParticleProcessMaterial.new()
-	process.direction = Vector3(0, 0, -1)
-	process.initial_velocity_min = 5.0
-	process.initial_velocity_max = 13.0
-	process.gravity = Vector3.ZERO
-	process.emission_shape = ParticleProcessMaterial.EMISSION_SHAPE_BOX
-	process.emission_box_extents = Vector3(3.8, 2.6, 0.2)
-	process.scale_min = 0.4
-	process.scale_max = 1.8
-	particles.process_material = process
-	particles.position = Vector3(0, 3.0, 4.0)
-	fx.add_child(particles)
 
 func _glow_material(color: Color, energy: float) -> StandardMaterial3D:
 	var mat := StandardMaterial3D.new()

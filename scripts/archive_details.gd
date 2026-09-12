@@ -150,7 +150,7 @@ static func build(root: Node3D) -> void:
 	screen_light.light_energy = 2.0
 	screen_light.omni_range = 8.0
 	root.add_child(screen_light)
-	label(root, "缓存不可用\n最后访问：很久以前", Vector3(14, 6.3, -2.08), 48, Color("8cf2ff"))
+	label(root, "成为一只平静的奶蛙 要流多少眼泪\n如果忧郁都是天赋 我奶蛙将天赋异禀\n认识一下 我是奶蛙 这条是没收到吗\n体重两吨 我他妈压死你", Vector3(14, 6.3, -2.08), 48, Color("8cf2ff"))
 	label(root, "记忆回收出口  →", Vector3(35.7, 5.95, -2.7), 42, Color("ffae66"))
 
 	# 顶部横梁只框住画面，不在玩家行走高度遮挡。

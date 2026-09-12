@@ -203,7 +203,7 @@ func _build_ui() -> void:
 	# 待机提示(播放器空闲时显示)。
 	var idle_hint := Label.new()
 	idle_hint.name = "IdleHint"
-	idle_hint.text = "\n\nA / D 切换碎片 · E 暂停 / 继续 · ESC 合上"
+	idle_hint.text = "\n\nA/D 或挥手 切换碎片 · E/握拳 暂停 / 继续 · ESC/张掌 合上"
 	idle_hint.add_theme_font_size_override("font_size", 22)
 	idle_hint.add_theme_color_override("font_color", UIKit.DIM)
 	idle_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -266,10 +266,16 @@ func _process(delta: float) -> void:
 		if router:
 			router.offer("board", "", 0.0, "", 9, true)
 		_sync_chip_styles()
-		# 手势:张开手掌合板(播放中也允许)。
+		# 手势:张开手掌合板;挥手左右切片段;握拳暂停/继续。
 		var input_state: Node = world.input_state
-		if input_state != null and input_state.is_vision_driven() and input_state.cancel_just_pressed:
-			_close_board()
+		if input_state != null and input_state.is_vision_driven():
+			if input_state.cancel_just_pressed:
+				_close_board()
+			elif input_state.swipe_just.x != 0:
+				cell_index = wrapi(cell_index + input_state.swipe_just.x, 0, CLIPS.size())
+				_play_clip(cell_index)
+			elif input_state.confirm_just_pressed and input_state.consume_confirm():
+				_toggle_pause()
 		return
 	var distance: float = world.player.position.distance_to(BOARD_POS)
 	if distance < NEAR_DISTANCE and router:

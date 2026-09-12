@@ -1,0 +1,333 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 616.56 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 5050 Laptop GPU
+
+SCRIPT ERROR: Parse Error: Function "_resolve_swipe()" not found in base self.
+   at: GDScript::reload (res://scripts/input_state.gd:85)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://scripts/_shot_interaction.gd:9)
+       [1] _init (res://scripts/_shot_interaction.gd:6)
+ERROR: Failed to load script "res://scripts/input_state.gd" with error "Parse error".
+   at: load (modules/gdscript/gdscript.cpp:2907)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://scripts/_shot_interaction.gd:9)
+       [1] _init (res://scripts/_shot_interaction.gd:6)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "inp" variable because the value doesn't have a set type.
+   at: GDScript::reload (res://scripts/text_archive_station.gd:66)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://scripts/_shot_interaction.gd:9)
+       [1] _init (res://scripts/_shot_interaction.gd:6)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "d" variable because the value doesn't have a set type.
+   at: GDScript::reload (res://scripts/text_archive_station.gd:69)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://scripts/_shot_interaction.gd:9)
+       [1] _init (res://scripts/_shot_interaction.gd:6)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "inp" variable because the value doesn't have a set type.
+   at: GDScript::reload (res://scripts/text_archive_station.gd:71)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://scripts/_shot_interaction.gd:9)
+       [1] _init (res://scripts/_shot_interaction.gd:6)
+ERROR: Failed to load script "res://scripts/text_archive_station.gd" with error "Parse error".
+   at: load (modules/gdscript/gdscript.cpp:2907)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://scripts/_shot_interaction.gd:9)
+       [1] _init (res://scripts/_shot_interaction.gd:6)
+SCRIPT ERROR: Invalid access to property or key 'pointer' on a base object of type 'Node'.
+   at: setup (res://scripts/opening_director.gd:107)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://scripts/opening_director.gd:107)
+       [1] _ready (res://scripts/main.gd:50)
+SCRIPT ERROR: Invalid call. Nonexistent function 'setup' in base 'Node3D'.
+   at: _ready (res://scripts/main.gd:118)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://scripts/main.gd:118)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+player=(-3.5, 2.585, -0.35)
+archive.visible=false archive.pos=(0.0, 0.0, 0.0) children=307
+easel=(7.9, 0.0, 1.55)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SAVED res://.workbuddy/shots/easel_view.png (1280x720)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SAVED res://.workbuddy/shots/board_view.png (1280x720)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SAVED res://.workbuddy/shots/corridor_east.png (1280x720)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SCRIPT ERROR: Invalid call. Nonexistent function 'poll' in base 'Node'.
+   at: _physics_process (res://scripts/main.gd:124)
+   GDScript backtrace (most recent call first):
+       [0] _physics_process (res://scripts/main.gd:124)
+SAVED res://.workbuddy/shots/topdown.png (1280x720)

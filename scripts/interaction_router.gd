@@ -27,6 +27,10 @@ var prompt_dot: Panel
 var offers := {}
 var focus_id := ""
 var _fade := 0.0
+var highlight_root: Node3D
+var highlight_mesh: MeshInstance3D
+var highlight_mat: StandardMaterial3D
+var targets := {}
 
 
 func setup(layer: CanvasLayer) -> void:
@@ -37,7 +41,28 @@ func setup(layer: CanvasLayer) -> void:
 	prompt_body = ui.body
 	prompt_dot = ui.dot
 	prompt_panel.visible = false
+	_build_highlight()
 	set_process(true)
+
+func _build_highlight() -> void:
+	highlight_root = Node3D.new()
+	highlight_root.name = "InteractionHighlight"
+	# current_scene 在测试框架(SceneTree 脚本)下为 null,兜底挂到 root;
+	# 若连 get_tree() 都还没有(未进树),跳过挂载,不影响其余逻辑。
+	var tree := get_tree()
+	if tree != null:
+		var parent := tree.current_scene
+		if parent == null:
+			parent = tree.root
+		parent.add_child.call_deferred(highlight_root)
+	var ring := MeshInstance3D.new()
+	var mesh := TorusMesh.new(); mesh.inner_radius = 0.28; mesh.outer_radius = 0.38; mesh.rings = 32; mesh.ring_segments = 8
+	ring.mesh = mesh
+	highlight_mat = StandardMaterial3D.new(); highlight_mat.albedo_color = Color("7ff6e7"); highlight_mat.emission_enabled = true; highlight_mat.emission = Color("42d9d0"); highlight_mat.emission_energy_multiplier = 1.8
+	ring.material_override = highlight_mat; highlight_root.add_child(ring); highlight_mesh = ring; highlight_root.visible = false
+
+func register_target(id: String, position: Vector3) -> void:
+	targets[id] = position
 
 
 ## 各系统每帧调用,申请一次交互提示。
@@ -76,8 +101,15 @@ func _process(delta: float) -> void:
 		prompt_panel.visible = false
 		_fade = 0.0
 		offers.clear()
+		if highlight_root: highlight_root.visible = false
 		return
 	_apply(offers[focus_id])
+	if highlight_root and targets.has(focus_id):
+		highlight_root.position = Vector3(targets[focus_id]) + Vector3(0, 0.035, 0)
+		highlight_root.visible = true
+		highlight_root.scale = Vector3.ONE * (1.0 + sin(Time.get_ticks_msec() * 0.006) * 0.08)
+	else:
+		if highlight_root: highlight_root.visible = false
 	offers.clear()
 	# 出现/切换时的淡入,避免提示条生硬闪烁。
 	_fade = minf(_fade + delta * 7.0, 1.0)

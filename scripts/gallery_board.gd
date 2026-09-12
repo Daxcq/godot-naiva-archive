@@ -14,30 +14,27 @@ const GOLD_DIM := Color(0.91, 0.77, 0.42, 0.42)
 const COLS := 4
 const CARD_W := 260.0
 const CARD_IMG_H := 180.0
-## 挥手判定:0.28 秒窗口内指针横移超过阈值即算一挥。
-const SWIPE_WINDOW := 0.28
-const SWIPE_DISTANCE := 0.16
-const SWIPE_COOLDOWN := 0.34
-## 手悬停屏幕左右缘的连翻:驻留 0.45 秒后每 0.3 秒翻一张。
+## 边缘驻留连翻:手悬停屏幕左右缘,驻留 0.45 秒后每 0.3 秒翻一张。
+## 挥手检测已下沉到 InputState.swipe_just,这里不再自己采样。
 const EDGE_ZONE := 0.15
 const EDGE_DWELL := 0.45
 const EDGE_REPEAT := 0.3
-## 策展人批注:按作品序号循环取用。
+## 策展人批注 → 奶蛙语录:按作品序号循环取用,全员奶龙文学风味。
 const CAPTIONS := [
-	"修复师批注：奶油调子拿捏得极准。",
-	"修复师批注：构图飘逸,相传出自佚名奶蛙之手。",
-	"修复师批注：腹部的留白是全画灵魂。",
-	"修复师批注：笔触湿润,像刚从牛奶里捞出。",
-	"修复师批注：装裱前请勿投喂。",
-	"修复师批注：被围观次数已不可考。",
-	"修复师批注：画中蛙的眼神过于真诚。",
-	"修复师批注：出土于热搜底层第 7 页。",
-	"修复师批注：颜料成分 87% 是梗。",
-	"修复师批注：建议每次观看不超过三小时。",
-	"修复师批注：曾一夜之间传遍整个广场。",
-	"修复师批注：复刻版与原作一样可爱。",
-	"修复师批注：看久了会不自觉点头。",
-	"修复师批注：档案员拒绝为真实性背书。"
+	"奶蛙语录：成为一只平静的奶蛙，要流多少眼泪。",
+	"奶蛙语录：你欠奶蛙的眼泪太多，奶蛙数不清。",
+	"奶蛙语录：奶蛙故意晚回你的消息，竟然只是为了扯平。",
+	"奶蛙语录：你是树荫还是雨滴，奶蛙没戴眼镜，分不清。",
+	"奶蛙语录：如果忧郁都是一种天赋，那我奶蛙将天赋异禀。",
+	"奶蛙语录：你的世界里，奶蛙也是可有可无吗。",
+	"奶蛙语录：奶蛙吞噬了太多意义，但其实生命只需要呼吸。",
+	"奶蛙语录：如果我是只奶蛙就好了，体重两吨，我他妈压死你。",
+	"奶蛙语录：谁惹我我就压谁，看谁不爽我就压死谁。",
+	"奶蛙语录：奶蛙的这颗心，对你来说也无所谓吗。",
+	"奶蛙语录：你的生活没有奶蛙，真的没关系吗。",
+	"奶蛙语录：你好，认识一下，我是奶蛙。没发出去吗？在忙吗？这条是没收到吗？",
+	"奶蛙语录：画框里的奶蛙在笑，笑得很平静，平静得像还没被忘记。",
+	"奶蛙语录：被忘记的奶蛙不会哭，它只是慢慢变成背景色。"
 ]
 
 var input_state: Node
@@ -58,9 +55,8 @@ var zoom_tween: Tween
 var flip_tween: Tween
 var sweep_tween: Tween
 var sfx: AudioStreamPlayer
-## 挥手采样:(时间, 指针x),窗口内位移超阈值判定为一挥。
-var swipe_samples: Array[Vector2] = []
-var swipe_cooldown := 0.0
+## 视觉指针在画框墙上悬停的卡片(-1 = 无)。
+var _gesture_hover := -1
 var edge_dir := 0
 var edge_time := 0.0
 var repeat_timer := 0.0
@@ -105,7 +101,7 @@ func _build_ui() -> void:
 	title.add_theme_color_override("font_color", GOLD)
 	add_child(title)
 	var subtitle := Label.new()
-	subtitle.text = "名画修复档案 · %d 幅作品" % artworks.size()
+	subtitle.text = "名画修复档案 · %d 幅作品 · 手掌指向画框 握拳打开" % artworks.size()
 	subtitle.position = Vector2(240, 34)
 	subtitle.add_theme_font_size_override("font_size", 15)
 	subtitle.add_theme_color_override("font_color", UIKit.DIM)
@@ -389,15 +385,24 @@ func _process(delta: float) -> void:
 	if not visible:
 		return
 	open_time += delta
-	if input_state == null or not detail.visible:
+	if input_state == null:
 		return
-	_tick_gesture_flip(delta)
+	# 手势:张开手掌退出画廊(刚打开 0.4 秒内不响应,防止误触)。
+	if open_time > 0.4 and input_state.cancel_just_pressed:
+		if detail.visible:
+			detail.visible = false
+		else:
+			close()
+		return
+	if detail.visible:
+		_tick_gesture_flip(delta)
+	else:
+		_tick_grid_gesture()
 
-## 视觉识别翻页:挥手快翻 + 手悬停左右缘连续翻。
+## 鉴赏模式手势:挥手快翻(通用滑动检测) + 手悬停左右缘连续翻。
 func _tick_gesture_flip(delta: float) -> void:
 	if not input_state.is_vision_driven() or open_time < 0.4:
 		return
-	swipe_cooldown = maxf(swipe_cooldown - delta, 0.0)
 	var px: float = input_state.pointer.x
 	# 边缘驻留连翻:手停在左/右缘,先驻留再每 0.3 秒翻一张。
 	var want := 0
@@ -411,25 +416,37 @@ func _tick_gesture_flip(delta: float) -> void:
 		if edge_time >= EDGE_DWELL and repeat_timer <= 0.0:
 			_step_detail(want)
 			repeat_timer = EDGE_REPEAT
-			swipe_samples.clear()
 			return
 	else:
 		edge_dir = want
 		edge_time = 0.0
 		repeat_timer = 0.0
-	# 挥手检测:窗口内横移超阈值即翻,方向 = 挥动方向。
-	if want == 0 and swipe_cooldown <= 0.0:
-		swipe_samples.append(Vector2(open_time, px))
-		while swipe_samples.size() > 1 and open_time - swipe_samples[0].x > SWIPE_WINDOW:
-			swipe_samples.remove_at(0)
-		if swipe_samples.size() >= 2:
-			var dx: float = swipe_samples[swipe_samples.size() - 1].y - swipe_samples[0].y
-			if absf(dx) >= SWIPE_DISTANCE:
-				_step_detail(1 if dx > 0.0 else -1)
-				swipe_cooldown = SWIPE_COOLDOWN
-				swipe_samples.clear()
-	else:
-		swipe_samples.clear()
+	# 挥手翻页:右挥=下一幅,左挥=上一幅(通用滑动检测,右为正)。
+	if want == 0 and input_state.swipe_just.x != 0:
+		_step_detail(input_state.swipe_just.x)
+
+## 画框墙手势:视觉指针悬停亮框,握拳开画。
+func _tick_grid_gesture() -> void:
+	if not input_state.is_vision_driven() or open_time < 0.4:
+		return
+	var viewport_size := get_viewport_rect().size
+	var pos := Vector2(input_state.pointer.x, input_state.pointer.y) * viewport_size
+	var hit := -1
+	for i in range(cards.size()):
+		if cards[i].get_global_rect().has_point(pos):
+			hit = i
+			break
+	if hit != _gesture_hover:
+		if _gesture_hover >= 0 and _gesture_hover < cards.size():
+			cards[_gesture_hover].add_theme_stylebox_override("panel", card_normal)
+			cards[_gesture_hover].scale = Vector2.ONE
+		_gesture_hover = hit
+		if hit >= 0:
+			cards[hit].add_theme_stylebox_override("panel", card_hover)
+			cards[hit].pivot_offset = cards[hit].size * 0.5
+			cards[hit].scale = Vector2(1.04, 1.04)
+	if hit >= 0 and input_state.confirm_just_pressed and input_state.consume_confirm():
+		_show_detail(hit, 0)
 
 func _input(event: InputEvent) -> void:
 	if not visible:

@@ -95,12 +95,17 @@ func _make_subtitle() -> Label:
 	label.modulate = Color(1, 1, 1, 0)
 	return label
 
-## 退场请求：奶蛙一醒就会喊这里。但标题有最短保留时间，
-## 保证开场演出完整放完——期间的请求先记下，到点自动融化。
-func dismiss() -> void:
+## 退场请求:奶蛙一醒就会喊这里。但标题有最短保留时间,
+## 保证开场演出完整放完——期间的请求先记下,到点自动融化。
+## force=true(挥手跳过)且飞入已基本完成时,立即融化。
+func dismiss(force := false) -> void:
 	if phase == "exit" or phase == "gone":
 		return
 	pending_exit = true
+	if force and elapsed >= 1.6:
+		phase = "exit"
+		exit_time = 0.0
+		return
 	_try_exit()
 
 func _try_exit() -> void:
@@ -127,6 +132,13 @@ func _process(delta: float) -> void:
 	if phase == "enter" or phase == "idle":
 		if elapsed > FALLBACK_QUIT:
 			pending_exit = true
+		# 手势:横挥一下提前跳过标题(飞入完成后才生效)。
+		var main := get_parent().get_parent() as Node
+		if main != null and "input_state" in main:
+			var input_state: Node = main.input_state
+			if input_state != null and input_state.is_vision_driven() and input_state.swipe_just.x != 0 and elapsed > 1.6:
+				dismiss(true)
+				return
 		_try_exit()
 	_update_droplets(delta)
 	queue_redraw()

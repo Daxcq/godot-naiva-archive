@@ -34,6 +34,7 @@ func _preview_ui() -> void:
 	box.add_child(title)
 	var preview_holder := Control.new()
 	preview_holder.custom_minimum_size = Vector2(248, 132)
+	preview_holder.clip_contents = true
 	box.add_child(preview_holder)
 	var preview_background := ColorRect.new()
 	preview_background.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -44,7 +45,9 @@ func _preview_ui() -> void:
 	preview.name = "UserCamera"
 	preview.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	preview.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	preview.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	# 摄像头画面铺满预览框：保持比例并裁掉多余边缘，避免左右黑边。
+	# 这样人像会同时贴近预览框的左右与上下边缘，更容易看清手势。
+	preview.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 	preview.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	preview.self_modulate = Color.WHITE
 	preview.modulate = Color.WHITE

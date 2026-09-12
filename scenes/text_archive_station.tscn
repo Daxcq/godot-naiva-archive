@@ -1,0 +1,8 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/text_archive_station.gd" id="1_text"]
+
+[node name="TextArchiveStation" type="Node3D"]
+position = Vector3(26.2, 0, 1.45)
+script = ExtResource("1_text")
+metadata/editable_description = "纯文字档案站；可在场景树中直接编辑位置与模型组件。"

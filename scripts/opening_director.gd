@@ -11,8 +11,6 @@ const PALM_CENTER := Vector3(-3.5, 1.7, 1.3)
 const WAKE_TRAVEL := 0.12
 const IDLE_TIMEOUT := 6.0
 const INVITE_TIMEOUT := 14.0
-const THUMP_HIT := 0.26
-const THUMP_TIME := 0.62
 const ARCHIVE_SPAWN := Vector3(-4.5, 4.0, 0.0)
 const ARCHIVE_FLOOR_Y := 0.625
 const ARRIVAL_PORTAL_POSITION := Vector3(-4.5, 2.25, -0.15)
@@ -45,11 +43,14 @@ var pointer_travel := 0.0
 var last_pointer := Vector2(0.5, 0.5)
 var thump_time := -1.0
 var thumped := false
+var _thump_registered := false
 var morph_meshes: Array[MeshInstance3D] = []
 var ambience: AudioStreamPlayer
 var effect: AudioStreamPlayer
 var grabbed := false
 var landed := false
+## 吸入白块 / 隧道穿越时挂在奶蛙身上的奶色拖尾。
+var trail: CPUParticles3D
 
 func pose(blink: float, reach: float) -> void:
 	for mesh in morph_meshes:
@@ -104,6 +105,37 @@ func setup(owner_world: Node3D) -> void:
 	world.player.position = FROG_PERCH
 	world.frog_visual.rotation.z = -0.16
 	last_pointer = input_state.pointer
+	# 奶色拖尾:吸入白块与隧道穿越时挂在奶蛙身后,像一滴被拽飞的牛奶。
+	trail = CPUParticles3D.new()
+	trail.name = "FrogTrail"
+	trail.amount = 70
+	trail.lifetime = 0.6
+	trail.emitting = false
+	var spark := QuadMesh.new()
+	spark.size = Vector2(0.1, 0.1)
+	var spark_mat := StandardMaterial3D.new()
+	spark_mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	spark_mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	spark_mat.blend_mode = BaseMaterial3D.BLEND_MODE_ADD
+	spark_mat.albedo_color = Color(0.75, 0.92, 1.0, 0.55)
+	spark_mat.billboard_mode = BaseMaterial3D.BILLBOARD_ENABLED
+	spark.material = spark_mat
+	trail.mesh = spark
+	trail.direction = Vector3.ZERO
+	trail.spread = 180.0
+	trail.initial_velocity_min = 0.2
+	trail.initial_velocity_max = 0.9
+	trail.gravity = Vector3.ZERO
+	trail.damping_min = 1.0
+	trail.damping_max = 2.0
+	trail.scale_amount_min = 0.5
+	trail.scale_amount_max = 1.4
+	var fade := Gradient.new()
+	fade.set_color(0, Color(0.8, 0.95, 1.0, 0.9))
+	fade.set_color(1, Color(0.4, 0.7, 1.0, 0.0))
+	trail.color_ramp = fade
+	trail.position = Vector3(0, 0.6, 0)
+	world.player.add_child(trail)
 
 func enter(next: String) -> void:
 	# 兼容旧的阶段名：抵达不再显示加载界面，而是直接打开传送门。
@@ -122,10 +154,16 @@ func enter(next: String) -> void:
 		"mitosis":
 			# 奶蛙就在机箱顶上分裂，分身从同一点弹出。
 			mitosis.begin(world.player.position)
-		"pull": sound("pull")
-		"tunnel": sound("tunnel")
+		"pull":
+			sound("pull")
+			if trail != null:
+				trail.emitting = true
+		"tunnel":
+			sound("tunnel")
 		"arrival":
 			effect.stop()
+			if trail != null:
+				trail.emitting = false
 			_begin_arrival()
 		"land": landed = false
 		"done": pose(0, 0)
@@ -208,11 +246,26 @@ func update(delta: float) -> bool:
 					grabbed = true
 					camera_director.add_shake(0.3)
 			var destination := Vector3(4.5, 4.0, -3.0)
-			world.player.position = pull_start.lerp(destination, force)
-			body.rotation.z = -sin(p * PI) * 0.6
-			body.scale = Vector3(1 - force * 0.6, 1 + sin(p * PI) * 0.3, 1)
+			# 飞行轨迹:起步滞重(挣扎),中段抬头划弧,后段加速吸进白块;
+			# 摆动幅度随靠近收束,像被越拉越紧的吸力吞没。
+			var travel := pow(p, 1.6)
+			var pull_point := pull_start.lerp(destination, travel)
+			pull_point.y += sin(p * PI) * (0.4 + force * 1.2)
+			var struggle := 1.0 - p
+			pull_point.x += (sin(elapsed * 5.2) * 0.42 + sin(elapsed * 11.0) * 0.1) * struggle
+			pull_point.z += cos(elapsed * 4.3) * 0.3 * struggle
+			world.player.position = pull_point
+			# 头朝白光:身体转向光块并抬头,拉长成"被拽飞"的姿态。
+			var to_light := destination + Vector3(0, 0.4, 0) - body.global_position
+			var flat := Vector2(to_light.x, to_light.z).length()
+			if flat > 0.01:
+				body.rotation.y = lerp_angle(body.rotation.y, atan2(to_light.x, to_light.z), delta * 6.0)
+				body.rotation.x = lerp(body.rotation.x, -atan2(to_light.y, flat) * 0.8, delta * 5.0)
+			body.rotation.z = -sin(p * PI) * 0.4 + sin(elapsed * 5.2) * 0.18 * struggle
+			body.scale = Vector3(1.0 - force * 0.5, 1.0 - force * 0.42, 1.0 + force * 0.55)
 			signal_node.position = destination.lerp(pull_start + Vector3(0, 1, 0), sin(p * PI) * 0.65)
 			signal_node.scale = Vector3.ONE * (1 + force * 22)
+			camera_director.add_shake(force * 0.16)
 			for i in range(gallery_pieces.size()):
 				var piece := gallery_pieces[i]
 				var original := original_transforms[i]
@@ -239,14 +292,28 @@ func update(delta: float) -> bool:
 				var depth := (8 - z) / 58.0
 				fragments[i].position = Vector3(cos(angle) * 4.5 + bend.x * depth * depth * 5, sin(angle) * 3.3 + 3 + bend.y * depth * depth * 4, z)
 				fragments[i].rotation.z = angle * 0.2
-			world.player.position = Vector3(100 + steer.x * 1.8, 2.1 - steer.y * 1.2 + sin(elapsed * 2) * 0.1, 2)
-			body.scale = body.scale.lerp(Vector3.ONE * 0.85, delta * 4)
-			body.rotation = Vector3(-0.12, sin(elapsed) * 0.15, -steer.x * 0.35)
+			# 超人飞行:头朝隧道深处,随转向压坡。逻辑轨迹干净地跟随 steer;
+			# 漂浮/呼吸感全部放在视觉层(frog_visual),不污染逻辑位置。
+			world.player.position = Vector3(
+				100.0 + steer.x * 1.8,
+				2.1 - steer.y * 1.2,
+				2.0 - p * 2.4
+			)
+			var surge := 1.0 + sin(elapsed * 1.7) * 0.18
+			body.scale = body.scale.lerp(Vector3(0.78, 0.78, 1.06) * surge, delta * 5.0)
+			body.position = Vector3(
+				sin(elapsed * 2.6) * 0.22,
+				sin(elapsed * 2.0) * 0.12 + sin(elapsed * 1.3) * 0.35,
+				0.0
+			)
+			body.rotation.y = lerp_angle(body.rotation.y, PI, delta * 4.0)
+			body.rotation.x = lerp(body.rotation.x, -0.3 + sin(elapsed * 2.3) * 0.06, delta * 5.0)
+			body.rotation.z = lerp(body.rotation.z, -steer.x * 0.5, delta * 5.0)
 			camera_director.apply_cinematic(
-				Vector3(100 + steer.x * 0.7, 3 - steer.y * 0.4, 10),
-				Vector3(100 + bend.x * 0.8, 3 + bend.y * 0.5, -18),
-				76 + sin(p * PI) * 7,
-				-steer.x * 0.1
+				Vector3(100 + steer.x * 0.8, 2.8 - steer.y * 0.4, 7.2),
+				Vector3(100 + bend.x * 0.8, 2.6 + bend.y * 0.5, -14),
+				78 + sin(p * PI) * 7,
+				-steer.x * 0.12
 			)
 			flash(maxf(1.0 - elapsed * 1.8, smoothstep(0.91, 1, p)))
 			if p >= 1:
@@ -291,6 +358,10 @@ func update(delta: float) -> bool:
 					world.gallery_easel.set_active(true)
 				if world.display_board != null:
 					world.display_board.set_active(true)
+				if world.cinema_room != null:
+					world.cinema_room.set_active(true)
+				if world.text_archive_station != null:
+					world.text_archive_station.set_active(true)
 				enter("done")
 	return true
 
@@ -311,6 +382,7 @@ func _begin_arrival() -> void:
 	camera_director.snap_to(Vector3(-1.8, 4.6, 12.5), Vector3(-1.8, 2.35, 0), 44)
 	world.frog_visual.rotation = Vector3.ZERO
 	world.frog_visual.scale = Vector3.ONE
+	world.frog_visual.position = Vector3.ZERO
 	# tunnel 结束时可能留下最后一帧闪白；在传送门镜头开始前清掉它。
 	world.tunnel_overlay.visible = false
 	world.tunnel_overlay.color = Color(0.02, 0.04, 0.08, 0)
@@ -354,8 +426,14 @@ func _look_at_point(body: Node3D, target: Vector3, weight: float) -> void:
 	var yaw := atan2(to_target.x, to_target.z)
 	body.rotation.y = lerp_angle(body.rotation.y, yaw, clampf(weight, 0.0, 1.0))
 
-## 进度条卡 99%，奶蛙拍一下机箱。
-## 既是笑点，也顺带教会玩家「这个世界可以被拍打」。
+## 进度条卡 99% 的踹机箱喜剧桥段,时间轴共约 2.45 秒:
+##   0.00-0.55 慢慢下蹲蓄力,再猛地拉长成弹簧
+##   0.55-0.85 喜剧定格:绷到最长带一丝发抖
+##   0.85-0.99 假跺!结结实实一下——进度条毫无反应
+##   0.99-1.39 迷惑:直起身歪头,小碎跳表示「嗯?」
+##   1.39-1.71 深吸一口气,这次蓄得更满
+##   1.71-1.85 真跺!命中帧放行进度条 + 大震屏 + 镜头前冲
+##   1.85-2.45 果冻余震,慢慢弹回原形
 func _drive_thump(delta: float, body: Node3D) -> void:
 	if thump_time < 0.0:
 		if terminal.needs_thump():
@@ -364,17 +442,70 @@ func _drive_thump(delta: float, body: Node3D) -> void:
 	if thumped:
 		return
 	thump_time += delta
-	var p := clampf(thump_time / THUMP_TIME, 0.0, 1.0)
-	# 抬起→落下的单次动作，命中帧给声音与震屏。
-	var swing := sin(p * PI)
-	body.rotation.z = -swing * 0.5
-	world.player.position.y = FROG_PERCH.y + swing * 0.16
-	if thump_time >= THUMP_HIT:
-		thumped = true
-		body.rotation.z = 0.0
-		terminal.register_thump()
-		camera_director.add_shake(0.5)
-		sound("landing")
+	var t := thump_time
+	world.player.position.y = FROG_PERCH.y
+	if t < 0.55:
+		# 蓄力:前 70% 慢压,后 30% 猛拉长。
+		var p := t / 0.55
+		if p < 0.7:
+			var q := p / 0.7
+			body.scale = Vector3(1.0 + q * 0.14, 1.0 - q * 0.22, 1.0 + q * 0.14)
+			body.rotation.z = -q * 0.14
+		else:
+			var q := (p - 0.7) / 0.3
+			body.scale = Vector3(1.14 - q * 0.32, 0.78 + q * 0.5, 1.14 - q * 0.32)
+			body.rotation.z = -0.14 + q * 0.3
+	elif t < 0.85:
+		# 喜剧定格:绷紧 + 高频微抖。
+		var tremble := sin(t * 60.0) * 0.012
+		body.scale = Vector3(0.82 + tremble, 1.28 - tremble, 0.82)
+		body.rotation.z = 0.16 + tremble
+		world.player.position.y = FROG_PERCH.y + 0.03
+	elif t < 0.99:
+		# 假跺:砸下去,但什么都不发生。
+		var p := (t - 0.85) / 0.14
+		body.scale = Vector3(lerpf(0.82, 1.34, p), lerpf(1.28, 0.66, p), lerpf(0.82, 1.34, p))
+		body.rotation.z = lerpf(0.16, 0.0, p)
+		world.player.position.y = lerpf(FROG_PERCH.y + 0.03, FROG_PERCH.y - 0.06, p)
+		if p >= 1.0:
+			camera_director.add_shake(0.3)
+			sound("landing")
+	elif t < 1.39:
+		# 迷惑:直起身,左右歪头看进度条,原地小碎跳。
+		var p := (t - 0.99) / 0.4
+		body.scale = body.scale.lerp(Vector3.ONE, delta * 10.0)
+		body.rotation.z = sin(p * TAU * 2.0) * 0.09 * (1.0 - p)
+		world.player.position.y = FROG_PERCH.y + absf(sin(p * TAU)) * 0.05
+	elif t < 1.71:
+		# 二次蓄力:吸得更多,踉跄着抬得更狠。
+		var p := (t - 1.39) / 0.32
+		body.scale = Vector3(1.0 - p * 0.24, 1.0 + p * 0.4, 1.0 - p * 0.24)
+		body.rotation.z = p * 0.2
+		world.player.position.y = FROG_PERCH.y + p * 0.05
+	elif t < 1.85:
+		# 真跺:命中帧放行 + 大震屏 + FOV 前冲(下一帧 _boot_camera 会拉回)。
+		var p := (t - 1.71) / 0.14
+		body.scale = Vector3(lerpf(0.76, 1.42, p), lerpf(1.4, 0.6, p), lerpf(0.76, 1.42, p))
+		body.rotation.z = lerpf(0.2, 0.0, p)
+		world.player.position.y = lerpf(FROG_PERCH.y + 0.05, FROG_PERCH.y - 0.09, p)
+		if p >= 1.0 and not _thump_registered:
+			_thump_registered = true
+			terminal.register_thump()
+			camera_director.add_shake(0.75)
+			camera_director.apply_cinematic(Vector3(-2.4, 2.9, 4.5), Vector3(-3.4, 1.95, -0.3), 35.0)
+			sound("landing")
+	else:
+		# 果冻余震:阻尼弹跳回原形,收尾后冻结。
+		var ft := t - 1.85
+		var k := exp(-4.6 * ft)
+		var sx := 1.0 + 0.3 * k * cos(13.0 * ft)
+		body.scale = Vector3(sx, 1.0 - (sx - 1.0) * 0.85, sx)
+		body.rotation.z = 0.35 * k * sin(11.0 * ft)
+		world.player.position.y = FROG_PERCH.y
+		if ft > 0.6:
+			body.scale = Vector3.ONE
+			body.rotation.z = 0.0
+			thumped = true
 
 ## 分裂桥段里的主角：被撑大、对话、目送妈妈离开、然后笑场。
 ## 分身自己的表演在 mitosis_act 里，这里不碰它。
