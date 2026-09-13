@@ -33,8 +33,12 @@ var move_cooldown := 0.0
 var rng := RandomNumberGenerator.new()
 ## 手势输入(InputState),由街机层注入;为空时纯键盘。
 var gesture: Node
+## 8-bit 音效包(res://scripts/pixel_sfx.gd)。
+var sfx: Node
 
 func _ready() -> void:
+	sfx = load("res://scripts/pixel_sfx.gd").new()
+	add_child(sfx)
 	set_process(true)
 
 func _gesture_confirm() -> bool:
@@ -46,6 +50,7 @@ func reset() -> void:
 	lines = 0
 	dead = false
 	fall_timer = 0.0
+	if sfx: sfx.play("arcade_start")
 	_spawn_piece()
 	queue_redraw()
 
@@ -57,6 +62,7 @@ func _spawn_piece() -> void:
 	piece_pos = Vector2i(3, 0)
 	if _collides(piece, piece_pos):
 		dead = true
+		if sfx: sfx.play("arcade_over", -8.0)
 
 func _collides(cells: Array[Vector2i], at: Vector2i) -> bool:
 	for cell in cells:
@@ -93,6 +99,9 @@ func _lock_piece() -> void:
 	if cleared > 0:
 		lines += cleared
 		score += [0, 100, 300, 500, 800][cleared]
+		if sfx: sfx.play("arcade_score", -8.0)
+	else:
+		if sfx: sfx.play("arcade_blip", -14.0)
 	_spawn_piece()
 
 func _try_move(offset: Vector2i) -> bool:

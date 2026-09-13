@@ -16,8 +16,12 @@ var step_timer := 0.0
 var rng := RandomNumberGenerator.new()
 ## 手势输入(InputState),由街机层注入;为空时纯键盘。
 var gesture: Node
+## 8-bit 音效包(res://scripts/pixel_sfx.gd)。
+var sfx: Node
 
 func _ready() -> void:
+	sfx = load("res://scripts/pixel_sfx.gd").new()
+	add_child(sfx)
 	set_process(true)
 
 func _gesture_confirm() -> bool:
@@ -30,6 +34,7 @@ func reset() -> void:
 	score = 0
 	dead = false
 	step_timer = 0.0
+	if sfx: sfx.play("arcade_start")
 	_spawn_food()
 	queue_redraw()
 
@@ -71,11 +76,13 @@ func _process(delta: float) -> void:
 	var head: Vector2i = snake[0] + direction
 	if head.x < 0 or head.x >= COLS or head.y < 0 or head.y >= ROWS or snake.has(head):
 		dead = true
+		if sfx: sfx.play("arcade_over", -8.0)
 		queue_redraw()
 		return
 	snake.push_front(head)
 	if head == food:
 		score += 10
+		if sfx: sfx.play("arcade_score", -8.0)
 		_spawn_food()
 	else:
 		snake.pop_back()

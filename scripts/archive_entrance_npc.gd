@@ -79,6 +79,8 @@ var world: Node3D
 var player: CharacterBody3D
 var layer: CanvasLayer
 var router: Node
+## 8-bit 音效包(res://scripts/pixel_sfx.gd)。
+var sfx: Node
 var card_title: Label
 var card_panel: Control
 var card: Label
@@ -96,6 +98,8 @@ func setup(owner: Node3D) -> void:
 	player = owner.player
 	layer = owner.get_node_or_null("Interface") as CanvasLayer
 	router = owner.get_node_or_null("InteractionRouter")
+	sfx = load("res://scripts/pixel_sfx.gd").new()
+	owner.add_child(sfx)
 	for i in range(NPCS.size()):
 		_build_npc(i)
 	_build_ui()
@@ -344,10 +348,12 @@ func _advance() -> void:
 		_show_line(entry)
 
 func _show_line(entry: Dictionary) -> void:
+	if sfx: sfx.play("npc_blip", -12.0)
 	_update_prompt(entry)
 	line_delay = LINE_DELAY
 
 func _end_talk(entry: Dictionary) -> void:
+	if sfx: sfx.play("npc_done", -8.0)
 	entry.talking = false
 	entry.line_index = -1
 	entry.finished_once = true
@@ -371,6 +377,8 @@ func _interact() -> void:
 	var entry: Dictionary = entries[nearest]
 	entry.talking = true
 	entry.line_index = 0
+	# 开聊彩蛋:牛来 8-bit 哞 / 袋鼠"肥嘟嘟"弹簧音,其余走通用叮咚。
+	if sfx: sfx.play_npc_greeting(String(NPCS[nearest].id))
 	_show_line(entry)
 
 ## 交互范围内最近的 NPC 下标,都不在范围内返回 -1。

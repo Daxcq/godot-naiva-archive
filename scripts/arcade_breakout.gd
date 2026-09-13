@@ -20,8 +20,12 @@ var finished := false
 var win := false
 ## 手势输入(InputState),由街机层注入;为空时纯键盘。
 var gesture: Node
+## 8-bit 音效包(res://scripts/pixel_sfx.gd)。
+var sfx: Node
 
 func _ready() -> void:
+	sfx = load("res://scripts/pixel_sfx.gd").new()
+	add_child(sfx)
 	set_process(true)
 
 func _gesture_confirm() -> bool:
@@ -40,6 +44,7 @@ func reset() -> void:
 	balls_left = 3
 	finished = false
 	win = false
+	if sfx: sfx.play("arcade_start")
 	_rest_ball()
 	queue_redraw()
 
@@ -83,6 +88,7 @@ func _process(delta: float) -> void:
 		if bricks[i].grow(BALL_RADIUS).has_point(ball_pos):
 			brick_alive[i] = false
 			score += 25
+			if sfx: sfx.play("arcade_blip", -8.0)
 			var brick := bricks[i]
 			# 以进入方向粗判反弹轴。
 			if ball_pos.x < brick.position.x or ball_pos.x > brick.end.x:
@@ -93,12 +99,15 @@ func _process(delta: float) -> void:
 	if not brick_alive.has(true):
 		finished = true
 		win = true
+		if sfx: sfx.play("exit_fanfare", -6.0)
 	if ball_pos.y > BOARD.y + BALL_RADIUS:
 		balls_left -= 1
 		if balls_left <= 0:
 			finished = true
 			win = false
+			if sfx: sfx.play("arcade_over", -8.0)
 		else:
+			if sfx: sfx.play("arcade_blip", -14.0)
 			_rest_ball()
 	queue_redraw()
 
