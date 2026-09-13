@@ -1,0 +1,106 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+ERROR: Playback can only happen when a node is inside the scene tree
+   at: play_basic (scene/audio/audio_stream_player_internal.cpp:142)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://scripts/opening_director.gd:81)
+       [1] _ready (res://scripts/main.gd:62)
+       [2] _init (res://scripts/check_entrance_npc.gd:25)
+ERROR: Parameter "data.tree" is null.
+   at: get_tree (scene/main/node.h:549)
+   GDScript backtrace (most recent call first):
+       [0] _build_highlight (res://scripts/interaction_router.gd:52)
+       [1] setup (res://scripts/interaction_router.gd:44)
+       [2] _ready (res://scripts/main.gd:96)
+       [3] _init (res://scripts/check_entrance_npc.gd:25)
+=== 搞笑道具已加载 ===
+  篮球 - 橙色球体(靠近按 E 拍一下)
+  鸡 - 会上下摇头(靠近按 E 逗一下)
+  西瓜 - 绿色条纹球体(持刀人剧情里会被劈)
+  持刀人 - 实体小人(蓝衣、怒目)+ 手里一把菜刀
+         华强买瓜四段式:问瓜 → 背景音乐+劈瓜重音 → 你劈我瓜是吧 → 杀人啦
+ERROR: Signal 'finished' is already connected to given callable 'AudioStreamPlayer::play' in that object.
+   at: connect (core/object/object.cpp:1682)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://scripts/opening_director.gd:80)
+       [1] _ready (res://scripts/main.gd:62)
+PASS 配置了两个入口 NPC (实际 2)
+PASS 运行时状态与配置一一对应
+PASS 牛来 根节点存在
+PASS 牛来 未激活时默认不可见
+PASS 牛来 Model 容器存在
+PASS 牛来 模型实例已载入（非空）
+PASS 牛来 名牌文本正确
+PASS 牛来 站位在走廊入口段 (实际 (-3.1, 0.0, -1.55))
+PASS 牛来 交互触发区存在
+PASS 美团袋鼠 根节点存在
+PASS 美团袋鼠 未激活时默认不可见
+PASS 美团袋鼠 Model 容器存在
+PASS 美团袋鼠 模型实例已载入（非空）
+PASS 美团袋鼠 名牌文本正确
+PASS 美团袋鼠 站位在走廊入口段 (实际 (0.8, 0.0, 1.55))
+PASS 美团袋鼠 交互触发区存在
+PASS 两 NPC 间隔 4.98 > TALK_RANGE 2.40
+PASS 站在牛来旁 → 命中牛来
+PASS 站在袋鼠旁 → 命中袋鼠
+PASS 走到走廊中段 → 无人可交互
+PASS 牛来台词不少于 4 句 (实际 7)
+PASS 按 E 进入牛来对话
+PASS 牛来 从第 1 句开始
+PASS 牛来 对话卡片显示
+PASS 牛来 卡片标题正确
+PASS 牛来 对话语音已装载
+PASS 牛来 对话语音播放中
+PASS 牛来 语音循环设置正确
+PASS 牛来 卡片内容 = 第 1 句台词
+PASS 牛来 按钮提示推进 ("E  下一句")
+PASS 牛来 台词读完后自动结束（未卡死）
+PASS 牛来 推进次数合理 (7 次推完 7 句)
+PASS 牛来 结束后卡片隐藏
+PASS 牛来 结束后卡片清空
+PASS 牛来 记录了已完成标记
+PASS 牛来末句为留白台词
+PASS 牛来 可重复对话（再次按 E 重新开始）
+PASS 牛来 走开后对话自动结束
+PASS 走开后对话语音停止
+PASS set_active(false) 关闭牛来对话
+PASS set_active(false) 隐藏卡片
+PASS set_active(false) 隐藏牛来
+PASS 美团袋鼠台词不少于 4 句 (实际 7)
+PASS 按 E 进入美团袋鼠对话
+PASS 美团袋鼠 从第 1 句开始
+PASS 美团袋鼠 对话卡片显示
+PASS 美团袋鼠 卡片标题正确
+PASS 美团袋鼠 对话语音已装载
+PASS 美团袋鼠 对话语音播放中
+PASS 美团袋鼠 语音循环设置正确
+PASS 美团袋鼠 卡片内容 = 第 1 句台词
+PASS 美团袋鼠 按钮提示推进 ("E  下一句")
+PASS 美团袋鼠 台词读完后自动结束（未卡死）
+PASS 美团袋鼠 推进次数合理 (7 次推完 7 句)
+PASS 美团袋鼠 结束后卡片隐藏
+PASS 美团袋鼠 结束后卡片清空
+PASS 美团袋鼠 记录了已完成标记
+PASS 美团袋鼠 末句甩出梗台词
+PASS 美团袋鼠 可重复对话（再次按 E 重新开始）
+PASS 美团袋鼠 走开后对话自动结束
+PASS 走开后对话语音停止
+PASS set_active(false) 关闭美团袋鼠对话
+PASS set_active(false) 隐藏卡片
+PASS set_active(false) 隐藏美团袋鼠
+PASS 靠近牛来 → 入口 NPC 拿到交互焦点
+PASS 离开后焦点释放
+
+RESULT: PASS 入口 NPC 全部检查通过
+ERROR: 1 RID allocations of type 'N13RendererDummy9DummyMeshE' were leaked at exit.
+ERROR: 1 RID allocations of type 'N13RendererDummy15MaterialStorage13DummyMaterialE' were leaked at exit.
+ERROR: 1 RID allocations of type 'N13RendererDummy15MaterialStorage11DummyShaderE' were leaked at exit.
+ERROR: 1 RID allocations of type 'N17RendererSceneCull8InstanceE' were leaked at exit.
+ERROR: Pages in use exist at exit in PagedAllocator: N20RasterizerSceneDummy21GeometryInstanceDummyE
+   at: ~PagedAllocator (./core/templates/paged_allocator.h:169)
+WARNING: Leaked instance dependency: Bug - did not call instance_notify_deleted when freeing.
+   at: ~Dependency (servers/rendering/storage/utilities.cpp:56)
+WARNING: ObjectDB instances leaked at exit (run with --verbose for details).
+   at: cleanup (core/object/object.cpp:2663)
+ERROR: 1 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:810)

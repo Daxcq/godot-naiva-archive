@@ -1,0 +1,1278 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+[   0% ] [90m[1mfirst_scan_filesystem[22m | Started 项目初始化 (5 steps)[39m[0m
+[   0% ] [90m[1mfirst_scan_filesystem[22m | 正在扫描文件结构……[39m[0m
+[  16% ] [90m[1mfirst_scan_filesystem[22m | 正在加载全局类名……[39m[0m
+[  33% ] [90m[1mfirst_scan_filesystem[22m | 正在校验 GDExtension……[39m[0m
+[  50% ] [90m[1mfirst_scan_filesystem[22m | 正在创建自动加载脚本……[39m[0m
+[  66% ] [90m[1mfirst_scan_filesystem[22m | 正在初始化插件……[39m[0m
+Godot MCP Plugin activated
+ERROR: Failed to start Godot MCP Server on port 6400: 22
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] _enter_tree (res://addons/godot_mcp/plugin.gd:23)
+[GodotWithU] Plugin initialized (v0.5.0)
+[LockOverlay] Overlay active.
+[ActionInterceptor] Hooks connected.
+[ScriptInterceptor] Initialized (site_id=peer_ade047ac).
+[GodotWithU] Ready — use the dock panel to Host or Join.
+[  83% ] [90m[1mfirst_scan_filesystem[22m | 正在启动文件扫描……[39m[0m
+[92m[ DONE ][39m [1mfirst_scan_filesystem[22m
+[0m
+[   0% ] [90m[1mupdate_scripts_classes[22m | Started 正在注册全局类…… (11 steps)[39m[0m
+[   0% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[   8% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  16% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  25% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  33% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  41% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  50% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  58% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  66% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  75% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  83% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[92m[ DONE ][39m [1mupdate_scripts_classes[22m
+[0m
+[   0% ] [90m[1m_update_scan_actions[22m | Started 正在扫描动作…… (92 steps)[39m[0m
+[   0% ] [90m[1m_update_scan_actions[22m | huaqiang_bao_shu.wav[39m[0m
+[   1% ] [90m[1m_update_scan_actions[22m | huaqiang_bgm.wav[39m[0m
+[   2% ] [90m[1m_update_scan_actions[22m | huaqiang_pi_gua.wav[39m[0m
+[   3% ] [90m[1m_update_scan_actions[22m | huaqiang_sha_ren.wav[39m[0m
+[   4% ] [90m[1m_update_scan_actions[22m | zhiyin.wav[39m[0m
+[   5% ] [90m[1m_update_scan_actions[22m | yellow_character_animated.blend[39m[0m
+[   6% ] [90m[1m_update_scan_actions[22m | yellow_character_animated.glb[39m[0m
+[   7% ] [90m[1m_update_scan_actions[22m | Prop_Barrel1.fbx[39m[0m
+[   8% ] [90m[1m_update_scan_actions[22m | Prop_Barrel2_Closed.fbx[39m[0m
+[   9% ] [90m[1m_update_scan_actions[22m | Prop_Barrel2_Open.fbx[39m[0m
+[  10% ] [90m[1m_update_scan_actions[22m | Prop_Chair.fbx[39m[0m
+[  11% ] [90m[1m_update_scan_actions[22m | Prop_Chest.fbx[39m[0m
+[  12% ] [90m[1m_update_scan_actions[22m | Prop_Crate.fbx[39m[0m
+[  13% ] [90m[1m_update_scan_actions[22m | Prop_Crate_Large.fbx[39m[0m
+[  15% ] [90m[1m_update_scan_actions[22m | Prop_Crate_Tarp.fbx[39m[0m
+[  16% ] [90m[1m_update_scan_actions[22m | Prop_Crate_Tarp_Large.fbx[39m[0m
+[  17% ] [90m[1m_update_scan_actions[22m | Prop_Desk_L.fbx[39m[0m
+[  18% ] [90m[1m_update_scan_actions[22m | Prop_Desk_Medium.fbx[39m[0m
+[  19% ] [90m[1m_update_scan_actions[22m | Prop_Desk_Small.fbx[39m[0m
+[  20% ] [90m[1m_update_scan_actions[22m | Prop_KeyCard.fbx[39m[0m
+[  21% ] [90m[1m_update_scan_actions[22m | Prop_Locker.fbx[39m[0m
+[  22% ] [90m[1m_update_scan_actions[22m | Prop_Mug.fbx[39m[0m
+[  23% ] [90m[1m_update_scan_actions[22m | Prop_Shelves_ThinShort.fbx[39m[0m
+[  24% ] [90m[1m_update_scan_actions[22m | Prop_Shelves_ThinTall.fbx[39m[0m
+[  25% ] [90m[1m_update_scan_actions[22m | Prop_Shelves_WideShort.fbx[39m[0m
+[  26% ] [90m[1m_update_scan_actions[22m | Prop_Shelves_WideTall.fbx[39m[0m
+[  27% ] [90m[1m_update_scan_actions[22m | poster_01.jpg[39m[0m
+[  29% ] [90m[1m_update_scan_actions[22m | poster_02.jpg[39m[0m
+[  30% ] [90m[1m_update_scan_actions[22m | poster_03.jpg[39m[0m
+[  31% ] [90m[1m_update_scan_actions[22m | poster_04.jpg[39m[0m
+[  32% ] [90m[1m_update_scan_actions[22m | poster_05.jpg[39m[0m
+[  33% ] [90m[1m_update_scan_actions[22m | poster_06.jpg[39m[0m
+[  34% ] [90m[1m_update_scan_actions[22m | poster_07.jpg[39m[0m
+[  35% ] [90m[1m_update_scan_actions[22m | poster_08.jpg[39m[0m
+[  36% ] [90m[1m_update_scan_actions[22m | floor_scifi_desert.png[39m[0m
+[  37% ] [90m[1m_update_scan_actions[22m | floor_scifi_desert_thumb.png[39m[0m
+[  38% ] [90m[1m_update_scan_actions[22m | floor_scifi_ship.png[39m[0m
+[  39% ] [90m[1m_update_scan_actions[22m | floor_scifi_ship_thumb.png[39m[0m
+[  40% ] [90m[1m_update_scan_actions[22m | T_Enemies_BaseColor.png[39m[0m
+[  41% ] [90m[1m_update_scan_actions[22m | T_Enemies_Emissive.png[39m[0m
+[  43% ] [90m[1m_update_scan_actions[22m | T_Enemies_Large_BaseColor.png[39m[0m
+[  44% ] [90m[1m_update_scan_actions[22m | T_Enemies_Large_Emissive.png[39m[0m
+[  45% ] [90m[1m_update_scan_actions[22m | T_Enemies_Large_Normal.png[39m[0m
+[  46% ] [90m[1m_update_scan_actions[22m | T_Enemies_Large_ORM.png[39m[0m
+[  47% ] [90m[1m_update_scan_actions[22m | T_Enemies_Normal.png[39m[0m
+[  48% ] [90m[1m_update_scan_actions[22m | T_Enemies_ORM.png[39m[0m
+[  49% ] [90m[1m_update_scan_actions[22m | T_Guns_Batch1_BaseColor.png[39m[0m
+[  50% ] [90m[1m_update_scan_actions[22m | T_Guns_Batch1_Emissive.png[39m[0m
+[  51% ] [90m[1m_update_scan_actions[22m | T_Guns_Batch1_Normal.png[39m[0m
+[  52% ] [90m[1m_update_scan_actions[22m | T_Guns_Batch1_ORM.png[39m[0m
+[  53% ] [90m[1m_update_scan_actions[22m | T_Guns_Batch2_BaseColor.png[39m[0m
+[  54% ] [90m[1m_update_scan_actions[22m | T_Guns_Batch2_Emissive.png[39m[0m
+[  55% ] [90m[1m_update_scan_actions[22m | T_Guns_Batch2_Normal.png[39m[0m
+[  56% ] [90m[1m_update_scan_actions[22m | T_Guns_Batch2_ORM.png[39m[0m
+[  58% ] [90m[1m_update_scan_actions[22m | T_Props_Batch1_BaseColor.png[39m[0m
+[  59% ] [90m[1m_update_scan_actions[22m | T_Props_Batch1_Normal.png[39m[0m
+[  60% ] [90m[1m_update_scan_actions[22m | T_Props_Batch1_ORM.png[39m[0m
+[  61% ] [90m[1m_update_scan_actions[22m | T_Props_Batch2_BaseColor.png[39m[0m
+[  62% ] [90m[1m_update_scan_actions[22m | T_Props_Batch2_Emissive.png[39m[0m
+[  63% ] [90m[1m_update_scan_actions[22m | T_Props_Batch2_Normal.png[39m[0m
+[  64% ] [90m[1m_update_scan_actions[22m | T_Props_Batch2_ORM.png[39m[0m
+[  65% ] [90m[1m_update_scan_actions[22m | T_Props_Crates_BaseColor.png[39m[0m
+[  66% ] [90m[1m_update_scan_actions[22m | T_Props_Crates_Normal.png[39m[0m
+[  67% ] [90m[1m_update_scan_actions[22m | T_Props_Crates_ORM.png[39m[0m
+[  68% ] [90m[1m_update_scan_actions[22m | T_Trim_01_BaseColor.png[39m[0m
+[  69% ] [90m[1m_update_scan_actions[22m | T_Trim_01_Normal.png[39m[0m
+[  70% ] [90m[1m_update_scan_actions[22m | T_Trim_01_ORM.png[39m[0m
+[  72% ] [90m[1m_update_scan_actions[22m | T_Trim_02_BaseColor.png[39m[0m
+[  73% ] [90m[1m_update_scan_actions[22m | T_Trim_02_Normal.png[39m[0m
+[  74% ] [90m[1m_update_scan_actions[22m | T_Trim_02_ORM.png[39m[0m
+[  75% ] [90m[1m_update_scan_actions[22m | T_Trim_03_BaseColor.png[39m[0m
+[  76% ] [90m[1m_update_scan_actions[22m | T_Trim_03_Dark.png[39m[0m
+[  77% ] [90m[1m_update_scan_actions[22m | T_Trim_03_Normal.png[39m[0m
+[  78% ] [90m[1m_update_scan_actions[22m | T_Trim_03_ORM.png[39m[0m
+[  79% ] [90m[1m_update_scan_actions[22m | T_Enemies_BaseColor.png[39m[0m
+[  80% ] [90m[1m_update_scan_actions[22m | T_Enemies_Large_BaseColor.png[39m[0m
+[  81% ] [90m[1m_update_scan_actions[22m | T_Guns_Batch1_BaseColor.png[39m[0m
+[  82% ] [90m[1m_update_scan_actions[22m | T_Guns_Batch2_BaseColor.png[39m[0m
+[  83% ] [90m[1m_update_scan_actions[22m | T_Props_Batch1_BaseColor.png[39m[0m
+[  84% ] [90m[1m_update_scan_actions[22m | T_Props_Batch2_BaseColor.png[39m[0m
+[  86% ] [90m[1m_update_scan_actions[22m | T_Props_Crates_BaseColor.png[39m[0m
+[  87% ] [90m[1m_update_scan_actions[22m | T_Trim_01_BaseColor.png[39m[0m
+[  88% ] [90m[1m_update_scan_actions[22m | T_Trim_02_BaseColor.png[39m[0m
+[  89% ] [90m[1m_update_scan_actions[22m | T_Trim_03_BaseColor.png[39m[0m
+[  90% ] [90m[1m_update_scan_actions[22m | wall_cyberpunk_panel.png[39m[0m
+[  91% ] [90m[1m_update_scan_actions[22m | wall_cyberpunk_panel_thumb.png[39m[0m
+[  92% ] [90m[1m_update_scan_actions[22m | wall_scifi_ship_0.png[39m[0m
+[  93% ] [90m[1m_update_scan_actions[22m | wall_scifi_ship_0_thumb.png[39m[0m
+[  94% ] [90m[1m_update_scan_actions[22m | wall_scifi_ship_3.png[39m[0m
+[  95% ] [90m[1m_update_scan_actions[22m | wall_scifi_ship_3_thumb.png[39m[0m
+[  96% ] [90m[1m_update_scan_actions[22m | wall_scifi_ship_5.png[39m[0m
+[  97% ] [90m[1m_update_scan_actions[22m | wall_scifi_ship_5_thumb.png[39m[0m
+[92m[ DONE ][39m [1m_update_scan_actions[22m
+[0m
+[   0% ] [90m[1mreimport[22m | Started 正在导入或重新导入资产 (92 steps)[39m[0m
+[   0% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[   1% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[   2% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[   3% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[   4% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[   5% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[   6% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[   7% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[   8% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[   9% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  10% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  11% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  12% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  13% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  15% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  16% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  17% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  18% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  19% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  20% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  21% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  22% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  23% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  24% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  25% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  26% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  27% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  29% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  30% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  31% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  32% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  33% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  34% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  35% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  36% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  37% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  38% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  39% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  40% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  41% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  43% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  44% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  45% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  46% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  47% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  48% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  49% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  50% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  51% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  52% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  53% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  54% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  55% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  56% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  58% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  59% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  60% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  61% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  62% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  63% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  64% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  65% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  66% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  67% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  68% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  69% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  70% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  72% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  73% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  74% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  75% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  76% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  77% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  78% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  79% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  80% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  81% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  82% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  83% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  84% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  86% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  87% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  88% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  89% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  90% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  91% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  92% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  93% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  94% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  95% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  96% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  97% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[   0% ] [90m[1mreimport[22m | 正在执行重新导入的前置操作……[39m[0m
+[   0% ] [90m[1mpreload_reimporting_scene[22m | Started 正在准备场景重新加载 (1 steps)[39m[0m
+[   0% ] [90m[1mpreload_reimporting_scene[22m | 正在分析场景 [空][39m[0m
+[  50% ] [90m[1mpreload_reimporting_scene[22m | 准备完成。[39m[0m
+[92m[ DONE ][39m [1mpreload_reimporting_scene[22m
+[0m
+[   0% ] [90m[1mreimport[22m | T_Trim_02_Normal.png[39m[0m
+[   0% ] [90m[1mreimport[22m | T_Trim_02_Normal.png[39m[0m
+[   1% ] [90m[1mreimport[22m | T_Trim_02_BaseColor.png[39m[0m
+ERROR: Cannot open MD5 file 'res://.godot/imported/T_Trim_02_Normal.png-a74cfbd758b96ea7db9d11f21c79d1f6.md5'.
+   at: _reimport_file (editor/file_system/editor_file_system.cpp:3014)
+[   2% ] [90m[1mreimport[22m | T_Trim_01_ORM.png[39m[0m
+[   3% ] [90m[1mreimport[22m | T_Trim_01_Normal.png[39m[0m
+[   4% ] [90m[1mreimport[22m | T_Trim_01_BaseColor.png[39m[0m
+[   5% ] [90m[1mreimport[22m | T_Props_Crates_ORM.png[39m[0m
+[   6% ] [90m[1mreimport[22m | T_Props_Crates_Normal.png[39m[0m
+[   7% ] [90m[1mreimport[22m | T_Props_Crates_BaseColor.png[39m[0m
+[   8% ] [90m[1mreimport[22m | T_Props_Batch2_ORM.png[39m[0m
+[   9% ] [90m[1mreimport[22m | T_Props_Batch2_Normal.png[39m[0m
+[  10% ] [90m[1mreimport[22m | T_Props_Batch2_Emissive.png[39m[0m
+[  11% ] [90m[1mreimport[22m | T_Props_Batch2_BaseColor.png[39m[0m
+[  12% ] [90m[1mreimport[22m | T_Props_Batch1_ORM.png[39m[0m
+[  13% ] [90m[1mreimport[22m | T_Props_Batch1_Normal.png[39m[0m
+[  15% ] [90m[1mreimport[22m | T_Props_Batch1_BaseColor.png[39m[0m
+[  16% ] [90m[1mreimport[22m | T_Guns_Batch2_ORM.png[39m[0m
+[  17% ] [90m[1mreimport[22m | T_Guns_Batch2_Normal.png[39m[0m
+[  18% ] [90m[1mreimport[22m | T_Guns_Batch2_Emissive.png[39m[0m
+[  19% ] [90m[1mreimport[22m | T_Guns_Batch2_BaseColor.png[39m[0m
+[  20% ] [90m[1mreimport[22m | T_Guns_Batch1_ORM.png[39m[0m
+[  21% ] [90m[1mreimport[22m | T_Guns_Batch1_Normal.png[39m[0m
+[  22% ] [90m[1mreimport[22m | T_Guns_Batch1_Emissive.png[39m[0m
+[  23% ] [90m[1mreimport[22m | T_Guns_Batch1_BaseColor.png[39m[0m
+[  24% ] [90m[1mreimport[22m | wall_scifi_ship_5_thumb.png[39m[0m
+[  25% ] [90m[1mreimport[22m | wall_scifi_ship_5.png[39m[0m
+[  26% ] [90m[1mreimport[22m | wall_scifi_ship_3_thumb.png[39m[0m
+[  27% ] [90m[1mreimport[22m | wall_scifi_ship_3.png[39m[0m
+[  29% ] [90m[1mreimport[22m | wall_scifi_ship_0_thumb.png[39m[0m
+[  30% ] [90m[1mreimport[22m | wall_scifi_ship_0.png[39m[0m
+[  31% ] [90m[1mreimport[22m | wall_cyberpunk_panel_thumb.png[39m[0m
+[  32% ] [90m[1mreimport[22m | wall_cyberpunk_panel.png[39m[0m
+[  33% ] [90m[1mreimport[22m | T_Trim_03_BaseColor.png[39m[0m
+[  34% ] [90m[1mreimport[22m | T_Trim_02_BaseColor.png[39m[0m
+[  35% ] [90m[1mreimport[22m | T_Trim_01_BaseColor.png[39m[0m
+[  36% ] [90m[1mreimport[22m | T_Props_Crates_BaseColor.png[39m[0m
+[  37% ] [90m[1mreimport[22m | T_Props_Batch2_BaseColor.png[39m[0m
+[  38% ] [90m[1mreimport[22m | T_Props_Batch1_BaseColor.png[39m[0m
+[  39% ] [90m[1mreimport[22m | T_Guns_Batch2_BaseColor.png[39m[0m
+[  40% ] [90m[1mreimport[22m | T_Guns_Batch1_BaseColor.png[39m[0m
+[  41% ] [90m[1mreimport[22m | T_Enemies_Large_BaseColor.png[39m[0m
+[  43% ] [90m[1mreimport[22m | T_Enemies_BaseColor.png[39m[0m
+[  44% ] [90m[1mreimport[22m | T_Trim_03_ORM.png[39m[0m
+[  45% ] [90m[1mreimport[22m | T_Trim_03_Normal.png[39m[0m
+[  46% ] [90m[1mreimport[22m | T_Trim_03_Dark.png[39m[0m
+[  47% ] [90m[1mreimport[22m | T_Trim_03_BaseColor.png[39m[0m
+[  48% ] [90m[1mreimport[22m | T_Trim_02_ORM.png[39m[0m
+[  49% ] [90m[1mreimport[22m | poster_01.jpg[39m[0m
+[  50% ] [90m[1mreimport[22m | poster_02.jpg[39m[0m
+[  51% ] [90m[1mreimport[22m | poster_03.jpg[39m[0m
+[  52% ] [90m[1mreimport[22m | poster_04.jpg[39m[0m
+[  53% ] [90m[1mreimport[22m | poster_05.jpg[39m[0m
+[  54% ] [90m[1mreimport[22m | poster_06.jpg[39m[0m
+[  55% ] [90m[1mreimport[22m | poster_07.jpg[39m[0m
+[  56% ] [90m[1mreimport[22m | poster_08.jpg[39m[0m
+[  58% ] [90m[1mreimport[22m | floor_scifi_desert.png[39m[0m
+[  59% ] [90m[1mreimport[22m | floor_scifi_desert_thumb.png[39m[0m
+[  60% ] [90m[1mreimport[22m | floor_scifi_ship.png[39m[0m
+[  61% ] [90m[1mreimport[22m | floor_scifi_ship_thumb.png[39m[0m
+[  62% ] [90m[1mreimport[22m | T_Enemies_BaseColor.png[39m[0m
+[  63% ] [90m[1mreimport[22m | T_Enemies_Emissive.png[39m[0m
+[  64% ] [90m[1mreimport[22m | T_Enemies_Large_BaseColor.png[39m[0m
+[  65% ] [90m[1mreimport[22m | T_Enemies_Large_Emissive.png[39m[0m
+[  66% ] [90m[1mreimport[22m | T_Enemies_Large_Normal.png[39m[0m
+[  67% ] [90m[1mreimport[22m | T_Enemies_Large_ORM.png[39m[0m
+[  68% ] [90m[1mreimport[22m | T_Enemies_Normal.png[39m[0m
+[  69% ] [90m[1mreimport[22m | T_Enemies_ORM.png[39m[0m
+[  70% ] [90m[1mreimport[22m | T_Trim_02_Normal.png[39m[0m
+[  70% ] [90m[1mreimport[22m | T_Trim_02_Normal.png[39m[0m
+[  72% ] [90m[1mreimport[22m | T_Trim_02_BaseColor.png[39m[0m
+[  73% ] [90m[1mreimport[22m | T_Trim_01_ORM.png[39m[0m
+[  74% ] [90m[1mreimport[22m | T_Trim_01_Normal.png[39m[0m
+[  75% ] [90m[1mreimport[22m | T_Trim_01_BaseColor.png[39m[0m
+[  76% ] [90m[1mreimport[22m | Prop_Shelves_WideTall.fbx[39m[0m
+[   0% ] [90m[1mimport[22m | Started 导入场景 (104 steps)[39m[0m
+[   0% ] [90m[1mimport[22m | 导入场景中...[39m[0m
+ERROR: Resource file not found: res:// (expected type: Texture2D)
+   at: _load (core/io/resource_loader.cpp:351)
+ERROR: Can't open file from path 'res://assets/models/props/T_Trim_01_BaseColor_Red.png'.
+   at: get_file_as_bytes (core/io/file_access.cpp:942)
+WARNING: FBX: Image index '0' couldn't be loaded from path: res://assets/models/props/T_Trim_01_BaseColor_Red.png because there was no data to load. Skipping it.
+   at: _parse_images (modules/fbx/fbx_document.cpp:1084)
+ERROR: Resource file not found: res:// (expected type: Texture2D)
+   at: _load (core/io/resource_loader.cpp:351)
+ERROR: Can't open file from path 'res://assets/models/props/T_Trim_01_Normal.png'.
+   at: get_file_as_bytes (core/io/file_access.cpp:942)
+WARNING: FBX: Image index '1' couldn't be loaded from path: res://assets/models/props/T_Trim_01_Normal.png because there was no data to load. Skipping it.
+   at: _parse_images (modules/fbx/fbx_document.cpp:1084)
+[   1% ] [90m[1mimport[22m | 执行自定义脚本...[39m[0m
+[  99% ] [90m[1mimport[22m | 保存中...[39m[0m
+[92m[ DONE ][39m [1mimport[22m
+[0m
+[  77% ] [90m[1mreimport[22m | Prop_Shelves_WideShort.fbx[39m[0m
+[   0% ] [90m[1mimport[22m | Started 导入场景 (104 steps)[39m[0m
+[   0% ] [90m[1mimport[22m | 导入场景中...[39m[0m
+ERROR: Resource file not found: res:// (expected type: Texture2D)
+   at: _load (core/io/resource_loader.cpp:351)
+ERROR: Can't open file from path 'res://assets/models/props/T_Trim_01_BaseColor_Red.png'.
+   at: get_file_as_bytes (core/io/file_access.cpp:942)
+WARNING: FBX: Image index '0' couldn't be loaded from path: res://assets/models/props/T_Trim_01_BaseColor_Red.png because there was no data to load. Skipping it.
+   at: _parse_images (modules/fbx/fbx_document.cpp:1084)
+ERROR: Resource file not found: res:// (expected type: Texture2D)
+   at: _load (core/io/resource_loader.cpp:351)
+ERROR: Can't open file from path 'res://assets/models/props/T_Trim_01_Normal.png'.
+   at: get_file_as_bytes (core/io/file_access.cpp:942)
+WARNING: FBX: Image index '1' couldn't be loaded from path: res://assets/models/props/T_Trim_01_Normal.png because there was no data to load. Skipping it.
+   at: _parse_images (modules/fbx/fbx_document.cpp:1084)
+[   1% ] [90m[1mimport[22m | 执行自定义脚本...[39m[0m
+[  99% ] [90m[1mimport[22m | 保存中...[39m[0m
+[92m[ DONE ][39m [1mimport[22m
+[0m
+[  78% ] [90m[1mreimport[22m | Prop_Shelves_ThinTall.fbx[39m[0m
+[   0% ] [90m[1mimport[22m | Started 导入场景 (104 steps)[39m[0m
+[   0% ] [90m[1mimport[22m | 导入场景中...[39m[0m
+ERROR: Resource file not found: res:// (expected type: Texture2D)
+   at: _load (core/io/resource_loader.cpp:351)
+ERROR: Can't open file from path 'res://assets/models/props/T_Trim_01_BaseColor_Red.png'.
+   at: get_file_as_bytes (core/io/file_access.cpp:942)
+WARNING: FBX: Image index '0' couldn't be loaded from path: res://assets/models/props/T_Trim_01_BaseColor_Red.png because there was no data to load. Skipping it.
+   at: _parse_images (modules/fbx/fbx_document.cpp:1084)
+ERROR: Resource file not found: res:// (expected type: Texture2D)
+   at: _load (core/io/resource_loader.cpp:351)
+ERROR: Can't open file from path 'res://assets/models/props/T_Trim_01_Normal.png'.
+   at: get_file_as_bytes (core/io/file_access.cpp:942)
+WARNING: FBX: Image index '1' couldn't be loaded from path: res://assets/models/props/T_Trim_01_Normal.png because there was no data to load. Skipping it.
+   at: _parse_images (modules/fbx/fbx_document.cpp:1084)
+[   1% ] [90m[1mimport[22m | 执行自定义脚本...[39m[0m
+[  99% ] [90m[1mimport[22m | 保存中...[39m[0m
+[92m[ DONE ][39m [1mimport[22m
+[0m
+[  79% ] [90m[1mreimport[22m | Prop_Shelves_ThinShort.fbx[39m[0m
+[   0% ] [90m[1mimport[22m | Started 导入场景 (104 steps)[39m[0m
+[   0% ] [90m[1mimport[22m | 导入场景中...[39m[0m
+ERROR: Resource file not found: res:// (expected type: Texture2D)
+   at: _load (core/io/resource_loader.cpp:351)
+ERROR: Can't open file from path 'res://assets/models/props/T_Trim_01_BaseColor_Red.png'.
+   at: get_file_as_bytes (core/io/file_access.cpp:942)
+WARNING: FBX: Image index '0' couldn't be loaded from path: res://assets/models/props/T_Trim_01_BaseColor_Red.png because there was no data to load. Skipping it.
+   at: _parse_images (modules/fbx/fbx_document.cpp:1084)
+ERROR: Resource file not found: res:// (expected type: Texture2D)
+   at: _load (core/io/resource_loader.cpp:351)
+ERROR: Can't open file from path 'res://assets/models/props/T_Trim_01_Normal.png'.
+   at: get_file_as_bytes (core/io/file_access.cpp:942)
+WARNING: FBX: Image index '1' couldn't be loaded from path: res://assets/models/props/T_Trim_01_Normal.png because there was no data to load. Skipping it.
+   at: _parse_images (modules/fbx/fbx_document.cpp:1084)
+[   1% ] [90m[1mimport[22m | 执行自定义脚本...[39m[0m
+[  99% ] [90m[1mimport[22m | 保存中...[39m[0m
+[92m[ DONE ][39m [1mimport[22m
+[0m
+[  80% ] [90m[1mreimport[22m | Prop_Mug.fbx[39m[0m
+[   0% ] [90m[1mimport[22m | Started 导入场景 (104 steps)[39m[0m
+[   0% ] [90m[1mimport[22m | 导入场景中...[39m[0m
+ERROR: Resource file not found: res:// (expected type: Texture2D)
+   at: _load (core/io/resource_loader.cpp:351)
+ERROR: Can't open file from path 'res://assets/models/props/T_Trim_03_BaseColor.png'.
+   at: get_file_as_bytes (core/io/file_access.cpp:942)
+WARNING: FBX: Image index '0' couldn't be loaded from path: res://assets/models/props/T_Trim_03_BaseColor.png because there was no data to load. Skipping it.
+   at: _parse_images (modules/fbx/fbx_document.cpp:1084)
+ERROR: Resource file not found: res:// (expected type: Texture2D)
+   at: _load (core/io/resource_loader.cpp:351)
+ERROR: Can't open file from path 'res://assets/models/props/T_Trim_03_Normal.png'.
+   at: get_file_as_bytes (core/io/file_access.cpp:942)
+WARNING: FBX: Image index '1' couldn't be loaded from path: res://assets/models/props/T_Trim_03_Normal.png because there was no data to load. Skipping it.
+   at: _parse_images (modules/fbx/fbx_document.cpp:1084)
+[   1% ] [90m[1mimport[22m | 执行自定义脚本...[39m[0m
+[  99% ] [90m[1mimport[22m | 保存中...[39m[0m
+[92m[ DONE ][39m [1mimport[22m
+[0m
+[  81% ] [90m[1mreimport[22m | yellow_character_animated.blend[39m[0m
+[   0% ] [90m[1mimport[22m | Started 导入场景 (104 steps)[39m[0m
+[   0% ] [90m[1mimport[22m | 导入场景中...[39m[0m
+ERROR: UVs are required to generate tangents.
+   at: generate_tangents (scene/resources/surface_tool.cpp:1156)
+ERROR: UVs are required to generate tangents.
+   at: generate_tangents (scene/resources/surface_tool.cpp:1156)
+[   1% ] [90m[1mimport[22m | 执行自定义脚本...[39m[0m
+[  99% ] [90m[1mimport[22m | 保存中...[39m[0m
+[92m[ DONE ][39m [1mimport[22m
+[0m
+[  82% ] [90m[1mreimport[22m | yellow_character_animated.glb[39m[0m
+[   0% ] [90m[1mimport[22m | Started 导入场景 (104 steps)[39m[0m
+[   0% ] [90m[1mimport[22m | 导入场景中...[39m[0m
+ERROR: UVs are required to generate tangents.
+   at: generate_tangents (scene/resources/surface_tool.cpp:1156)
+ERROR: UVs are required to generate tangents.
+   at: generate_tangents (scene/resources/surface_tool.cpp:1156)
+[   1% ] [90m[1mimport[22m | 执行自定义脚本...[39m[0m
+[  99% ] [90m[1mimport[22m | 保存中...[39m[0m
+[92m[ DONE ][39m [1mimport[22m
+[0m
+[  83% ] [90m[1mreimport[22m | Prop_Barrel1.fbx[39m[0m
+[   0% ] [90m[1mimport[22m | Started 导入场景 (104 steps)[39m[0m
+[   0% ] [90m[1mimport[22m | 导入场景中...[39m[0m
+ERROR: Resource file not found: res:// (expected type: Texture2D)
+   at: _load (core/io/resource_loader.cpp:351)
+ERROR: Can't open file from path 'res://assets/models/props/T_Props_Batch1_BaseColor.png'.
+   at: get_file_as_bytes (core/io/file_access.cpp:942)
+WARNING: FBX: Image index '0' couldn't be loaded from path: res://assets/models/props/T_Props_Batch1_BaseColor.png because there was no data to load. Skipping it.
+   at: _parse_images (modules/fbx/fbx_document.cpp:1084)
+ERROR: Resource file not found: res:// (expected type: Texture2D)
+   at: _load (core/io/resource_loader.cpp:351)
+ERROR: Can't open file from path 'res://assets/models/props/T_Props_Batch1_Normal.png'.
+   at: get_file_as_bytes (core/io/file_access.cpp:942)
+WARNING: FBX: Image index '1' couldn't be loaded from path: res://assets/models/props/T_Props_Batch1_Normal.png because there was no data to load. Skipping it.
+   at: _parse_images (modules/fbx/fbx_document.cpp:1084)
+[   1% ] [90m[1mimport[22m | 执行自定义脚本...[39m[0m
+[  99% ] [90m[1mimport[22m | 保存中...[39m[0m
+[92m[ DONE ][39m [1mimport[22m
+[0m
+[  84% ] [90m[1mreimport[22m | Prop_Barrel2_Closed.fbx[39m[0m
+[   0% ] [90m[1mimport[22m | Started 导入场景 (104 steps)[39m[0m
+[   0% ] [90m[1mimport[22m | 导入场景中...[39m[0m
+ERROR: Resource file not found: res:// (expected type: Texture2D)
+   at: _load (core/io/resource_loader.cpp:351)
+ERROR: Can't open file from path 'res://assets/models/props/T_Props_Batch1_BaseColor.png'.
+   at: get_file_as_bytes (core/io/file_access.cpp:942)
+WARNING: FBX: Image index '0' couldn't be loaded from path: res://assets/models/props/T_Props_Batch1_BaseColor.png because there was no data to load. Skipping it.
+   at: _parse_images (modules/fbx/fbx_document.cpp:1084)
+ERROR: Resource file not found: res:// (expected type: Texture2D)
+   at: _load (core/io/resource_loader.cpp:351)
+ERROR: Can't open file from path 'res://assets/models/props/T_Props_Batch1_Normal.png'.
+   at: get_file_as_bytes (core/io/file_access.cpp:942)
+WARNING: FBX: Image index '1' couldn't be loaded from path: res://assets/models/props/T_Props_Batch1_Normal.png because there was no data to load. Skipping it.
+   at: _parse_images (modules/fbx/fbx_document.cpp:1084)
+[   1% ] [90m[1mimport[22m | 执行自定义脚本...[39m[0m
+[  99% ] [90m[1mimport[22m | 保存中...[39m[0m
+[92m[ DONE ][39m [1mimport[22m
+[0m
+[  86% ] [90m[1mreimport[22m | Prop_Barrel2_Open.fbx[39m[0m
+[   0% ] [90m[1mimport[22m | Started 导入场景 (104 steps)[39m[0m
+[   0% ] [90m[1mimport[22m | 导入场景中...[39m[0m
+ERROR: Resource file not found: res:// (expected type: Texture2D)
+   at: _load (core/io/resource_loader.cpp:351)
+ERROR: Can't open file from path 'res://assets/models/props/T_Props_Batch1_BaseColor.png'.
+   at: get_file_as_bytes (core/io/file_access.cpp:942)
+WARNING: FBX: Image index '0' couldn't be loaded from path: res://assets/models/props/T_Props_Batch1_BaseColor.png because there was no data to load. Skipping it.
+   at: _parse_images (modules/fbx/fbx_document.cpp:1084)
+ERROR: Resource file not found: res:// (expected type: Texture2D)
+   at: _load (core/io/resource_loader.cpp:351)
+ERROR: Can't open file from path 'res://assets/models/props/T_Props_Batch1_Normal.png'.
+   at: get_file_as_bytes (core/io/file_access.cpp:942)
+WARNING: FBX: Image index '1' couldn't be loaded from path: res://assets/models/props/T_Props_Batch1_Normal.png because there was no data to load. Skipping it.
+   at: _parse_images (modules/fbx/fbx_document.cpp:1084)
+[   1% ] [90m[1mimport[22m | 执行自定义脚本...[39m[0m
+[  99% ] [90m[1mimport[22m | 保存中...[39m[0m
+[92m[ DONE ][39m [1mimport[22m
+[0m
+[  87% ] [90m[1mreimport[22m | Prop_Chair.fbx[39m[0m
+[   0% ] [90m[1mimport[22m | Started 导入场景 (104 steps)[39m[0m
+[   0% ] [90m[1mimport[22m | 导入场景中...[39m[0m
+ERROR: Resource file not found: res:// (expected type: Texture2D)
+   at: _load (core/io/resource_loader.cpp:351)
+ERROR: Can't open file from path 'res://assets/models/props/T_Trim_03_Dark.png'.
+   at: get_file_as_bytes (core/io/file_access.cpp:942)
+WARNING: FBX: Image index '0' couldn't be loaded from path: res://assets/models/props/T_Trim_03_Dark.png because there was no data to load. Skipping it.
+   at: _parse_images (modules/fbx/fbx_document.cpp:1084)
+ERROR: Resource file not found: res:// (expected type: Texture2D)
+   at: _load (core/io/resource_loader.cpp:351)
+ERROR: Can't open file from path 'res://assets/models/props/T_Trim_03_Normal.png'.
+   at: get_file_as_bytes (core/io/file_access.cpp:942)
+WARNING: FBX: Image index '1' couldn't be loaded from path: res://assets/models/props/T_Trim_03_Normal.png because there was no data to load. Skipping it.
+   at: _parse_images (modules/fbx/fbx_document.cpp:1084)
+ERROR: Resource file not found: res:// (expected type: Texture2D)
+   at: _load (core/io/resource_loader.cpp:351)
+ERROR: Can't open file from path 'res://assets/models/props/T_Trim_03_BaseColor.png'.
+   at: get_file_as_bytes (core/io/file_access.cpp:942)
+WARNING: FBX: Image index '2' couldn't be loaded from path: res://assets/models/props/T_Trim_03_BaseColor.png because there was no data to load. Skipping it.
+   at: _parse_images (modules/fbx/fbx_document.cpp:1084)
+[   1% ] [90m[1mimport[22m | 执行自定义脚本...[39m[0m
+[  99% ] [90m[1mimport[22m | 保存中...[39m[0m
+[92m[ DONE ][39m [1mimport[22m
+[0m
+[  88% ] [90m[1mreimport[22m | Prop_Chest.fbx[39m[0m
+[   0% ] [90m[1mimport[22m | Started 导入场景 (104 steps)[39m[0m
+[   0% ] [90m[1mimport[22m | 导入场景中...[39m[0m
+ERROR: Resource file not found: res:// (expected type: Texture2D)
+   at: _load (core/io/resource_loader.cpp:351)
+ERROR: Can't open file from path 'res://assets/models/props/T_Props_Batch2_BaseColor.png'.
+   at: get_file_as_bytes (core/io/file_access.cpp:942)
+WARNING: FBX: Image index '0' couldn't be loaded from path: res://assets/models/props/T_Props_Batch2_BaseColor.png because there was no data to load. Skipping it.
+   at: _parse_images (modules/fbx/fbx_document.cpp:1084)
+ERROR: Resource file not found: res:// (expected type: Texture2D)
+   at: _load (core/io/resource_loader.cpp:351)
+ERROR: Can't open file from path 'res://assets/models/props/T_Props_Batch2_Normal.png'.
+   at: get_file_as_bytes (core/io/file_access.cpp:942)
+WARNING: FBX: Image index '1' couldn't be loaded from path: res://assets/models/props/T_Props_Batch2_Normal.png because there was no data to load. Skipping it.
+   at: _parse_images (modules/fbx/fbx_document.cpp:1084)
+[   1% ] [90m[1mimport[22m | 执行自定义脚本...[39m[0m
+[  99% ] [90m[1mimport[22m | 保存中...[39m[0m
+[92m[ DONE ][39m [1mimport[22m
+[0m
+[  89% ] [90m[1mreimport[22m | Prop_Crate.fbx[39m[0m
+[   0% ] [90m[1mimport[22m | Started 导入场景 (104 steps)[39m[0m
+[   0% ] [90m[1mimport[22m | 导入场景中...[39m[0m
+ERROR: Resource file not found: res:// (expected type: Texture2D)
+   at: _load (core/io/resource_loader.cpp:351)
+ERROR: Can't open file from path 'res://assets/models/props/T_Props_Crates_BaseColor.png'.
+   at: get_file_as_bytes (core/io/file_access.cpp:942)
+WARNING: FBX: Image index '0' couldn't be loaded from path: res://assets/models/props/T_Props_Crates_BaseColor.png because there was no data to load. Skipping it.
+   at: _parse_images (modules/fbx/fbx_document.cpp:1084)
+ERROR: Resource file not found: res:// (expected type: Texture2D)
+   at: _load (core/io/resource_loader.cpp:351)
+ERROR: Can't open file from path 'res://assets/models/props/T_Props_Crates_Normal.png'.
+   at: get_file_as_bytes (core/io/file_access.cpp:942)
+WARNING: FBX: Image index '1' couldn't be loaded from path: res://assets/models/props/T_Props_Crates_Normal.png because there was no data to load. Skipping it.
+   at: _parse_images (modules/fbx/fbx_document.cpp:1084)
+[   1% ] [90m[1mimport[22m | 执行自定义脚本...[39m[0m
+[  99% ] [90m[1mimport[22m | 保存中...[39m[0m
+[92m[ DONE ][39m [1mimport[22m
+[0m
+[  90% ] [90m[1mreimport[22m | Prop_Crate_Large.fbx[39m[0m
+[   0% ] [90m[1mimport[22m | Started 导入场景 (104 steps)[39m[0m
+[   0% ] [90m[1mimport[22m | 导入场景中...[39m[0m
+ERROR: Resource file not found: res:// (expected type: Texture2D)
+   at: _load (core/io/resource_loader.cpp:351)
+ERROR: Can't open file from path 'res://assets/models/props/T_Props_Crates_BaseColor.png'.
+   at: get_file_as_bytes (core/io/file_access.cpp:942)
+WARNING: FBX: Image index '0' couldn't be loaded from path: res://assets/models/props/T_Props_Crates_BaseColor.png because there was no data to load. Skipping it.
+   at: _parse_images (modules/fbx/fbx_document.cpp:1084)
+ERROR: Resource file not found: res:// (expected type: Texture2D)
+   at: _load (core/io/resource_loader.cpp:351)
+ERROR: Can't open file from path 'res://assets/models/props/T_Props_Crates_Normal.png'.
+   at: get_file_as_bytes (core/io/file_access.cpp:942)
+WARNING: FBX: Image index '1' couldn't be loaded from path: res://assets/models/props/T_Props_Crates_Normal.png because there was no data to load. Skipping it.
+   at: _parse_images (modules/fbx/fbx_document.cpp:1084)
+[   1% ] [90m[1mimport[22m | 执行自定义脚本...[39m[0m
+[  99% ] [90m[1mimport[22m | 保存中...[39m[0m
+[92m[ DONE ][39m [1mimport[22m
+[0m
+[  91% ] [90m[1mreimport[22m | Prop_Crate_Tarp.fbx[39m[0m
+[   0% ] [90m[1mimport[22m | Started 导入场景 (104 steps)[39m[0m
+[   0% ] [90m[1mimport[22m | 导入场景中...[39m[0m
+ERROR: Resource file not found: res:// (expected type: Texture2D)
+   at: _load (core/io/resource_loader.cpp:351)
+ERROR: Can't open file from path 'res://assets/models/props/T_Props_Crates_BaseColor.png'.
+   at: get_file_as_bytes (core/io/file_access.cpp:942)
+WARNING: FBX: Image index '0' couldn't be loaded from path: res://assets/models/props/T_Props_Crates_BaseColor.png because there was no data to load. Skipping it.
+   at: _parse_images (modules/fbx/fbx_document.cpp:1084)
+ERROR: Resource file not found: res:// (expected type: Texture2D)
+   at: _load (core/io/resource_loader.cpp:351)
+ERROR: Can't open file from path 'res://assets/models/props/T_Props_Crates_Normal.png'.
+   at: get_file_as_bytes (core/io/file_access.cpp:942)
+WARNING: FBX: Image index '1' couldn't be loaded from path: res://assets/models/props/T_Props_Crates_Normal.png because there was no data to load. Skipping it.
+   at: _parse_images (modules/fbx/fbx_document.cpp:1084)
+[   1% ] [90m[1mimport[22m | 执行自定义脚本...[39m[0m
+[  99% ] [90m[1mimport[22m | 保存中...[39m[0m
+[92m[ DONE ][39m [1mimport[22m
+[0m
+[  92% ] [90m[1mreimport[22m | Prop_Crate_Tarp_Large.fbx[39m[0m
+[   0% ] [90m[1mimport[22m | Started 导入场景 (104 steps)[39m[0m
+[   0% ] [90m[1mimport[22m | 导入场景中...[39m[0m
+ERROR: Resource file not found: res:// (expected type: Texture2D)
+   at: _load (core/io/resource_loader.cpp:351)
+ERROR: Can't open file from path 'res://assets/models/props/T_Props_Crates_BaseColor.png'.
+   at: get_file_as_bytes (core/io/file_access.cpp:942)
+WARNING: FBX: Image index '0' couldn't be loaded from path: res://assets/models/props/T_Props_Crates_BaseColor.png because there was no data to load. Skipping it.
+   at: _parse_images (modules/fbx/fbx_document.cpp:1084)
+ERROR: Resource file not found: res:// (expected type: Texture2D)
+   at: _load (core/io/resource_loader.cpp:351)
+ERROR: Can't open file from path 'res://assets/models/props/T_Props_Crates_Normal.png'.
+   at: get_file_as_bytes (core/io/file_access.cpp:942)
+WARNING: FBX: Image index '1' couldn't be loaded from path: res://assets/models/props/T_Props_Crates_Normal.png because there was no data to load. Skipping it.
+   at: _parse_images (modules/fbx/fbx_document.cpp:1084)
+[   1% ] [90m[1mimport[22m | 执行自定义脚本...[39m[0m
+[  99% ] [90m[1mimport[22m | 保存中...[39m[0m
+[92m[ DONE ][39m [1mimport[22m
+[0m
+[  93% ] [90m[1mreimport[22m | Prop_Desk_L.fbx[39m[0m
+[   0% ] [90m[1mimport[22m | Started 导入场景 (104 steps)[39m[0m
+[   0% ] [90m[1mimport[22m | 导入场景中...[39m[0m
+ERROR: Resource file not found: res:// (expected type: Texture2D)
+   at: _load (core/io/resource_loader.cpp:351)
+ERROR: Can't open file from path 'res://assets/models/props/T_Trim_03_Dark.png'.
+   at: get_file_as_bytes (core/io/file_access.cpp:942)
+WARNING: FBX: Image index '0' couldn't be loaded from path: res://assets/models/props/T_Trim_03_Dark.png because there was no data to load. Skipping it.
+   at: _parse_images (modules/fbx/fbx_document.cpp:1084)
+ERROR: Resource file not found: res:// (expected type: Texture2D)
+   at: _load (core/io/resource_loader.cpp:351)
+ERROR: Can't open file from path 'res://assets/models/props/T_Trim_03_Normal.png'.
+   at: get_file_as_bytes (core/io/file_access.cpp:942)
+WARNING: FBX: Image index '1' couldn't be loaded from path: res://assets/models/props/T_Trim_03_Normal.png because there was no data to load. Skipping it.
+   at: _parse_images (modules/fbx/fbx_document.cpp:1084)
+ERROR: Resource file not found: res:// (expected type: Texture2D)
+   at: _load (core/io/resource_loader.cpp:351)
+ERROR: Can't open file from path 'res://assets/models/props/T_Trim_03_BaseColor.png'.
+   at: get_file_as_bytes (core/io/file_access.cpp:942)
+WARNING: FBX: Image index '2' couldn't be loaded from path: res://assets/models/props/T_Trim_03_BaseColor.png because there was no data to load. Skipping it.
+   at: _parse_images (modules/fbx/fbx_document.cpp:1084)
+ERROR: Resource file not found: res:// (expected type: Texture2D)
+   at: _load (core/io/resource_loader.cpp:351)
+ERROR: Can't open file from path 'res://assets/models/props/T_Trim_01_BaseColor_Red.png'.
+   at: get_file_as_bytes (core/io/file_access.cpp:942)
+WARNING: FBX: Image index '3' couldn't be loaded from path: res://assets/models/props/T_Trim_01_BaseColor_Red.png because there was no data to load. Skipping it.
+   at: _parse_images (modules/fbx/fbx_document.cpp:1084)
+ERROR: Resource file not found: res:// (expected type: Texture2D)
+   at: _load (core/io/resource_loader.cpp:351)
+ERROR: Can't open file from path 'res://assets/models/props/T_Trim_01_Normal.png'.
+   at: get_file_as_bytes (core/io/file_access.cpp:942)
+WARNING: FBX: Image index '4' couldn't be loaded from path: res://assets/models/props/T_Trim_01_Normal.png because there was no data to load. Skipping it.
+   at: _parse_images (modules/fbx/fbx_document.cpp:1084)
+[   1% ] [90m[1mimport[22m | 执行自定义脚本...[39m[0m
+[  99% ] [90m[1mimport[22m | 保存中...[39m[0m
+[92m[ DONE ][39m [1mimport[22m
+[0m
+[  94% ] [90m[1mreimport[22m | Prop_Desk_Medium.fbx[39m[0m
+[   0% ] [90m[1mimport[22m | Started 导入场景 (104 steps)[39m[0m
+[   0% ] [90m[1mimport[22m | 导入场景中...[39m[0m
+ERROR: Resource file not found: res:// (expected type: Texture2D)
+   at: _load (core/io/resource_loader.cpp:351)
+ERROR: Can't open file from path 'res://assets/models/props/T_Trim_03_Dark.png'.
+   at: get_file_as_bytes (core/io/file_access.cpp:942)
+WARNING: FBX: Image index '0' couldn't be loaded from path: res://assets/models/props/T_Trim_03_Dark.png because there was no data to load. Skipping it.
+   at: _parse_images (modules/fbx/fbx_document.cpp:1084)
+ERROR: Resource file not found: res:// (expected type: Texture2D)
+   at: _load (core/io/resource_loader.cpp:351)
+ERROR: Can't open file from path 'res://assets/models/props/T_Trim_03_Normal.png'.
+   at: get_file_as_bytes (core/io/file_access.cpp:942)
+WARNING: FBX: Image index '1' couldn't be loaded from path: res://assets/models/props/T_Trim_03_Normal.png because there was no data to load. Skipping it.
+   at: _parse_images (modules/fbx/fbx_document.cpp:1084)
+ERROR: Resource file not found: res:// (expected type: Texture2D)
+   at: _load (core/io/resource_loader.cpp:351)
+ERROR: Can't open file from path 'res://assets/models/props/T_Trim_03_BaseColor.png'.
+   at: get_file_as_bytes (core/io/file_access.cpp:942)
+WARNING: FBX: Image index '2' couldn't be loaded from path: res://assets/models/props/T_Trim_03_BaseColor.png because there was no data to load. Skipping it.
+   at: _parse_images (modules/fbx/fbx_document.cpp:1084)
+ERROR: Resource file not found: res:// (expected type: Texture2D)
+   at: _load (core/io/resource_loader.cpp:351)
+ERROR: Can't open file from path 'res://assets/models/props/T_Trim_01_BaseColor_Red.png'.
+   at: get_file_as_bytes (core/io/file_access.cpp:942)
+WARNING: FBX: Image index '3' couldn't be loaded from path: res://assets/models/props/T_Trim_01_BaseColor_Red.png because there was no data to load. Skipping it.
+   at: _parse_images (modules/fbx/fbx_document.cpp:1084)
+ERROR: Resource file not found: res:// (expected type: Texture2D)
+   at: _load (core/io/resource_loader.cpp:351)
+ERROR: Can't open file from path 'res://assets/models/props/T_Trim_01_Normal.png'.
+   at: get_file_as_bytes (core/io/file_access.cpp:942)
+WARNING: FBX: Image index '4' couldn't be loaded from path: res://assets/models/props/T_Trim_01_Normal.png because there was no data to load. Skipping it.
+   at: _parse_images (modules/fbx/fbx_document.cpp:1084)
+[   1% ] [90m[1mimport[22m | 执行自定义脚本...[39m[0m
+[  99% ] [90m[1mimport[22m | 保存中...[39m[0m
+[92m[ DONE ][39m [1mimport[22m
+[0m
+[  95% ] [90m[1mreimport[22m | Prop_Desk_Small.fbx[39m[0m
+[   0% ] [90m[1mimport[22m | Started 导入场景 (104 steps)[39m[0m
+[   0% ] [90m[1mimport[22m | 导入场景中...[39m[0m
+ERROR: Resource file not found: res:// (expected type: Texture2D)
+   at: _load (core/io/resource_loader.cpp:351)
+ERROR: Can't open file from path 'res://assets/models/props/T_Trim_03_Dark.png'.
+   at: get_file_as_bytes (core/io/file_access.cpp:942)
+WARNING: FBX: Image index '0' couldn't be loaded from path: res://assets/models/props/T_Trim_03_Dark.png because there was no data to load. Skipping it.
+   at: _parse_images (modules/fbx/fbx_document.cpp:1084)
+ERROR: Resource file not found: res:// (expected type: Texture2D)
+   at: _load (core/io/resource_loader.cpp:351)
+ERROR: Can't open file from path 'res://assets/models/props/T_Trim_03_Normal.png'.
+   at: get_file_as_bytes (core/io/file_access.cpp:942)
+WARNING: FBX: Image index '1' couldn't be loaded from path: res://assets/models/props/T_Trim_03_Normal.png because there was no data to load. Skipping it.
+   at: _parse_images (modules/fbx/fbx_document.cpp:1084)
+ERROR: Resource file not found: res:// (expected type: Texture2D)
+   at: _load (core/io/resource_loader.cpp:351)
+ERROR: Can't open file from path 'res://assets/models/props/T_Trim_03_BaseColor.png'.
+   at: get_file_as_bytes (core/io/file_access.cpp:942)
+WARNING: FBX: Image index '2' couldn't be loaded from path: res://assets/models/props/T_Trim_03_BaseColor.png because there was no data to load. Skipping it.
+   at: _parse_images (modules/fbx/fbx_document.cpp:1084)
+ERROR: Resource file not found: res:// (expected type: Texture2D)
+   at: _load (core/io/resource_loader.cpp:351)
+ERROR: Can't open file from path 'res://assets/models/props/T_Trim_01_BaseColor_Red.png'.
+   at: get_file_as_bytes (core/io/file_access.cpp:942)
+WARNING: FBX: Image index '3' couldn't be loaded from path: res://assets/models/props/T_Trim_01_BaseColor_Red.png because there was no data to load. Skipping it.
+   at: _parse_images (modules/fbx/fbx_document.cpp:1084)
+ERROR: Resource file not found: res:// (expected type: Texture2D)
+   at: _load (core/io/resource_loader.cpp:351)
+ERROR: Can't open file from path 'res://assets/models/props/T_Trim_01_Normal.png'.
+   at: get_file_as_bytes (core/io/file_access.cpp:942)
+WARNING: FBX: Image index '4' couldn't be loaded from path: res://assets/models/props/T_Trim_01_Normal.png because there was no data to load. Skipping it.
+   at: _parse_images (modules/fbx/fbx_document.cpp:1084)
+[   1% ] [90m[1mimport[22m | 执行自定义脚本...[39m[0m
+[  99% ] [90m[1mimport[22m | 保存中...[39m[0m
+[92m[ DONE ][39m [1mimport[22m
+[0m
+[  96% ] [90m[1mreimport[22m | Prop_KeyCard.fbx[39m[0m
+[   0% ] [90m[1mimport[22m | Started 导入场景 (104 steps)[39m[0m
+[   0% ] [90m[1mimport[22m | 导入场景中...[39m[0m
+ERROR: Resource file not found: res:// (expected type: Texture2D)
+   at: _load (core/io/resource_loader.cpp:351)
+ERROR: Can't open file from path 'res://assets/models/props/T_Props_Batch1_BaseColor.png'.
+   at: get_file_as_bytes (core/io/file_access.cpp:942)
+WARNING: FBX: Image index '0' couldn't be loaded from path: res://assets/models/props/T_Props_Batch1_BaseColor.png because there was no data to load. Skipping it.
+   at: _parse_images (modules/fbx/fbx_document.cpp:1084)
+ERROR: Resource file not found: res:// (expected type: Texture2D)
+   at: _load (core/io/resource_loader.cpp:351)
+ERROR: Can't open file from path 'res://assets/models/props/T_Props_Batch1_Normal.png'.
+   at: get_file_as_bytes (core/io/file_access.cpp:942)
+WARNING: FBX: Image index '1' couldn't be loaded from path: res://assets/models/props/T_Props_Batch1_Normal.png because there was no data to load. Skipping it.
+   at: _parse_images (modules/fbx/fbx_document.cpp:1084)
+[   1% ] [90m[1mimport[22m | 执行自定义脚本...[39m[0m
+[  99% ] [90m[1mimport[22m | 保存中...[39m[0m
+[92m[ DONE ][39m [1mimport[22m
+[0m
+[  97% ] [90m[1mreimport[22m | Prop_Locker.fbx[39m[0m
+[   0% ] [90m[1mimport[22m | Started 导入场景 (104 steps)[39m[0m
+[   0% ] [90m[1mimport[22m | 导入场景中...[39m[0m
+ERROR: Resource file not found: res:// (expected type: Texture2D)
+   at: _load (core/io/resource_loader.cpp:351)
+ERROR: Can't open file from path 'res://assets/models/props/T_Trim_02_BaseColor_Red.png'.
+   at: get_file_as_bytes (core/io/file_access.cpp:942)
+WARNING: FBX: Image index '0' couldn't be loaded from path: res://assets/models/props/T_Trim_02_BaseColor_Red.png because there was no data to load. Skipping it.
+   at: _parse_images (modules/fbx/fbx_document.cpp:1084)
+ERROR: Resource file not found: res:// (expected type: Texture2D)
+   at: _load (core/io/resource_loader.cpp:351)
+ERROR: Can't open file from path 'res://assets/models/props/T_Trim_02_Normal.png'.
+   at: get_file_as_bytes (core/io/file_access.cpp:942)
+WARNING: FBX: Image index '1' couldn't be loaded from path: res://assets/models/props/T_Trim_02_Normal.png because there was no data to load. Skipping it.
+   at: _parse_images (modules/fbx/fbx_document.cpp:1084)
+[   1% ] [90m[1mimport[22m | 执行自定义脚本...[39m[0m
+[  99% ] [90m[1mimport[22m | 保存中...[39m[0m
+[92m[ DONE ][39m [1mimport[22m
+[0m
+[  98% ] [90m[1mreimport[22m | 正在结束资产导入……[39m[0m
+[92m[ DONE ][39m [1mreimport[22m
+[0m
+[   0% ] [90m[1mreimport[22m | Started 正在导入或重新导入资产 (92 steps)[39m[0m
+[   0% ] [90m[1mreimport[22m | 正在执行重新导入的后置操作……[39m[0m
+[92m[ DONE ][39m [1mreimport[22m
+[0m
+[   0% ] [90m[1mloading_editor_layout[22m | Started 正在加载编辑器 (5 steps)[39m[0m
+[   0% ] [90m[1mloading_editor_layout[22m | 正在加载编辑器布局……[39m[0m
+[  16% ] [90m[1mloading_editor_layout[22m | 正在加载停靠面板……[39m[0m
+[  33% ] [90m[1mloading_editor_layout[22m | 正在重新打开场景……[39m[0m
+[ActionInterceptor] NODE_ADD: WorldEnvironment (WorldEnvironment) parent=.
+[ActionInterceptor] NODE_ADD: Moonlight (DirectionalLight3D) parent=.
+[ActionInterceptor] NODE_ADD: PresentDayGallery (Node3D) parent=.
+[ActionInterceptor] NODE_ADD: WhiteFloor (MeshInstance3D) parent=PresentDayGallery
+[ActionInterceptor] NODE_ADD: WhiteWall (MeshInstance3D) parent=PresentDayGallery
+[ActionInterceptor] NODE_ADD: BlackSignalScreen (MeshInstance3D) parent=PresentDayGallery
+[ActionInterceptor] NODE_ADD: BootTerminal (Node3D) parent=PresentDayGallery
+[ActionInterceptor] NODE_ADD: DisplayPlinth (MeshInstance3D) parent=PresentDayGallery
+[ActionInterceptor] NODE_ADD: GlassEdge (MeshInstance3D) parent=PresentDayGallery
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@4 (MeshInstance3D) parent=PresentDayGallery
+[ActionInterceptor] NODE_ADD: GlassTop (MeshInstance3D) parent=PresentDayGallery
+[ActionInterceptor] NODE_ADD: DeadIcon (MeshInstance3D) parent=PresentDayGallery
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@5 (MeshInstance3D) parent=PresentDayGallery
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@6 (MeshInstance3D) parent=PresentDayGallery
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@7 (MeshInstance3D) parent=PresentDayGallery
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@8 (MeshInstance3D) parent=PresentDayGallery
+[ActionInterceptor] NODE_ADD: @OmniLight3D@9 (OmniLight3D) parent=PresentDayGallery
+[ActionInterceptor] NODE_ADD: UnknownSignal (MeshInstance3D) parent=PresentDayGallery
+[ActionInterceptor] NODE_ADD: IntroGround (StaticBody3D) parent=.
+[ActionInterceptor] NODE_ADD: @CollisionShape3D@10 (CollisionShape3D) parent=IntroGround
+[ActionInterceptor] NODE_ADD: ArchiveArchitecture (Node3D) parent=.
+[ActionInterceptor] NODE_ADD: Floor (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: BackWall (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: Ceiling (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: ServerCabinet_00 (Node3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: ServerCabinet_02 (Node3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: ServerCabinet_04 (Node3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: CeilingPipe (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@55 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@56 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@57 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: HangingCable (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@58 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@59 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@60 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@61 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@62 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@63 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@64 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@65 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@66 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@67 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@68 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@69 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: DeadScreenFrame (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: DeadScreen (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: Scanline (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@70 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@71 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@72 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@73 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@74 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@75 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@76 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: ExitFrame (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: ExitGlow (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @OmniLight3D@77 (OmniLight3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: ForegroundBeam (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@78 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@79 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@80 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@81 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@82 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@83 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: FloorPlate (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: FadedRouteMark (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: DrainSlot (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@84 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@85 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@86 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@87 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@88 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@89 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@90 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@91 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@92 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@93 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@94 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@95 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@96 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@97 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@98 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@99 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@100 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@101 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@102 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@103 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@104 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@105 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@106 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@107 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@108 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@109 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@110 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@111 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@112 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@113 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@114 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@115 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@116 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@117 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@118 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@119 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@120 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@121 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@122 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@123 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@124 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@125 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@126 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@127 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@128 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@129 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@130 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@131 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@132 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@133 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@134 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@135 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@136 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@137 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@138 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@139 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@140 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@141 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@142 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@143 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@144 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@145 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@146 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@147 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@148 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@149 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@150 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@151 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@152 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@153 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@154 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@155 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@156 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@157 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@158 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@159 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@160 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@161 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@162 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@163 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@164 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@165 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@166 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@167 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@168 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@169 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@170 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@171 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@172 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@173 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@174 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@175 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@176 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@177 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@178 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@179 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@180 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@181 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@182 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@183 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@184 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@185 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@186 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@187 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@188 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@189 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@190 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@191 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@192 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@193 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@194 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@195 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@196 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@197 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@198 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@199 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@200 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@201 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@202 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@203 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@204 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@205 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@206 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@207 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@208 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@209 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@210 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@211 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@212 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@213 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@214 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@215 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@216 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@217 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@218 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: ArchivePlaque (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @Label3D@219 (Label3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: DrawerHandle (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: IndexSlip (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@220 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@221 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@222 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@223 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@224 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@225 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@226 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@227 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@228 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@229 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@230 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@231 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: CableSegment (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@232 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@233 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@234 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: LostArchiveBox (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@235 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@236 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: DiscardedIndex (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@237 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@238 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@239 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@263 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@264 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@265 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@266 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@267 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @Label3D@268 (Label3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@269 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@270 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@271 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@272 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@273 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@274 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@275 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@276 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@277 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@278 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@279 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@280 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@281 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@282 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@283 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@284 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@285 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@286 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@287 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@288 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@289 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@290 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@291 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@292 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@293 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@317 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@318 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@319 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@320 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@321 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @Label3D@322 (Label3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@323 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@324 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@325 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@326 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@327 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@328 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@329 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@330 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@331 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@332 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@333 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@334 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@335 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@336 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@337 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@338 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@339 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@340 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@341 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@342 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@343 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@344 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@345 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@346 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@347 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@371 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@372 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@373 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@374 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@375 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: PendantHousing (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: PendantDiffuser (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: RouteLight_0 (SpotLight3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@376 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@377 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@378 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: RouteLight_1 (SpotLight3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@379 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@380 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@381 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: RouteLight_2 (SpotLight3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@382 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@383 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@384 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: RouteLight_3 (SpotLight3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: ScreenSpill (OmniLight3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @Label3D@385 (Label3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @Label3D@386 (Label3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: OverheadGirder (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@387 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@388 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@389 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: @MeshInstance3D@390 (MeshInstance3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: GalleryEasel (Node3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: SciFiProps (Node3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: FunnyPropsInstance (Node3D) parent=ArchiveArchitecture
+[ActionInterceptor] NODE_ADD: ArrivalPortal (Node3D) parent=.
+[ActionInterceptor] NODE_ADD: GroundCollision (StaticBody3D) parent=.
+[ActionInterceptor] NODE_ADD: @CollisionShape3D@391 (CollisionShape3D) parent=GroundCollision
+[ActionInterceptor] NODE_ADD: MilkFrog (CharacterBody3D) parent=.
+[ActionInterceptor] NODE_ADD: @CollisionShape3D@392 (CollisionShape3D) parent=MilkFrog
+[ActionInterceptor] NODE_ADD: CharacterVisual (Node3D) parent=MilkFrog
+[ActionInterceptor] NODE_ADD: @OmniLight3D@394 (OmniLight3D) parent=MilkFrog
+[ActionInterceptor] NODE_ADD: CinematicSideCamera (Camera3D) parent=.
+[ActionInterceptor] NODE_ADD: Interface (CanvasLayer) parent=.
+[ActionInterceptor] NODE_ADD: MovementHint (Label) parent=Interface
+[ActionInterceptor] NODE_ADD: TransitionOverlay (ColorRect) parent=Interface
+[ActionInterceptor] NODE_ADD: StoryCue (Label) parent=Interface
+[ActionInterceptor] NODE_ADD: TitleCard (Control) parent=Interface
+[ActionInterceptor] NODE_ADD: StoryDirector (Node) parent=.
+[ActionInterceptor] NODE_ADD: Ambience (AudioStreamPlayer) parent=StoryDirector
+[ActionInterceptor] NODE_ADD: StorySound (AudioStreamPlayer) parent=StoryDirector
+[ActionInterceptor] NODE_ADD: VisualRecognition (Node) parent=.
+[ActionInterceptor] NODE_ADD: InputState (Node) parent=.
+[ActionInterceptor] NODE_ADD: CameraDirector (Node) parent=.
+[ActionInterceptor] NODE_ADD: VisionPreview (CanvasLayer) parent=.
+[ActionInterceptor] NODE_ADD: TimeTunnel (Node3D) parent=.
+[ActionInterceptor] NODE_ADD: MemoryWindow_000 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_001 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_002 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_003 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_004 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_005 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_006 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_007 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_008 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_009 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_010 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_011 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_012 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_013 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_014 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_015 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_016 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_017 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_018 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_019 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_020 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_021 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_022 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_023 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_024 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_025 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_026 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_027 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_028 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_029 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_030 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_031 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_032 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_033 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_034 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_035 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_036 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_037 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_038 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_039 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_040 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_041 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_042 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_043 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_044 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_045 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_046 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_047 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_048 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_049 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_050 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_051 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_052 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_053 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_054 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_055 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_056 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_057 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_058 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_059 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_060 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_061 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_062 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_063 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_064 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_065 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_066 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_067 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_068 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_069 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_070 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_071 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_072 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_073 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_074 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_075 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_076 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_077 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_078 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_079 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_080 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_081 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_082 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_083 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_084 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_085 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_086 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_087 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_088 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_089 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_090 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_091 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_092 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_093 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_094 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_095 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_096 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_097 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_098 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_099 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_100 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_101 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_102 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_103 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_104 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_105 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_106 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_107 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_108 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_109 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_110 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_111 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_112 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_113 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_114 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_115 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_116 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_117 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_118 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_119 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_120 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_121 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_122 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_123 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_124 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_125 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_126 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_127 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_128 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_129 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_130 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_131 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_132 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_133 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_134 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_135 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_136 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_137 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_138 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_139 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_140 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_141 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_142 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_143 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_144 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_145 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_146 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_147 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_148 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_149 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_150 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_151 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_152 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_153 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_154 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: MemoryWindow_155 (Node3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: @OmniLight3D@741 (OmniLight3D) parent=TimeTunnel
+[ActionInterceptor] NODE_ADD: EntranceNPC_niu_lai (Node3D) parent=.
+[ActionInterceptor] NODE_ADD: NiuLaiModel (Node3D) parent=EntranceNPC_niu_lai
+[ActionInterceptor] NODE_ADD: EditNotes (Node) parent=EntranceNPC_niu_lai
+[ActionInterceptor] NODE_ADD: EntranceNPC_meituan_kangaroo (Node3D) parent=.
+[ActionInterceptor] NODE_ADD: MeituanKangarooModel (Node3D) parent=EntranceNPC_meituan_kangaroo
+[ActionInterceptor] NODE_ADD: EditNotes (Node) parent=EntranceNPC_meituan_kangaroo
+[ActionInterceptor] NODE_ADD: CinemaRoom (Node3D) parent=.
+[ActionInterceptor] NODE_ADD: TextArchiveStation (Node3D) parent=.
+[  50% ] [90m[1mloading_editor_layout[22m | 正在加载中央编辑器布局……[39m[0m
+[  66% ] [90m[1mloading_editor_layout[22m | 正在加载插件窗口布局……[39m[0m
+[  83% ] [90m[1mloading_editor_layout[22m | 编辑器布局就绪。[39m[0m
+[92m[ DONE ][39m [1mloading_editor_layout[22m
+[0m
+[ScriptInterceptor] Hooked CodeEdit for: res://scripts/archive_fx.gd
+Godot MCP Plugin deactivated
+[ScriptInterceptor] sync_pending = false
+[ActionInterceptor] Hooks disconnected.
+[ScriptInterceptor] Torn down.
+[LockOverlay] Overlay removed.
+[GodotWithU] Plugin shut down.
