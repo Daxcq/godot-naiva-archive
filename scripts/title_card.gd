@@ -1,16 +1,18 @@
 extends Control
-## 开场标题「奶娃之旅」。左侧「奶娃」、右侧「之旅」各自从屏幕外翻滚飞入，
-## 落位瞬间果冻弹跳并溅出奶滴，随后整排字像果冻一样轻轻晃；
-## 两组字中间弹出一颗小奶滴作分隔。奶蛙被唤醒（或超时兜底）时
+## 开场标题「奶娃那咋了」：两段式排布——「奶娃」从左、「那咋了」从右
+## 各自翻滚飞入，落位瞬间果冻弹跳并溅出奶滴，随后整排字像果冻一样轻轻晃；
+## 两组之间（"娃 | 那"）的断句缝偏大，读出"奶娃——那咋了？"的梗节奏。
+## 中缝弹出一颗小奶滴作分隔。奶蛙被唤醒（或超时兜底）时
 ## 标题先拉长再融化、滴着奶滴坠落退场。
 
-const TITLE := ["奶", "娃", "之", "旅"]
+const TITLE := ["奶", "娃", "那", "咋", "了"]
 const VIEW := Vector2(1280, 720)
 const CENTER := Vector2(640, 468)
-const CELL := 200.0        # 单字占位宽
+const CELL := 176.0        # 单字占位宽（5 字比 4 字收窄防溢出）
 const CHAR_BOX := 200.0    # 字容器边长，缩放/旋转枢轴取容器中心
-const PAIR_GAP := 230.0    # 「奶娃」与「之旅」两组之间的缝
-const FONT_SIZE := 150
+const PAIR_GAP := 64.0     # 「奶娃」与「那咋了」两组之间的断句缝
+const IN_GAP := 24.0       # 组内字距
+const FONT_SIZE := 132
 const FLIGHT := 0.62       # 单字飞行时长
 const STAGGER := 0.16      # 逐字错峰起飞
 const FIRST_DELAY := 0.15
@@ -36,6 +38,7 @@ class Char:
 
 var chars: Array[Char] = []
 var subtitle: Label
+var drop_x := 640.0  # 中央奶滴的 x：对齐"娃|那"断句缝中心（_ready 里按布局算）
 var phase := "enter"
 var elapsed := 0.0
 var idle_time := 0.0
@@ -50,7 +53,14 @@ var droplets: Array = []  # {pos, vel, r, life, max_life}
 func _ready() -> void:
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var offsets := [-CELL - PAIR_GAP * 0.5, -PAIR_GAP * 0.5, PAIR_GAP * 0.5, CELL + PAIR_GAP * 0.5]
+	# 通用两段式排布：第 2 字之后（"娃|那"）是组间断句缝，其余是组内字距。
+	# 5 字总宽 5*176 + 3*24 + 64 = 1012，居中后两侧各留 134px。
+	var offsets: Array[float] = []
+	var total := TITLE.size() * CELL + (TITLE.size() - 2) * IN_GAP + PAIR_GAP
+	var x := CENTER.x - total * 0.5 + CELL * 0.5
+	for i in range(TITLE.size()):
+		offsets.append(x - CENTER.x)
+		x += CELL + (PAIR_GAP if i == 1 else IN_GAP)
 	for i in range(TITLE.size()):
 		var ch := Char.new()
 		var center := Vector2(CENTER.x + offsets[i], CENTER.y)
@@ -62,6 +72,8 @@ func _ready() -> void:
 		ch.label = _make_label(TITLE[i], center)
 		add_child(ch.label)
 		chars.append(ch)
+	# 奶滴对齐到第 2、3 字之间的断句缝正中。
+	drop_x = CENTER.x + (offsets[1] + offsets[2]) * 0.5
 	subtitle = _make_subtitle()
 	add_child(subtitle)
 
@@ -84,7 +96,7 @@ func _make_label(glyph: String, center: Vector2) -> Label:
 
 func _make_subtitle() -> Label:
 	var label := Label.new()
-	label.text = "网 络 流 行 梗 编 年 馆"
+	label.text = "网 络 梗 记 忆 档 案 馆"
 	label.position = Vector2(0, CENTER.y + 116)
 	label.size = Vector2(VIEW.x, 30)
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -188,7 +200,7 @@ func _apply_landing_pose(ch: Char, delta: float) -> void:
 func _update_chrome(delta: float, exit_fade: float) -> void:
 	if elapsed >= POP_TIME and not drop_popped:
 		drop_popped = true
-		_spawn_splash(Vector2(CENTER.x, CENTER.y + 20), 0.0, 6)
+		_spawn_splash(Vector2(drop_x, CENTER.y + 20), 0.0, 6)
 	if drop_popped:
 		var p := clampf((elapsed - POP_TIME) / 0.5, 0.0, 1.0)
 		drop_scale = _elastic_out(p)
@@ -259,7 +271,7 @@ func _update_droplets(delta: float) -> void:
 func _draw() -> void:
 	if drop_alpha > 0.01 and drop_scale > 0.0:
 		var bob := sin(elapsed * 2.4) * 4.0
-		_draw_drop(Vector2(CENTER.x, CENTER.y + 14 + bob), drop_scale, drop_alpha)
+		_draw_drop(Vector2(drop_x, CENTER.y + 14 + bob), drop_scale, drop_alpha)
 	for d in droplets:
 		var fade: float = 1.0 - d["life"] / d["max_life"]
 		var col: Color = MILK
