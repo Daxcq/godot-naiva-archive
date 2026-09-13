@@ -39,6 +39,9 @@ const NPCS := [
 		"tag_y": 1.62,
 		# 保留模型原始材质，不再叠加金黄色染色。
 		"tint": Color(1, 1, 1),
+		# 对话实录语音：对话进行时循环播放，走开/道别即停（用户 2026-09-13 提供）。
+		"voice": "res://assets/audio/voice_niulai.wav",
+		"voice_loop": true,
 		"lines": [
 			"……",
 			"你也是刚被送到这儿的？我看你从上面那道光里掉下来。",
@@ -61,6 +64,9 @@ const NPCS := [
 		"scale": 1.18,
 		"tag_y": 1.38,
 		"tint": Color(1, 1, 1),
+		# 名场面实录《你的胆子真是肥嘟嘟的》，20.3s 全量，对话时播、走开停。
+		"voice": "res://assets/audio/voice_kangaroo.wav",
+		"voice_loop": false,
 		"lines": [
 			"站住。先把话放这儿：不许提我的体重。",
 			"……算了，你肯定也刷到过了。全网都说我圆滚滚、胖乎乎，还给我画胖了三圈。",
@@ -92,6 +98,8 @@ var entries: Array = []
 var active := false
 var active_index := -1
 var line_delay := 0.0
+## 对话实录语音：一次只聊一个，全组共用一个播放器。
+var voice_player: AudioStreamPlayer
 
 func setup(owner: Node3D) -> void:
 	world = owner
@@ -100,10 +108,36 @@ func setup(owner: Node3D) -> void:
 	router = owner.get_node_or_null("InteractionRouter")
 	sfx = load("res://scripts/pixel_sfx.gd").new()
 	owner.add_child(sfx)
+	voice_player = AudioStreamPlayer.new()
+	voice_player.name = "EntranceVoice"
+	voice_player.bus = "Master"
+	voice_player.volume_db = -4.0
+	owner.add_child(voice_player)
 	for i in range(NPCS.size()):
 		_build_npc(i)
 	_build_ui()
 	set_active(false)
+
+## 开播某 NPC 的对话语音；voice_loop=true 的（牛来 8 秒名场面）循环。
+func _start_voice(index: int) -> void:
+	if voice_player == null:
+		return
+	var spec: Dictionary = NPCS[index]
+	var path := String(spec.get("voice", ""))
+	if path == "":
+		return
+	var wav := load(path) as AudioStreamWAV
+	if wav == null:
+		return
+	wav.loop_mode = AudioStreamWAV.LOOP_FORWARD if bool(spec.get("voice_loop", false)) else AudioStreamWAV.LOOP_DISABLED
+	wav.loop_begin = 0
+	wav.loop_end = wav.data.size() / 2  # 16-bit 单声道：帧数 = 字节数 / 2
+	voice_player.stream = wav
+	voice_player.play()
+
+func _stop_voice() -> void:
+	if voice_player and voice_player.playing:
+		voice_player.stop()
 
 ## 建造场景里的角色。模型都是静态减面 glb，没有骨骼，
 ## "呼吸"和"说话点头"全靠整体 transform 驱动。
@@ -260,6 +294,8 @@ func set_active(value: bool) -> void:
 		root_node.visible = value
 		entry.talking = false
 		entry.line_index = -1
+	if not value:
+		_stop_voice()
 	if card_panel:
 		card_panel.visible = false
 		card.text = ""
@@ -313,6 +349,10 @@ func _process(delta: float) -> void:
 		tag.position.y = float(NPCS[i].tag_y) + sin(float(entry.idle_time) * 1.2) * 0.02
 
 	if active_index >= 0:
+		# 走开即散：超出略大于 TALK_RANGE 的范围，对话和语音一起停。
+		if _distance(active_index) > TALK_RANGE + 0.6:
+			_end_talk(entries[active_index])
+			return
 		_update_prompt(entries[active_index])
 		return
 	var nearest := _nearest_entry()
@@ -354,6 +394,7 @@ func _show_line(entry: Dictionary) -> void:
 
 func _end_talk(entry: Dictionary) -> void:
 	if sfx: sfx.play("npc_done", -8.0)
+	_stop_voice()
 	entry.talking = false
 	entry.line_index = -1
 	entry.finished_once = true
@@ -379,6 +420,8 @@ func _interact() -> void:
 	entry.line_index = 0
 	# 开聊彩蛋:牛来 8-bit 哞 / 袋鼠"肥嘟嘟"弹簧音,其余走通用叮咚。
 	if sfx: sfx.play_npc_greeting(String(NPCS[nearest].id))
+	# 对话实录语音：牛来名场面 8s 循环 / 袋鼠"肥嘟嘟" 20.3s，走开或道别即停。
+	_start_voice(nearest)
 	_show_line(entry)
 
 ## 交互范围内最近的 NPC 下标,都不在范围内返回 -1。

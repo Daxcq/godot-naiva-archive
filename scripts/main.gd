@@ -42,6 +42,11 @@ var destination_elapsed := 0.0
 var in_destination := false
 var exit_gesture_hold := 0.0
 const EXIT_GESTURE_SECONDS := 0.65
+## 奶娃大笑：梗问答答对触发，肢体后仰抽动 + laugh.wav，覆盖位移动作约 2.2 秒。
+const SFX_LAUGH := preload("res://assets/audio/laugh.wav")
+const LAUGH_TIME := 2.2
+var laugh_elapsed := -1.0  # <0 = 没在笑
+var laugh_voice: AudioStreamPlayer
 
 func _ready() -> void:
 	archive_root.visible = false
@@ -62,6 +67,11 @@ func _ready() -> void:
 	skeleton = _find_skeleton(frog_visual)
 	frog_visual_base_y = frog_visual.position.y
 	_collect_animated_parts(frog_visual)
+	laugh_voice = AudioStreamPlayer.new()
+	laugh_voice.name = "LaughVoice"
+	laugh_voice.stream = SFX_LAUGH
+	laugh_voice.volume_db = -2.0
+	add_child(laugh_voice)
 	if skeleton == null:
 		push_warning("未在 CharacterVisual 下找到 Skeleton3D，走路摆腿效果将不可见")
 	# 队友迁移：动画版奶蛙模型(yellow_character_animated.glb)自带 AnimationPlayer，
@@ -157,6 +167,11 @@ func _physics_process(delta: float) -> void:
 	# InputState 全局每帧轮询:街机 / 画廊 / 记忆房间打开时也要喂手势数据,
 	# 否则 cancel_just_pressed / confirm_just_pressed 会永远不更新。
 	input_state.poll(delta)
+	# 奶娃大笑计时（梗问答答对触发）。
+	if laugh_elapsed >= 0.0:
+		laugh_elapsed += delta
+		if laugh_elapsed >= LAUGH_TIME:
+			laugh_elapsed = -1.0
 	# 队友迁移:显示屏播放中冻结世界移动(Esc 退出由显示屏自己处理)。
 	if archive_video_screen and archive_video_screen.is_playing():
 		player.velocity = Vector3.ZERO
@@ -410,7 +425,22 @@ func _collect_animated_parts(node: Node) -> void:
 				animated_part_base[child] = (child as Node3D).rotation
 			_collect_animated_parts(child)
 
+## 梗问答答对：奶娃捧腹大笑。身体后仰抽动（沿用开场 laugh 段的姿态语言），
+## 覆盖程序化/动画位移动作直到 LAUGH_TIME 结束。
+func play_frog_laugh() -> void:
+	laugh_elapsed = 0.0
+	if laugh_voice:
+		laugh_voice.play()
+
 func apply_locomotion_pose() -> void:
+	# 大笑优先：后仰 + 按笑声节奏抽动，压过 idle/walk/run 动画与程序化摆骨骼。
+	if laugh_elapsed >= 0.0:
+		var t := laugh_elapsed
+		frog_visual.rotation.x = lerp(frog_visual.rotation.x, -0.30 + sin(t * 26.0) * 0.09, 0.35)
+		frog_visual.rotation.z = lerp(frog_visual.rotation.z, 0.0, 0.2)
+		frog_visual.scale = frog_visual.scale.lerp(Vector3.ONE, 0.16)
+		frog_visual.position.y = frog_visual_base_y + absf(sin(t * 13.0)) * 0.06
+		return
 	var moving := locomotion != "idle"
 	var phase := sin(anim_time)
 	if locomotion == "crawl":

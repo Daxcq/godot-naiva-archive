@@ -23,6 +23,9 @@ func _init() -> void:
 	world = packed.instantiate() as Node3D
 	root.add_child(world)
 	world._ready()
+	# 等一帧让 AudioStreamPlayer 完成 playback 注册，
+	# 否则 headless 下 voice_player.playing 恒为 false（播放断言假失败）。
+	await process_frame
 
 	npc = world.get_node_or_null("ArchiveEntranceNPC")
 	if npc == null:
@@ -142,6 +145,12 @@ func _test_dialogue_flow(index: int) -> void:
 	_check(int(_entry(index).line_index) == 0, "%s 从第 1 句开始" % label)
 	_check(npc.card_panel.visible == true, "%s 对话卡片显示" % label)
 	_check(npc.card_title.text == label, "%s 卡片标题正确" % label)
+	# 对话实录语音：开聊即播（牛来 8s 名场面循环 / 袋鼠"肥嘟嘟"全量）。
+	_check(npc.voice_player != null and npc.voice_player.stream != null, "%s 对话语音已装载" % label)
+	_check(npc.voice_player.playing, "%s 对话语音播放中" % label)
+	var want_loop := bool(spec.get("voice_loop", false))
+	_check((npc.voice_player.stream.loop_mode == AudioStreamWAV.LOOP_FORWARD) == want_loop,
+			"%s 语音循环设置正确" % label)
 	var first_text: String = npc.card.text
 	_check(first_text.contains(String(lines[0])), "%s 卡片内容 = 第 1 句台词" % label)
 	_check(String(npc.button.text).contains("下一句"),
@@ -171,6 +180,12 @@ func _test_dialogue_flow(index: int) -> void:
 	npc.line_delay = 0.0
 	npc._interact()
 	_check(npc.active_index == index, "%s 可重复对话（再次按 E 重新开始）" % label)
+
+	# 走开即散：对话和语音一起停。
+	world.player.position = Vector3(10.0, 0.65, 0.0)
+	npc._process(0.016)
+	_check(npc.active_index == -1, "%s 走开后对话自动结束" % label)
+	_check(not npc.voice_player.playing, "走开后对话语音停止")
 
 	# 关闭系统后必须完全静默（set_active 同时重置对话状态，不泄漏给下一段测试）
 	npc.set_active(false)

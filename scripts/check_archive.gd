@@ -126,7 +126,11 @@ func check() -> void:
 	interaction.interact()
 	# 窗口内按 E(保存旧版本)才进入梗问答。
 	assert(interaction.active_state == "quiz", "covered_2024 暂停窗口内按 E 应进入梗问答")
+	# 反馈音：答错一声"安迪？"，答对奶娃捧腹大笑(2.2s 肢体+laugh.wav)。
+	interaction.choose_beat(1)
+	assert(interaction.quiz_voice.playing, "答错应播放安迪语音")
 	interaction.choose_beat(2)
+	assert(scene.laugh_elapsed >= 0.0, "答对应触发奶娃大笑")
 	assert(interaction.get_node_state("covered_2024") == "solved")
 	assert(interaction.main_count() == 3)
 	var endings: Array[String] = []

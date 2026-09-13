@@ -8,6 +8,11 @@ signal ending_chosen(kind: String)
 
 const UIKit := preload("res://scripts/ui_kit.gd")
 
+## 梗问答反馈音：答对→奶娃大笑（world.play_frog_laugh 声画同源）；
+## 答错→"安迪？"（voice_andy_2.wav，开场修剪下来的安迪追问句，正好废物利用）。
+const SFX_QUIZ_WRONG := preload("res://assets/audio/voice_andy_2.wav")
+var quiz_voice: AudioStreamPlayer
+
 var world: Node3D
 var player: CharacterBody3D
 var router: Node
@@ -61,6 +66,11 @@ func setup(owner: Node3D) -> void:
 	player = owner.player
 	var layer := owner.get_node("Interface")
 	router = owner.get_node_or_null("InteractionRouter")
+	quiz_voice = AudioStreamPlayer.new()
+	quiz_voice.name = "QuizWrongVoice"
+	quiz_voice.stream = SFX_QUIZ_WRONG
+	quiz_voice.volume_db = -2.0
+	add_child(quiz_voice)
 	# 队友迁移：梗问答期间的全屏故障失真(模糊+抖动+扫描线)。
 	_create_distortion_overlay(layer)
 	# 左上档案卡:标题 + 正文,统一样式与锚位(UIKit 卡片区)。
@@ -497,9 +507,15 @@ func choose_beat(choice: int) -> void:
 		var data: Dictionary = question_data[active_id]
 		if choice - 1 == int(data.correct):
 			interaction_feedback.emit(active_id, "beat_correct")
+			# 答对：奶娃捧腹大笑（声画同源，2.2 秒后回正常动作）。
+			if world and world.has_method("play_frog_laugh"):
+				world.play_frog_laugh()
 			_solve(_item_by_id(active_id))
 		else:
 			interaction_feedback.emit(active_id, "beat_wrong")
+			# 答错：一声"安迪？"，奶娃一脸疑惑。
+			if quiz_voice:
+				quiz_voice.play()
 			card.text = "选错了。档案出现短暂噪声，再试一次。"
 
 ## 队友迁移：进入梗问答——复用节拍按钮行显示三个选项。
