@@ -4,7 +4,9 @@ extends Node3D
 const UIKit := preload("res://scripts/ui_kit.gd")
 const CINEMA_POS := Vector3(29.5, 0.0, 1.55)
 const NEAR_DISTANCE := 2.8
-const FEATURE_MP4 := "res://assets/video/cinema_feature.mp4"
+## 今日放映：完整播放俊博提供的《影院视频》（27s，960 宽 Theora）。
+## Godot 4.6 原生只支持 Theora(.ogv)，mp4 无 loader（实测 No loader found）。
+const FEATURE := "res://assets/video/cinema_feature.ogv"
 const FALLBACK_OGV := "res://assets/video/clip_rooftop.ogv"
 
 var world: Node3D
@@ -94,7 +96,7 @@ func _close() -> void:
 	player.stop(); player.visible = false; open = false; world.board_active = false; layer.visible = false
 
 func _play_feature() -> void:
-	var stream := load(FEATURE_MP4) as VideoStream
+	var stream := load(FEATURE) as VideoStream
 	if stream == null:
 		stream = load(FALLBACK_OGV) as VideoStream
 	if stream: player.stream = stream; player.visible = true; player.play()

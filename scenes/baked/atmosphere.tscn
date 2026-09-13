@@ -1,0 +1,84 @@
+[gd_scene format=3]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_akcvf"]
+emission_shape = 3
+emission_box_extents = Vector3(20.5, 3.8, 2.5)
+direction = Vector3(0.15, 0.2, 0)
+spread = 32.0
+initial_velocity_min = 0.025
+initial_velocity_max = 0.11
+gravity = Vector3(0, -0.006, 0)
+scale_min = 0.4
+scale_max = 1.3
+
+[sub_resource type="Gradient" id="Gradient_abupg"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_cv7ij"]
+gradient = SubResource("Gradient_abupg")
+width = 32
+height = 32
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5ehk2"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0.68, 0.62, 1, 0.48)
+albedo_texture = SubResource("GradientTexture2D_cv7ij")
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_tflxu"]
+material = SubResource("StandardMaterial3D_5ehk2")
+size = Vector2(0.045, 0.045)
+
+[sub_resource type="Shader" id="Shader_llcle"]
+code = "shader_type spatial; render_mode unshaded, blend_add, depth_draw_never, cull_disabled; uniform float strength = 0.034; void fragment() { float edge = pow(abs(dot(normalize(NORMAL), normalize(VIEW))), 2.0); float fade = smoothstep(0.0, 0.12, UV.y) * (1.0 - smoothstep(0.55, 1.0, UV.y)); ALBEDO = vec3(0.44, 0.62, 0.98); ALPHA = edge * fade * strength; }"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_puk30"]
+render_priority = 0
+shader = SubResource("Shader_llcle")
+shader_parameter/strength = null
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_askfr"]
+top_radius = 0.07
+bottom_radius = 2.7
+height = 9.0
+radial_segments = 32
+cap_top = false
+cap_bottom = false
+
+[node name="BakedVisuals_atmosphere" type="Node3D" unique_id=1697862534]
+
+[node name="ArchiveDust" type="GPUParticles3D" parent="." unique_id=559498392]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 3.8, -0.8)
+amount = 360
+lifetime = 10.0
+preprocess = 10.0
+visibility_aabb = AABB(-22, -4.5, -4, 44, 10, 8)
+process_material = SubResource("ParticleProcessMaterial_akcvf")
+draw_pass_1 = SubResource("QuadMesh_tflxu")
+
+[node name="ArchiveScreenShaft" type="SpotLight3D" parent="." unique_id=1157822083]
+transform = Transform3D(1, 0, 0, 0, 0.42261824, 0.9063078, 0, -0.9063078, 0.42261824, 14, 9.2, 2)
+light_color = Color(0.39215687, 0.84705883, 1, 1)
+light_energy = 3.2
+shadow_enabled = true
+spot_range = 14.0
+spot_angle = 26.0
+
+[node name="VisibleShaft" type="MeshInstance3D" parent="ArchiveScreenShaft" unique_id=691463367]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, -4.5)
+material_override = SubResource("ShaderMaterial_puk30")
+cast_shadow = 0
+mesh = SubResource("CylinderMesh_askfr")
+
+[node name="ExitWarmPool" type="OmniLight3D" parent="." unique_id=1971345243]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 2.5, 0)
+light_color = Color(1, 0.5019608, 0.2, 1)
+light_energy = 0.9
+omni_range = 7.0

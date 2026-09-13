@@ -15,11 +15,38 @@ const POSTERS := [
 	{"x": 33.9, "y": 2.6, "w": 1.2, "h": 1.6, "accent": "3ee6ff", "title": "出口酒馆", "line": "最后一杯电子雨"}
 ]
 
-func setup(archive_root: Node3D) -> void:
+func setup(archive_root: Node3D, force := false) -> void:
 	name = "ArchivePosters"
 	archive_root.add_child(self)
+	# 烘焙优先：BakedVisuals_posters 在场景里（编辑器可视化编辑的就是它），
+	# 本节点退化为"故障闪烁驱动器"，把烘焙实例里的霓虹灯管接回动画即可。
+	# force=true 供烘焙流程绕过检测（否则有产物时永远烘不出新东西）。
+	var baker := load("res://scripts/visual_baker.gd")
+	if not force and baker.try_mount(archive_root, "posters"):
+		_adopt_baked(archive_root, String(baker.node_name("posters")))
+		return
 	for spec in POSTERS:
 		_build_poster(spec)
+	set_process(true)
+
+## 烘焙模式：不重复生成海报，只收集烘焙实例里的霓虹边框接进闪烁动画。
+func _adopt_baked(archive_root: Node3D, baked_name: String) -> void:
+	var baked := archive_root.get_node_or_null(NodePath(baked_name))
+	if baked == null:
+		return
+	for spec in POSTERS:
+		if not spec.get("flicker", false):
+			continue
+		var poster_name := "Poster_%s" % String(spec.title).replace(" ", "_")
+		var poster := baked.get_node_or_null(NodePath(poster_name))
+		if poster == null:
+			continue
+		for edge in poster.find_children("NeonEdge*", "MeshInstance3D", true, false):
+			# seed 用海报名 + 边序号推出来，确定且彼此错开相位。
+			_flicker.append({
+				"mesh": edge,
+				"seed": float(hash(poster_name) % 1000) * 0.006 + float(edge.get_index()) * 1.7,
+			})
 	set_process(true)
 
 func _build_poster(spec: Dictionary) -> void:
@@ -53,6 +80,7 @@ func _build_poster(spec: Dictionary) -> void:
 		_panel(poster, "ArtBlock_%d" % i, Vector3(bx, by, 0.02), Vector3(bw, bh, 0.012), tint, 0.8)
 	# 标语。
 	var title := Label3D.new()
+	title.name = "Title"
 	title.text = String(spec.title)
 	title.position = Vector3(0, h * 0.32, 0.04)
 	title.font_size = 30
@@ -60,6 +88,7 @@ func _build_poster(spec: Dictionary) -> void:
 	title.modulate = accent
 	poster.add_child(title)
 	var line := Label3D.new()
+	line.name = "Line"
 	line.text = String(spec.line)
 	line.position = Vector3(0, -h * 0.34, 0.04)
 	line.font_size = 18
@@ -90,7 +119,10 @@ func _panel(parent: Node3D, title: String, at: Vector3, size: Vector3, color: Co
 		mat.emission = color
 		mat.emission_energy_multiplier = emission
 	node.material_override = mat
-	parent.add_child(node)
+	# 第二参 true = 冲突时强制可读名（NeonEdge2/NeonEdge3/...）。
+	# 不然四条灯管只有第一条保留名字，烘焙产物里其余变成 @MeshInstance3D@N，
+	# _adopt_baked 按 "NeonEdge*" 收集闪烁灯管时会漏掉三条。
+	parent.add_child(node, true)
 	return node
 
 func _process(delta: float) -> void:

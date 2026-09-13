@@ -165,7 +165,11 @@ static func build(root: Node3D) -> void:
 	var shaft := SpotLight3D.new(); shaft.name = "ArchiveScreenShaft"; shaft.position = Vector3(14, 10.5, 2.0); shaft.rotation_degrees = Vector3(-55, 0, 0); shaft.light_color = Color("64d8ff"); shaft.light_energy = 4.0; shaft.spot_range = 14; shaft.spot_angle = 32; shaft.shadow_enabled = true; root.add_child(shaft)
 	var exit_fill := OmniLight3D.new(); exit_fill.name = "ExitWarmPool"; exit_fill.position = Vector3(35.0, 2.5, 0.0); exit_fill.light_color = Color("ff8033"); exit_fill.light_energy = 1.5; exit_fill.omni_range = 7.0; root.add_child(exit_fill)
 
-static func build_fx(root: Node3D) -> void:
+static func build_fx(root: Node3D, force := false) -> void:
+	# 烘焙优先：res://scenes/baked/atmosphere.tscn 存在就直接挂烘焙实例，
+	# 跳过程序生成（编辑器里可视化编辑的就是烘焙产物）。force=true 供烘焙流程绕过。
+	if not force and load("res://scripts/visual_baker.gd").try_mount(root, "atmosphere"):
+		return
 	if root.has_node("FX"):
 		return
 	var fx := Node3D.new()

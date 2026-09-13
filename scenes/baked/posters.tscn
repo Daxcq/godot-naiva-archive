@@ -1,0 +1,969 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o314a"]
+albedo_color = Color(0.043137256, 0.023529412, 0.09411765, 1)
+roughness = 0.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_c2pkg"]
+size = Vector3(1.5, 2.1, 0.03)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pqo5x"]
+albedo_color = Color(1, 0.30980393, 0.84705883, 1)
+roughness = 0.6
+emission_enabled = true
+emission = Color(1, 0.30980393, 0.84705883, 1)
+emission_energy_multiplier = 2.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_8s54r"]
+size = Vector3(1.56, 0.045, 0.02)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5qnlw"]
+albedo_color = Color(1, 0.30980393, 0.84705883, 1)
+roughness = 0.6
+emission_enabled = true
+emission = Color(1, 0.30980393, 0.84705883, 1)
+emission_energy_multiplier = 2.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_bspxr"]
+size = Vector3(1.56, 0.045, 0.02)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bgh4j"]
+albedo_color = Color(1, 0.30980393, 0.84705883, 1)
+roughness = 0.6
+emission_enabled = true
+emission = Color(1, 0.30980393, 0.84705883, 1)
+emission_energy_multiplier = 2.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_86nck"]
+size = Vector3(0.045, 2.16, 0.02)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gj6sp"]
+albedo_color = Color(1, 0.30980393, 0.84705883, 1)
+roughness = 0.6
+emission_enabled = true
+emission = Color(1, 0.30980393, 0.84705883, 1)
+emission_energy_multiplier = 2.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_mggkb"]
+size = Vector3(0.045, 2.16, 0.02)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ymm2n"]
+albedo_color = Color(0.6717789, 0.22237386, 0.62920034, 1)
+roughness = 0.6
+emission_enabled = true
+emission = Color(0.6717789, 0.22237386, 0.62920034, 1)
+emission_energy_multiplier = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_kmrov"]
+size = Vector3(0.6560692, 0.26421696, 0.012)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hbnfy"]
+albedo_color = Color(0.40026796, 0.15004997, 0.44898343, 1)
+roughness = 0.6
+emission_enabled = true
+emission = Color(0.40026796, 0.15004997, 0.44898343, 1)
+emission_energy_multiplier = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_5bocl"]
+size = Vector3(0.5305209, 0.6254693, 0.012)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lioi2"]
+albedo_color = Color(0.4610026, 0.16622819, 0.48929638, 1)
+roughness = 0.6
+emission_enabled = true
+emission = Color(0.4610026, 0.16622819, 0.48929638, 1)
+emission_energy_multiplier = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_kqeip"]
+size = Vector3(0.5774105, 0.380831, 0.012)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bak6h"]
+albedo_color = Color(0.043137256, 0.023529412, 0.09411765, 1)
+roughness = 0.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_6jlgl"]
+size = Vector3(1.3, 1.8, 0.03)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_biswc"]
+albedo_color = Color(0.24313726, 0.9019608, 1, 1)
+roughness = 0.6
+emission_enabled = true
+emission = Color(0.24313726, 0.9019608, 1, 1)
+emission_energy_multiplier = 2.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_1krbn"]
+size = Vector3(1.36, 0.045, 0.02)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ts2w5"]
+albedo_color = Color(0.24313726, 0.9019608, 1, 1)
+roughness = 0.6
+emission_enabled = true
+emission = Color(0.24313726, 0.9019608, 1, 1)
+emission_energy_multiplier = 2.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_re14a"]
+size = Vector3(1.36, 0.045, 0.02)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5e4ye"]
+albedo_color = Color(0.24313726, 0.9019608, 1, 1)
+roughness = 0.6
+emission_enabled = true
+emission = Color(0.24313726, 0.9019608, 1, 1)
+emission_energy_multiplier = 2.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_jlnmb"]
+size = Vector3(0.045, 1.86, 0.02)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f6n5c"]
+albedo_color = Color(0.24313726, 0.9019608, 1, 1)
+roughness = 0.6
+emission_enabled = true
+emission = Color(0.24313726, 0.9019608, 1, 1)
+emission_energy_multiplier = 2.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_0gmwc"]
+size = Vector3(0.045, 1.86, 0.02)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_411sa"]
+albedo_color = Color(0.19164658, 0.59873784, 0.7268133, 1)
+roughness = 0.6
+emission_enabled = true
+emission = Color(0.19164658, 0.59873784, 0.7268133, 1)
+emission_energy_multiplier = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_bo2on"]
+size = Vector3(0.60534555, 0.35155696, 0.012)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p7qmu"]
+albedo_color = Color(0.15925588, 0.40799266, 0.55496264, 1)
+roughness = 0.6
+emission_enabled = true
+emission = Color(0.15925588, 0.40799266, 0.55496264, 1)
+emission_energy_multiplier = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_4aleo"]
+size = Vector3(0.6057683, 0.24975695, 0.012)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u7yba"]
+albedo_color = Color(0.19289061, 0.60606384, 0.7334136, 1)
+roughness = 0.6
+emission_enabled = true
+emission = Color(0.19289061, 0.60606384, 0.7334136, 1)
+emission_energy_multiplier = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_rp30b"]
+size = Vector3(0.5186688, 0.38478798, 0.012)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2xlmv"]
+albedo_color = Color(0.043137256, 0.023529412, 0.09411765, 1)
+roughness = 0.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_68n8v"]
+size = Vector3(1.6, 2.2, 0.03)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pt7t3"]
+albedo_color = Color(0.69803923, 0.41960785, 1, 1)
+roughness = 0.6
+emission_enabled = true
+emission = Color(0.69803923, 0.41960785, 1, 1)
+emission_energy_multiplier = 2.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_md1db"]
+size = Vector3(1.66, 0.045, 0.02)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6e7e7"]
+albedo_color = Color(0.69803923, 0.41960785, 1, 1)
+roughness = 0.6
+emission_enabled = true
+emission = Color(0.69803923, 0.41960785, 1, 1)
+emission_energy_multiplier = 2.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_hubbt"]
+size = Vector3(1.66, 0.045, 0.02)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_716vq"]
+albedo_color = Color(0.69803923, 0.41960785, 1, 1)
+roughness = 0.6
+emission_enabled = true
+emission = Color(0.69803923, 0.41960785, 1, 1)
+emission_energy_multiplier = 2.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_k38c6"]
+size = Vector3(0.045, 2.26, 0.02)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tpk3v"]
+albedo_color = Color(0.69803923, 0.41960785, 1, 1)
+roughness = 0.6
+emission_enabled = true
+emission = Color(0.69803923, 0.41960785, 1, 1)
+emission_energy_multiplier = 2.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_ukkul"]
+size = Vector3(0.045, 2.26, 0.02)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nhx5q"]
+albedo_color = Color(0.47274756, 0.28769365, 0.7169032, 1)
+roughness = 0.6
+emission_enabled = true
+emission = Color(0.47274756, 0.28769365, 0.7169032, 1)
+emission_energy_multiplier = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_tej7i"]
+size = Vector3(0.47167388, 0.3740643, 0.012)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7xxyn"]
+albedo_color = Color(0.36583158, 0.22509153, 0.5825549, 1)
+roughness = 0.6
+emission_enabled = true
+emission = Color(0.36583158, 0.22509153, 0.5825549, 1)
+emission_energy_multiplier = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_h5xj0"]
+size = Vector3(0.6315197, 0.59220934, 0.012)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bvi5x"]
+albedo_color = Color(0.33805427, 0.20882718, 0.54765046, 1)
+roughness = 0.6
+emission_enabled = true
+emission = Color(0.33805427, 0.20882718, 0.54765046, 1)
+emission_energy_multiplier = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_aoui5"]
+size = Vector3(0.7793929, 0.5396258, 0.012)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sgrim"]
+albedo_color = Color(0.043137256, 0.023529412, 0.09411765, 1)
+roughness = 0.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_k6qo4"]
+size = Vector3(1.4, 1.9, 0.03)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e0vw6"]
+albedo_color = Color(0.36078432, 1, 0.7607843, 1)
+roughness = 0.6
+emission_enabled = true
+emission = Color(0.36078432, 1, 0.7607843, 1)
+emission_energy_multiplier = 2.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_ntgwf"]
+size = Vector3(1.46, 0.045, 0.02)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i0oe7"]
+albedo_color = Color(0.36078432, 1, 0.7607843, 1)
+roughness = 0.6
+emission_enabled = true
+emission = Color(0.36078432, 1, 0.7607843, 1)
+emission_energy_multiplier = 2.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_16jps"]
+size = Vector3(1.46, 0.045, 0.02)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tbh5j"]
+albedo_color = Color(0.36078432, 1, 0.7607843, 1)
+roughness = 0.6
+emission_enabled = true
+emission = Color(0.36078432, 1, 0.7607843, 1)
+emission_energy_multiplier = 2.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_8w1nc"]
+size = Vector3(0.045, 1.96, 0.02)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qeoli"]
+albedo_color = Color(0.36078432, 1, 0.7607843, 1)
+roughness = 0.6
+emission_enabled = true
+emission = Color(0.36078432, 1, 0.7607843, 1)
+emission_energy_multiplier = 2.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_lhk5j"]
+size = Vector3(0.045, 1.96, 0.02)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kq1pj"]
+albedo_color = Color(0.21838732, 0.48866534, 0.48030543, 1)
+roughness = 0.6
+emission_enabled = true
+emission = Color(0.21838732, 0.48866534, 0.48030543, 1)
+emission_energy_multiplier = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_resme"]
+size = Vector3(0.6034117, 0.27760994, 0.012)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m10of"]
+albedo_color = Color(0.21961309, 0.49306697, 0.4827198, 1)
+roughness = 0.6
+emission_enabled = true
+emission = Color(0.21961309, 0.49306697, 0.4827198, 1)
+emission_energy_multiplier = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_dukln"]
+size = Vector3(0.44824594, 0.49010062, 0.012)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tvkv1"]
+albedo_color = Color(0.18603677, 0.37249744, 0.4165846, 1)
+roughness = 0.6
+emission_enabled = true
+emission = Color(0.18603677, 0.37249744, 0.4165846, 1)
+emission_energy_multiplier = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_krje3"]
+size = Vector3(0.3839559, 0.49151796, 0.012)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uulwu"]
+albedo_color = Color(0.043137256, 0.023529412, 0.09411765, 1)
+roughness = 0.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_1kjxq"]
+size = Vector3(1.5, 2, 0.03)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_krw6a"]
+albedo_color = Color(1, 0.627451, 0.2509804, 1)
+roughness = 0.6
+emission_enabled = true
+emission = Color(1, 0.627451, 0.2509804, 1)
+emission_energy_multiplier = 2.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_n8h35"]
+size = Vector3(1.56, 0.045, 0.02)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u20d2"]
+albedo_color = Color(1, 0.627451, 0.2509804, 1)
+roughness = 0.6
+emission_enabled = true
+emission = Color(1, 0.627451, 0.2509804, 1)
+emission_energy_multiplier = 2.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_m1jju"]
+size = Vector3(1.56, 0.045, 0.02)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_40saf"]
+albedo_color = Color(1, 0.627451, 0.2509804, 1)
+roughness = 0.6
+emission_enabled = true
+emission = Color(1, 0.627451, 0.2509804, 1)
+emission_energy_multiplier = 2.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_2dku8"]
+size = Vector3(0.045, 2.06, 0.02)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fx535"]
+albedo_color = Color(1, 0.627451, 0.2509804, 1)
+roughness = 0.6
+emission_enabled = true
+emission = Color(1, 0.627451, 0.2509804, 1)
+emission_energy_multiplier = 2.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_0wqpc"]
+size = Vector3(0.045, 2.06, 0.02)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mg3jy"]
+albedo_color = Color(0.3753786, 0.24013117, 0.2509804, 1)
+roughness = 0.6
+emission_enabled = true
+emission = Color(0.3753786, 0.24013117, 0.2509804, 1)
+emission_energy_multiplier = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_w5o1s"]
+size = Vector3(0.5784452, 0.49492532, 0.012)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hx2y3"]
+albedo_color = Color(0.52042764, 0.33007425, 0.2509804, 1)
+roughness = 0.6
+emission_enabled = true
+emission = Color(0.52042764, 0.33007425, 0.2509804, 1)
+emission_energy_multiplier = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_1gxd7"]
+size = Vector3(0.6758263, 0.37721193, 0.012)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mmtet"]
+albedo_color = Color(0.45474356, 0.2893444, 0.2509804, 1)
+roughness = 0.6
+emission_enabled = true
+emission = Color(0.45474356, 0.2893444, 0.2509804, 1)
+emission_energy_multiplier = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_u62i4"]
+size = Vector3(0.61982584, 0.27104717, 0.012)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4anri"]
+albedo_color = Color(0.043137256, 0.023529412, 0.09411765, 1)
+roughness = 0.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_knnad"]
+size = Vector3(1.3, 1.8, 0.03)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_enig6"]
+albedo_color = Color(1, 0.36078432, 0.5411765, 1)
+roughness = 0.6
+emission_enabled = true
+emission = Color(1, 0.36078432, 0.5411765, 1)
+emission_energy_multiplier = 2.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_arq33"]
+size = Vector3(1.36, 0.045, 0.02)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5ni2m"]
+albedo_color = Color(1, 0.36078432, 0.5411765, 1)
+roughness = 0.6
+emission_enabled = true
+emission = Color(1, 0.36078432, 0.5411765, 1)
+emission_energy_multiplier = 2.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_jq67v"]
+size = Vector3(1.36, 0.045, 0.02)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fj2da"]
+albedo_color = Color(1, 0.36078432, 0.5411765, 1)
+roughness = 0.6
+emission_enabled = true
+emission = Color(1, 0.36078432, 0.5411765, 1)
+emission_energy_multiplier = 2.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_4k4yy"]
+size = Vector3(0.045, 1.86, 0.02)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nhlri"]
+albedo_color = Color(1, 0.36078432, 0.5411765, 1)
+roughness = 0.6
+emission_enabled = true
+emission = Color(1, 0.36078432, 0.5411765, 1)
+emission_energy_multiplier = 2.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_gkide"]
+size = Vector3(0.045, 1.86, 0.02)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hxsce"]
+albedo_color = Color(0.5783308, 0.22452441, 0.40491658, 1)
+roughness = 0.6
+emission_enabled = true
+emission = Color(0.5783308, 0.22452441, 0.40491658, 1)
+emission_energy_multiplier = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_0eaqs"]
+size = Vector3(0.39066103, 0.27683792, 0.012)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r0n58"]
+albedo_color = Color(0.6793397, 0.25716484, 0.437557, 1)
+roughness = 0.6
+emission_enabled = true
+emission = Color(0.6793397, 0.25716484, 0.437557, 1)
+emission_energy_multiplier = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_7lqk4"]
+size = Vector3(0.4812149, 0.52417374, 0.012)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v4nl1"]
+albedo_color = Color(0.5366732, 0.21106298, 0.39145517, 1)
+roughness = 0.6
+emission_enabled = true
+emission = Color(0.5366732, 0.21106298, 0.39145517, 1)
+emission_energy_multiplier = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_jpy36"]
+size = Vector3(0.5293647, 0.48931772, 0.012)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d3ugx"]
+albedo_color = Color(0.043137256, 0.023529412, 0.09411765, 1)
+roughness = 0.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_tsiy8"]
+size = Vector3(1.2, 1.6, 0.03)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n6lds"]
+albedo_color = Color(0.24313726, 0.9019608, 1, 1)
+roughness = 0.6
+emission_enabled = true
+emission = Color(0.24313726, 0.9019608, 1, 1)
+emission_energy_multiplier = 2.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_82ugw"]
+size = Vector3(1.26, 0.045, 0.02)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_si1nj"]
+albedo_color = Color(0.24313726, 0.9019608, 1, 1)
+roughness = 0.6
+emission_enabled = true
+emission = Color(0.24313726, 0.9019608, 1, 1)
+emission_energy_multiplier = 2.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_ivxnu"]
+size = Vector3(1.26, 0.045, 0.02)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ijkxw"]
+albedo_color = Color(0.24313726, 0.9019608, 1, 1)
+roughness = 0.6
+emission_enabled = true
+emission = Color(0.24313726, 0.9019608, 1, 1)
+emission_energy_multiplier = 2.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_x7v7c"]
+size = Vector3(0.045, 1.66, 0.02)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bhvli"]
+albedo_color = Color(0.24313726, 0.9019608, 1, 1)
+roughness = 0.6
+emission_enabled = true
+emission = Color(0.24313726, 0.9019608, 1, 1)
+emission_energy_multiplier = 2.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_8mqgg"]
+size = Vector3(0.045, 1.66, 0.02)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_orvlu"]
+albedo_color = Color(0.14746822, 0.33857644, 0.49242258, 1)
+roughness = 0.6
+emission_enabled = true
+emission = Color(0.14746822, 0.33857644, 0.49242258, 1)
+emission_energy_multiplier = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_i332e"]
+size = Vector3(0.3958553, 0.36738446, 0.012)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1vaxt"]
+albedo_color = Color(0.15712684, 0.395455, 0.54366696, 1)
+roughness = 0.6
+emission_enabled = true
+emission = Color(0.15712684, 0.395455, 0.54366696, 1)
+emission_energy_multiplier = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_a0ugm"]
+size = Vector3(0.37276676, 0.4465756, 0.012)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_882og"]
+albedo_color = Color(0.16162254, 0.42192966, 0.5675191, 1)
+roughness = 0.6
+emission_enabled = true
+emission = Color(0.16162254, 0.42192966, 0.5675191, 1)
+emission_energy_multiplier = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_sd3g7"]
+size = Vector3(0.390826, 0.1993916, 0.012)
+
+[node name="BakedVisuals_posters" type="Node3D" unique_id=2085925742]
+
+[node name="Poster_记忆回收_CORP" type="Node3D" parent="." unique_id=814011554]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2, 3.4, -2.42)
+
+[node name="Backing" type="MeshInstance3D" parent="Poster_记忆回收_CORP" unique_id=1731220266]
+material_override = SubResource("StandardMaterial3D_o314a")
+mesh = SubResource("BoxMesh_c2pkg")
+
+[node name="NeonEdge" type="MeshInstance3D" parent="Poster_记忆回收_CORP" unique_id=412411622]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, 0.025)
+material_override = SubResource("StandardMaterial3D_pqo5x")
+mesh = SubResource("BoxMesh_8s54r")
+
+[node name="NeonEdge2" type="MeshInstance3D" parent="Poster_记忆回收_CORP" unique_id=287646707]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.05, 0.025)
+material_override = SubResource("StandardMaterial3D_5qnlw")
+mesh = SubResource("BoxMesh_bspxr")
+
+[node name="NeonEdge3" type="MeshInstance3D" parent="Poster_记忆回收_CORP" unique_id=1180953292]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.75, 0, 0.025)
+material_override = SubResource("StandardMaterial3D_bgh4j")
+mesh = SubResource("BoxMesh_86nck")
+
+[node name="NeonEdge4" type="MeshInstance3D" parent="Poster_记忆回收_CORP" unique_id=860051015]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.75, 0, 0.025)
+material_override = SubResource("StandardMaterial3D_gj6sp")
+mesh = SubResource("BoxMesh_mggkb")
+
+[node name="ArtBlock_0" type="MeshInstance3D" parent="Poster_记忆回收_CORP" unique_id=576543205]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.03161472, -0.0010845661, 0.02)
+material_override = SubResource("StandardMaterial3D_ymm2n")
+mesh = SubResource("BoxMesh_kmrov")
+
+[node name="ArtBlock_1" type="MeshInstance3D" parent="Poster_记忆回收_CORP" unique_id=1029954296]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.33741623, -0.25457522, 0.02)
+material_override = SubResource("StandardMaterial3D_hbnfy")
+mesh = SubResource("BoxMesh_5bocl")
+
+[node name="ArtBlock_2" type="MeshInstance3D" parent="Poster_记忆回收_CORP" unique_id=1764401409]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.32352525, -0.042610586, 0.02)
+material_override = SubResource("StandardMaterial3D_lioi2")
+mesh = SubResource("BoxMesh_kqeip")
+
+[node name="Title" type="Label3D" parent="Poster_记忆回收_CORP" unique_id=464871052]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.672, 0.04)
+modulate = Color(1, 0.30980393, 0.84705883, 1)
+text = "记忆回收 CORP"
+font_size = 30
+
+[node name="Line" type="Label3D" parent="Poster_记忆回收_CORP" unique_id=1452705927]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.714, 0.04)
+pixel_size = 0.004
+modulate = Color(0.7882353, 0.83137256, 0.9490196, 1)
+text = "旧信号 · 高价上门"
+font_size = 18
+
+[node name="PosterGlow" type="OmniLight3D" parent="Poster_记忆回收_CORP" unique_id=1540134251]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
+light_color = Color(1, 0.30980393, 0.84705883, 1)
+light_energy = 0.35
+omni_range = 1.9
+
+[node name="Poster_别眨眼" type="Node3D" parent="." unique_id=638081923]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.3, 4.4, -2.42)
+
+[node name="Backing" type="MeshInstance3D" parent="Poster_别眨眼" unique_id=1595149920]
+material_override = SubResource("StandardMaterial3D_bak6h")
+mesh = SubResource("BoxMesh_6jlgl")
+
+[node name="NeonEdge" type="MeshInstance3D" parent="Poster_别眨眼" unique_id=562483338]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0.025)
+material_override = SubResource("StandardMaterial3D_biswc")
+mesh = SubResource("BoxMesh_1krbn")
+
+[node name="NeonEdge2" type="MeshInstance3D" parent="Poster_别眨眼" unique_id=2096935828]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.9, 0.025)
+material_override = SubResource("StandardMaterial3D_ts2w5")
+mesh = SubResource("BoxMesh_re14a")
+
+[node name="NeonEdge3" type="MeshInstance3D" parent="Poster_别眨眼" unique_id=376897105]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.65, 0, 0.025)
+material_override = SubResource("StandardMaterial3D_5e4ye")
+mesh = SubResource("BoxMesh_jlnmb")
+
+[node name="NeonEdge4" type="MeshInstance3D" parent="Poster_别眨眼" unique_id=2122372384]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.65, 0, 0.025)
+material_override = SubResource("StandardMaterial3D_f6n5c")
+mesh = SubResource("BoxMesh_0gmwc")
+
+[node name="ArtBlock_0" type="MeshInstance3D" parent="Poster_别眨眼" unique_id=608049320]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2348581, -0.09670827, 0.02)
+material_override = SubResource("StandardMaterial3D_411sa")
+mesh = SubResource("BoxMesh_bo2on")
+
+[node name="ArtBlock_1" type="MeshInstance3D" parent="Poster_别眨眼" unique_id=1088919807]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.21357551, 0.16101539, 0.02)
+material_override = SubResource("StandardMaterial3D_p7qmu")
+mesh = SubResource("BoxMesh_4aleo")
+
+[node name="ArtBlock_2" type="MeshInstance3D" parent="Poster_别眨眼" unique_id=700377293]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.036855042, -0.08331123, 0.02)
+material_override = SubResource("StandardMaterial3D_u7yba")
+mesh = SubResource("BoxMesh_rp30b")
+
+[node name="Title" type="Label3D" parent="Poster_别眨眼" unique_id=919192045]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.576, 0.04)
+modulate = Color(0.24313726, 0.9019608, 1, 1)
+text = "别眨眼"
+font_size = 30
+
+[node name="Line" type="Label3D" parent="Poster_别眨眼" unique_id=1015279091]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.612, 0.04)
+pixel_size = 0.004
+modulate = Color(0.7882353, 0.83137256, 0.9490196, 1)
+text = "你正在被缓存"
+font_size = 18
+
+[node name="PosterGlow" type="OmniLight3D" parent="Poster_别眨眼" unique_id=1761616705]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
+light_color = Color(0.24313726, 0.9019608, 1, 1)
+light_energy = 0.35
+omni_range = 1.9
+
+[node name="Poster_深夜频道" type="Node3D" parent="." unique_id=1223346640]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.6, 3.1, -2.42)
+
+[node name="Backing" type="MeshInstance3D" parent="Poster_深夜频道" unique_id=983085813]
+material_override = SubResource("StandardMaterial3D_2xlmv")
+mesh = SubResource("BoxMesh_68n8v")
+
+[node name="NeonEdge" type="MeshInstance3D" parent="Poster_深夜频道" unique_id=896484484]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0.025)
+material_override = SubResource("StandardMaterial3D_pt7t3")
+mesh = SubResource("BoxMesh_md1db")
+
+[node name="NeonEdge2" type="MeshInstance3D" parent="Poster_深夜频道" unique_id=219732848]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.1, 0.025)
+material_override = SubResource("StandardMaterial3D_6e7e7")
+mesh = SubResource("BoxMesh_hubbt")
+
+[node name="NeonEdge3" type="MeshInstance3D" parent="Poster_深夜频道" unique_id=94635399]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, 0, 0.025)
+material_override = SubResource("StandardMaterial3D_716vq")
+mesh = SubResource("BoxMesh_k38c6")
+
+[node name="NeonEdge4" type="MeshInstance3D" parent="Poster_深夜频道" unique_id=78594027]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, 0, 0.025)
+material_override = SubResource("StandardMaterial3D_tpk3v")
+mesh = SubResource("BoxMesh_ukkul")
+
+[node name="ArtBlock_0" type="MeshInstance3D" parent="Poster_深夜频道" unique_id=2032858641]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1008285, -0.5690322, 0.02)
+material_override = SubResource("StandardMaterial3D_nhx5q")
+mesh = SubResource("BoxMesh_tej7i")
+
+[node name="ArtBlock_1" type="MeshInstance3D" parent="Poster_深夜频道" unique_id=1733336300]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0077564716, -0.26904908, 0.02)
+material_override = SubResource("StandardMaterial3D_7xxyn")
+mesh = SubResource("BoxMesh_h5xj0")
+
+[node name="ArtBlock_2" type="MeshInstance3D" parent="Poster_深夜频道" unique_id=1220758823]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.23546553, 0.1813041, 0.02)
+material_override = SubResource("StandardMaterial3D_bvi5x")
+mesh = SubResource("BoxMesh_aoui5")
+
+[node name="Title" type="Label3D" parent="Poster_深夜频道" unique_id=2144614082]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.704, 0.04)
+modulate = Color(0.69803923, 0.41960785, 1, 1)
+text = "深夜频道"
+font_size = 30
+
+[node name="Line" type="Label3D" parent="Poster_深夜频道" unique_id=3307809]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.748, 0.04)
+pixel_size = 0.004
+modulate = Color(0.7882353, 0.83137256, 0.9490196, 1)
+text = "24H 循环播放"
+font_size = 18
+
+[node name="PosterGlow" type="OmniLight3D" parent="Poster_深夜频道" unique_id=931721459]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
+light_color = Color(0.69803923, 0.41960785, 1, 1)
+light_energy = 0.35
+omni_range = 1.9
+
+[node name="Poster_像素诊所" type="Node3D" parent="." unique_id=1352200299]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.6, 4.6, -2.42)
+
+[node name="Backing" type="MeshInstance3D" parent="Poster_像素诊所" unique_id=1207569574]
+material_override = SubResource("StandardMaterial3D_sgrim")
+mesh = SubResource("BoxMesh_k6qo4")
+
+[node name="NeonEdge" type="MeshInstance3D" parent="Poster_像素诊所" unique_id=925366367]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.95, 0.025)
+material_override = SubResource("StandardMaterial3D_e0vw6")
+mesh = SubResource("BoxMesh_ntgwf")
+
+[node name="NeonEdge2" type="MeshInstance3D" parent="Poster_像素诊所" unique_id=92362919]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.95, 0.025)
+material_override = SubResource("StandardMaterial3D_i0oe7")
+mesh = SubResource("BoxMesh_16jps")
+
+[node name="NeonEdge3" type="MeshInstance3D" parent="Poster_像素诊所" unique_id=2141904255]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7, 0, 0.025)
+material_override = SubResource("StandardMaterial3D_tbh5j")
+mesh = SubResource("BoxMesh_8w1nc")
+
+[node name="NeonEdge4" type="MeshInstance3D" parent="Poster_像素诊所" unique_id=612449111]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7, 0, 0.025)
+material_override = SubResource("StandardMaterial3D_qeoli")
+mesh = SubResource("BoxMesh_lhk5j")
+
+[node name="ArtBlock_0" type="MeshInstance3D" parent="Poster_像素诊所" unique_id=1961658813]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.13301548, -0.34375864, 0.02)
+material_override = SubResource("StandardMaterial3D_kq1pj")
+mesh = SubResource("BoxMesh_resme")
+
+[node name="ArtBlock_1" type="MeshInstance3D" parent="Poster_像素诊所" unique_id=2119740101]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.06592789, -0.4125181, 0.02)
+material_override = SubResource("StandardMaterial3D_m10of")
+mesh = SubResource("BoxMesh_dukln")
+
+[node name="ArtBlock_2" type="MeshInstance3D" parent="Poster_像素诊所" unique_id=884899466]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3316115, 0.050249845, 0.02)
+material_override = SubResource("StandardMaterial3D_tvkv1")
+mesh = SubResource("BoxMesh_krje3")
+
+[node name="Title" type="Label3D" parent="Poster_像素诊所" unique_id=92358531]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.608, 0.04)
+modulate = Color(0.36078432, 1, 0.7607843, 1)
+text = "像素诊所"
+font_size = 30
+
+[node name="Line" type="Label3D" parent="Poster_像素诊所" unique_id=1553568134]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.646, 0.04)
+pixel_size = 0.004
+modulate = Color(0.7882353, 0.83137256, 0.9490196, 1)
+text = "修复丢帧的记忆"
+font_size = 18
+
+[node name="PosterGlow" type="OmniLight3D" parent="Poster_像素诊所" unique_id=605239327]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
+light_color = Color(0.36078432, 1, 0.7607843, 1)
+light_energy = 0.35
+omni_range = 1.9
+
+[node name="Poster_热搜当铺" type="Node3D" parent="." unique_id=2115783744]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27, 3.5, -2.42)
+
+[node name="Backing" type="MeshInstance3D" parent="Poster_热搜当铺" unique_id=1966516998]
+material_override = SubResource("StandardMaterial3D_uulwu")
+mesh = SubResource("BoxMesh_1kjxq")
+
+[node name="NeonEdge" type="MeshInstance3D" parent="Poster_热搜当铺" unique_id=2100854826]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0.025)
+material_override = SubResource("StandardMaterial3D_krw6a")
+mesh = SubResource("BoxMesh_n8h35")
+
+[node name="NeonEdge2" type="MeshInstance3D" parent="Poster_热搜当铺" unique_id=1625307989]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0.025)
+material_override = SubResource("StandardMaterial3D_u20d2")
+mesh = SubResource("BoxMesh_m1jju")
+
+[node name="NeonEdge3" type="MeshInstance3D" parent="Poster_热搜当铺" unique_id=1712213567]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.75, 0, 0.025)
+material_override = SubResource("StandardMaterial3D_40saf")
+mesh = SubResource("BoxMesh_2dku8")
+
+[node name="NeonEdge4" type="MeshInstance3D" parent="Poster_热搜当铺" unique_id=1484549145]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.75, 0, 0.025)
+material_override = SubResource("StandardMaterial3D_fx535")
+mesh = SubResource("BoxMesh_0wqpc")
+
+[node name="ArtBlock_0" type="MeshInstance3D" parent="Poster_热搜当铺" unique_id=1410693417]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3459626, -0.008279055, 0.02)
+material_override = SubResource("StandardMaterial3D_mg3jy")
+mesh = SubResource("BoxMesh_w5o1s")
+
+[node name="ArtBlock_1" type="MeshInstance3D" parent="Poster_热搜当铺" unique_id=1037977155]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25901842, -0.011595845, 0.02)
+material_override = SubResource("StandardMaterial3D_hx2y3")
+mesh = SubResource("BoxMesh_1gxd7")
+
+[node name="ArtBlock_2" type="MeshInstance3D" parent="Poster_热搜当铺" unique_id=954382718]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.078082204, 0.048168838, 0.02)
+material_override = SubResource("StandardMaterial3D_mmtet")
+mesh = SubResource("BoxMesh_u62i4")
+
+[node name="Title" type="Label3D" parent="Poster_热搜当铺" unique_id=1710574797]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.64, 0.04)
+modulate = Color(1, 0.627451, 0.2509804, 1)
+text = "热搜当铺"
+font_size = 30
+
+[node name="Line" type="Label3D" parent="Poster_热搜当铺" unique_id=1460369223]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.68, 0.04)
+pixel_size = 0.004
+modulate = Color(0.7882353, 0.83137256, 0.9490196, 1)
+text = "过气梗 · 以旧换新"
+font_size = 18
+
+[node name="PosterGlow" type="OmniLight3D" parent="Poster_热搜当铺" unique_id=254034373]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
+light_color = Color(1, 0.627451, 0.2509804, 1)
+light_energy = 0.35
+omni_range = 1.9
+
+[node name="Poster_你曾经的直播" type="Node3D" parent="." unique_id=866650392]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.6, 4.3, -2.42)
+
+[node name="Backing" type="MeshInstance3D" parent="Poster_你曾经的直播" unique_id=1220001671]
+material_override = SubResource("StandardMaterial3D_4anri")
+mesh = SubResource("BoxMesh_knnad")
+
+[node name="NeonEdge" type="MeshInstance3D" parent="Poster_你曾经的直播" unique_id=1706919240]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0.025)
+material_override = SubResource("StandardMaterial3D_enig6")
+mesh = SubResource("BoxMesh_arq33")
+
+[node name="NeonEdge2" type="MeshInstance3D" parent="Poster_你曾经的直播" unique_id=12436086]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.9, 0.025)
+material_override = SubResource("StandardMaterial3D_5ni2m")
+mesh = SubResource("BoxMesh_jq67v")
+
+[node name="NeonEdge3" type="MeshInstance3D" parent="Poster_你曾经的直播" unique_id=1138146283]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.65, 0, 0.025)
+material_override = SubResource("StandardMaterial3D_fj2da")
+mesh = SubResource("BoxMesh_4k4yy")
+
+[node name="NeonEdge4" type="MeshInstance3D" parent="Poster_你曾经的直播" unique_id=693213321]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.65, 0, 0.025)
+material_override = SubResource("StandardMaterial3D_nhlri")
+mesh = SubResource("BoxMesh_gkide")
+
+[node name="ArtBlock_0" type="MeshInstance3D" parent="Poster_你曾经的直播" unique_id=401146416]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.31353107, -0.2461727, 0.02)
+material_override = SubResource("StandardMaterial3D_hxsce")
+mesh = SubResource("BoxMesh_0eaqs")
+
+[node name="ArtBlock_1" type="MeshInstance3D" parent="Poster_你曾经的直播" unique_id=137217380]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.16843945, -0.17297393, 0.02)
+material_override = SubResource("StandardMaterial3D_r0n58")
+mesh = SubResource("BoxMesh_7lqk4")
+
+[node name="ArtBlock_2" type="MeshInstance3D" parent="Poster_你曾经的直播" unique_id=1761225992]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.12683286, 0.14952368, 0.02)
+material_override = SubResource("StandardMaterial3D_v4nl1")
+mesh = SubResource("BoxMesh_jpy36")
+
+[node name="Title" type="Label3D" parent="Poster_你曾经的直播" unique_id=1168627954]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.576, 0.04)
+modulate = Color(1, 0.36078432, 0.5411765, 1)
+text = "你曾经的直播"
+font_size = 30
+
+[node name="Line" type="Label3D" parent="Poster_你曾经的直播" unique_id=657352342]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.612, 0.04)
+pixel_size = 0.004
+modulate = Color(0.7882353, 0.83137256, 0.9490196, 1)
+text = "仍在缓存中"
+font_size = 18
+
+[node name="PosterGlow" type="OmniLight3D" parent="Poster_你曾经的直播" unique_id=559583678]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
+light_color = Color(1, 0.36078432, 0.5411765, 1)
+light_energy = 0.35
+omni_range = 1.9
+
+[node name="Poster_出口酒馆" type="Node3D" parent="." unique_id=813186641]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.9, 2.6, -2.42)
+
+[node name="Backing" type="MeshInstance3D" parent="Poster_出口酒馆" unique_id=1204655719]
+material_override = SubResource("StandardMaterial3D_d3ugx")
+mesh = SubResource("BoxMesh_tsiy8")
+
+[node name="NeonEdge" type="MeshInstance3D" parent="Poster_出口酒馆" unique_id=941995051]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0.025)
+material_override = SubResource("StandardMaterial3D_n6lds")
+mesh = SubResource("BoxMesh_82ugw")
+
+[node name="NeonEdge2" type="MeshInstance3D" parent="Poster_出口酒馆" unique_id=1901429269]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.8, 0.025)
+material_override = SubResource("StandardMaterial3D_si1nj")
+mesh = SubResource("BoxMesh_ivxnu")
+
+[node name="NeonEdge3" type="MeshInstance3D" parent="Poster_出口酒馆" unique_id=2128342931]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, 0, 0.025)
+material_override = SubResource("StandardMaterial3D_ijkxw")
+mesh = SubResource("BoxMesh_x7v7c")
+
+[node name="NeonEdge4" type="MeshInstance3D" parent="Poster_出口酒馆" unique_id=1437216161]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, 0, 0.025)
+material_override = SubResource("StandardMaterial3D_bhvli")
+mesh = SubResource("BoxMesh_8mqgg")
+
+[node name="ArtBlock_0" type="MeshInstance3D" parent="Poster_出口酒馆" unique_id=900899539]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.28774342, -0.07244465, 0.02)
+material_override = SubResource("StandardMaterial3D_orvlu")
+mesh = SubResource("BoxMesh_i332e")
+
+[node name="ArtBlock_1" type="MeshInstance3D" parent="Poster_出口酒馆" unique_id=354959449]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.28712282, -0.24063304, 0.02)
+material_override = SubResource("StandardMaterial3D_1vaxt")
+mesh = SubResource("BoxMesh_a0ugm")
+
+[node name="ArtBlock_2" type="MeshInstance3D" parent="Poster_出口酒馆" unique_id=910880709]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.27280575, -0.30600682, 0.02)
+material_override = SubResource("StandardMaterial3D_882og")
+mesh = SubResource("BoxMesh_sd3g7")
+
+[node name="Title" type="Label3D" parent="Poster_出口酒馆" unique_id=42799905]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.512, 0.04)
+modulate = Color(0.24313726, 0.9019608, 1, 1)
+text = "出口酒馆"
+font_size = 30
+
+[node name="Line" type="Label3D" parent="Poster_出口酒馆" unique_id=1069190586]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.544, 0.04)
+pixel_size = 0.004
+modulate = Color(0.7882353, 0.83137256, 0.9490196, 1)
+text = "最后一杯电子雨"
+font_size = 18
+
+[node name="PosterGlow" type="OmniLight3D" parent="Poster_出口酒馆" unique_id=498135758]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
+light_color = Color(0.24313726, 0.9019608, 1, 1)
+light_energy = 0.35
+omni_range = 1.9

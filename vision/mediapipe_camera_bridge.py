@@ -116,10 +116,10 @@ def main():
 
     model_path = resolve_model()
     cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
-    # 预览框只有 248x132，320x240 绰绰有余；分辨率减半让整条链路
-    # （read -> MediaPipe -> JPEG 编码 -> UDP）都快一倍以上。
-    cap.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
-    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
+    # 640x480 保清晰度（用户反馈 320x240 太糊）；防卡顿靠 BUFFERSIZE=1 +
+    # 接收端纹理复用/只解最新帧，这些优化已足够消除旧帧堆积的延迟。
+    cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
     # 关键：驱动缓冲只留 1 帧。旧帧在驱动层堆积是"画面延迟、越看越卡"的最大元凶。
     cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
     if not cap.isOpened():
@@ -190,8 +190,8 @@ def main():
 
             hand_sock.sendto(json.dumps(payload).encode(), ("127.0.0.1", HAND_PORT))
 
-            # q60：预览画面足够，且体积更小 = UDP 分片更少 = 丢包更少。
-            ok, enc = cv2.imencode(".jpg", frame, [cv2.IMWRITE_JPEG_QUALITY, 60])
+            # q75：与原生采集分辨率匹配的质量（用户要求保清晰度）。
+            ok, enc = cv2.imencode(".jpg", frame, [cv2.IMWRITE_JPEG_QUALITY, 75])
             if ok:
                 data = enc.tobytes()
                 size = 1200

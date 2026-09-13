@@ -12,7 +12,6 @@ extends Node3D
 ## 这样 headless 里手动步进 opening.update() 也能推进本演出。
 
 const CHARACTER := preload("res://assets/character/yellow_character.glb")
-const SFX_SPLIT := preload("res://assets/audio/split.wav")
 const SFX_MOTHER := preload("res://assets/audio/voice_mother.wav")
 const SFX_CHILD := preload("res://assets/audio/voice_child.wav")
 const SFX_GAGA := preload("res://assets/audio/voice_gaga.wav")
@@ -64,7 +63,6 @@ var _twin_morphs: Array[MeshInstance3D] = []
 var _voice: AudioStreamPlayer
 var _origin := Vector3.ZERO
 var _exit := Vector3.ZERO
-var _split_played := false
 var _spoken := -1
 var _hop_played := false
 
@@ -151,6 +149,8 @@ func cleanup() -> void:
 
 func _drive_swell() -> void:
 	# 妈妈还在体内：分身贴在原点、压扁到几乎看不见。
+	# 注意：这里不再播 split.wav——它在胀大动画第一帧就响，音画错位，
+	# 听感上是"嘎嘎提拉晒"对话前凭空多出的一声（用户反馈已删）。
 	if _twin == null:
 		return
 	var p := clampf(stage_time / SWELL_TIME, 0.0, 1.0)
@@ -159,9 +159,6 @@ func _drive_swell() -> void:
 	var bulge := smoothstep(0.55, 1.0, p)
 	_twin.scale = Vector3(0.24 + bulge * 0.3, 0.16 + bulge * 0.22, 0.24 + bulge * 0.3)
 	_twin_pose(1.0, 0.0)
-	if not _split_played:
-		_split_played = true
-		_play(SFX_SPLIT)
 
 func _drive_split() -> void:
 	if _twin == null:

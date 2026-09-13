@@ -7,13 +7,13 @@
 [ext_resource type="Script" uid="uid://cnira2171vg6f" path="res://scripts/camera_director.gd" id="camera_director"]
 [ext_resource type="Script" uid="uid://dvn58jl8jbauv" path="res://scripts/input_state.gd" id="input_state"]
 [ext_resource type="PackedScene" path="res://scenes/archive_space.tscn" id="scene_archive_space"]
+[ext_resource type="PackedScene" path="res://scenes/cinema_room.tscn" id="scene_cinema_room"]
 [ext_resource type="PackedScene" path="res://scenes/interface.tscn" id="scene_interface"]
 [ext_resource type="PackedScene" path="res://scenes/intro_space.tscn" id="scene_intro_space"]
 [ext_resource type="PackedScene" path="res://scenes/entrance_npc_meituan_kangaroo.tscn" id="scene_npc_meituan"]
 [ext_resource type="PackedScene" path="res://scenes/entrance_npc_niu_lai.tscn" id="scene_npc_niu_lai"]
-[ext_resource type="PackedScene" path="res://scenes/cinema_room.tscn" id="scene_cinema_room"]
-[ext_resource type="PackedScene" path="res://scenes/text_archive_station.tscn" id="scene_text_archive"]
 [ext_resource type="PackedScene" path="res://scenes/player.tscn" id="scene_player"]
+[ext_resource type="PackedScene" path="res://scenes/text_archive_station.tscn" id="scene_text_archive"]
 [ext_resource type="PackedScene" path="res://scenes/time_tunnel.tscn" id="scene_time_tunnel"]
 [ext_resource type="Script" uid="uid://c5kep8r7vbydh" path="res://scripts/vision_preview.gd" id="vision_preview"]
 [ext_resource type="Script" uid="uid://b6xoumgay3w7y" path="res://scripts/visual_recognition.gd" id="visual_recognition"]
@@ -56,7 +56,7 @@ shadow_enabled = true
 [node name="PresentDayGallery" parent="." unique_id=1518861340 instance=ExtResource("scene_intro_space")]
 
 [node name="WhiteFloor" parent="PresentDayGallery" index="0" unique_id=936862445]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.47572213, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.47572213, -0.13199615)
 
 [node name="IntroGround" type="StaticBody3D" parent="." unique_id=1768531381]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.45, 0)
@@ -126,9 +126,11 @@ transform = Transform3D(-0.27559027, 0, -0.9612752, 0, 1, 0, 0.9612752, 0, -0.27
 [node name="MeituanKangarooModel" parent="EntranceNPC_meituan_kangaroo" index="0"]
 transform = Transform3D(0.7046837, 0, 0.70952153, 0, 1, 0, -0.70952153, 0, 0.7046837, 0, 0, 0)
 
-[node name="CinemaRoom" parent="." instance=ExtResource("scene_cinema_room")]
+[node name="CinemaRoom" parent="." unique_id=837680247 instance=ExtResource("scene_cinema_room")]
+transform = Transform3D(0.58, 0, 0, 0, 0.58, 0, 0, 0, 0.58, 29.5, 0, 1.55)
 
-[node name="TextArchiveStation" parent="." instance=ExtResource("scene_text_archive")]
+[node name="TextArchiveStation" parent="." unique_id=1731612680 instance=ExtResource("scene_text_archive")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.2, 0, 1.45)
 
 [editable path="PresentDayGallery"]
 [editable path="ArchiveArchitecture"]

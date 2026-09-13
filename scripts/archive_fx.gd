@@ -23,10 +23,19 @@ var wrong_time := 0.0
 func setup(owner: Node3D, archive_interaction: Node) -> void:
 	archive_root = owner.get_node("ArchiveArchitecture") as Node3D
 	interaction = archive_interaction
-	var fx := archive_root.get_node("FX")
-	dust = fx.get_node("ArchiveDust") as GPUParticles3D
-	screen_shaft = fx.get_node("ArchiveScreenShaft") as SpotLight3D
-	exit_pool = fx.get_node("ExitWarmPool") as OmniLight3D
+	# FX 有两个来源：程序生成（build_fx 的 "FX"）或烘焙实例
+	# （VisualBaker 的 "BakedVisuals_atmosphere"）。两者都缺时自建容器兜底。
+	var fx := archive_root.get_node_or_null("FX")
+	if fx == null:
+		fx = archive_root.get_node_or_null("BakedVisuals_atmosphere")
+	if fx == null:
+		var fallback := Node3D.new()
+		fallback.name = "FX"
+		archive_root.add_child(fallback)
+		fx = fallback
+	dust = fx.get_node_or_null("ArchiveDust") as GPUParticles3D
+	screen_shaft = fx.get_node_or_null("ArchiveScreenShaft") as SpotLight3D
+	exit_pool = fx.get_node_or_null("ExitWarmPool") as OmniLight3D
 	_create_route_lights(fx)
 	_create_drawer_dust(fx)
 	_create_node_lights(fx)

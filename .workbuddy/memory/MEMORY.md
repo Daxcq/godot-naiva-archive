@@ -6,6 +6,7 @@
 - Godot 可执行文件：`E:\Godot\Godot_v4.6.3-stable_win64.exe`（不在 PATH 里，要用全路径）。
 - git remote：origin 已由 HTTPS 改为 SSH **`git@github.com:Daxcq/godot-naiva-archive.git`**。
   - **推送必须走 SSH**：终端禁交互，HTTPS 会报 `fatal: could not read Username for 'https://github.com'`。若发现又变回 HTTPS，`git remote set-url origin git@github.com:Daxcq/godot-naiva-archive.git` 即可。
+  - **⚠️ ref 被外力反复删除（第 10 次，GitHubDesktop 嫌疑）**：症状 = `git rev-parse HEAD` **返回字面量 "HEAD"（exit 0）**、branch --show-current 为空、reflog 空。抢救：用已知短 sha `git rev-parse <短sha>^{commit}` 拿**全长 sha** 写回 `.git/refs/heads/<branch>`（**绝不能把 rev-parse HEAD 的字面量 "HEAD" 写进 ref**），然后立即 push + ls-remote 终验。**危险**：本地 src ref 损坏时 `push src:dst` 会变成请求**删除远端 dst**（GitHub 拒删默认分支才没出事）。commit 后必须马上 push 并终验。
 
 ## 目录约定
 | 路径 | 内容 |
@@ -30,7 +31,8 @@
 - 固定依赖版本：`numpy==1.26.4 / opencv-contrib-python==4.10.0.84 / mediapipe==1.0.1`。全新装一次约 **5 分钟**（首次需联网 PyPI）。
 - Windows venv 的 `python.exe` 是**转发壳**，会再拉一个 `Python312\python.exe` 子进程 → **一次启动 = 2 个进程**。回收必须 `taskkill /PID <n> /T /F`（`/T` 递归整棵树），否则摄像头被残留进程长期占用。
 - `visual_recognition.gd` 用 `_notification()` 处理 `NOTIFICATION_WM_CLOSE_REQUEST` / `NOTIFICATION_PREDELETE` 做回收 —— **只靠 `_exit_tree()` 太晚**，那时进程已在销毁，阻塞式 taskkill 跑不完（实测残留 2 个进程）。
-- 桥接侧还会每 60 tick 自查宿主存活（Win32 `OpenProcess(0x1000)` + `GetExitCodeProcess`，STILL_ACTIVE=259），Godot 没了就自杀。
+- 桥接侧还会每 60 tick 自查宿主存活（Win32 `OpenProcess(0x1000)` + `GetExitCodeProcess`，STILL_ACTIVE=259），Godot 没了就自杀。**⚠️ 宿主 PID 必须由 Godot 通过 argv[1] 显式传入**——`os.getppid()` 拿到的是 venv 转发壳（桥代码在壳的子进程里跑，壳永远活着→宿主死了桥不知道→僵尸桥）。实测死宿主下桥 ~6s 自愈退出。
+- **僵尸桥清场双保险（2026-09-12）**：桥启动写 `vision/.bridge.pid`（壳+工作两个 PID，干净退出删除）；`_start_bridge()` 前调 `_kill_stale_bridges()` 按文件 taskkill /T /F（先删文件再杀）。**5 组僵尸桥并存 = 预览卡顿元凶**（分片交错+CPU 吃满），查残留用 `Get-CimInstance Win32_Process` 看 CommandLine。
 - **`OS.execute()` 返回的是 int 退出码，不是 Array**。写成 `if probe is Array` 会直接 `Parse Error` 让整个脚本加载失败。
 
 ## ⚠️ 骨架节点名铁律（走路效果踩的坑）
