@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1536" viewBox="0 0 1080 1536">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#080b24"/><stop offset=".55" stop-color="#17105b"/><stop offset="1" stop-color="#3d155d"/></linearGradient>
+    <radialGradient id="portal"><stop stop-color="#ffffff" stop-opacity=".95"/><stop offset=".35" stop-color="#65eaff" stop-opacity=".82"/><stop offset="1" stop-color="#6d39ff" stop-opacity="0"/></radialGradient>
+    <linearGradient id="neon" x1="0" x2="1"><stop stop-color="#5ef0ff"/><stop offset="1" stop-color="#ff72c7"/></linearGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="18" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="1080" height="1536" fill="url(#bg)"/>
+  <circle cx="540" cy="690" r="420" fill="url(#portal)" filter="url(#glow)"/>
+  <ellipse cx="540" cy="690" rx="250" ry="385" fill="none" stroke="url(#neon)" stroke-width="28" transform="rotate(-8 540 690)"/>
+  <ellipse cx="540" cy="690" rx="214" ry="350" fill="none" stroke="#9cf8ff" stroke-opacity=".55" stroke-width="5" transform="rotate(10 540 690)"/>
+  <path d="M290 1040 Q420 930 540 1010 Q660 930 790 1040 L755 1225 Q540 1320 325 1225Z" fill="#11132e" stroke="#60eaff" stroke-width="6"/>
+  <circle cx="440" cy="1060" r="42" fill="#ffe16a"/><circle cx="640" cy="1060" r="42" fill="#ffe16a"/>
+  <circle cx="445" cy="1060" r="16" fill="#18204f"/><circle cx="635" cy="1060" r="16" fill="#18204f"/>
+  <path d="M480 1140 Q540 1180 600 1140" fill="none" stroke="#ff8fcf" stroke-width="12" stroke-linecap="round"/>
+  <text x="540" y="180" fill="#ffffff" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="64" font-weight="700" letter-spacing="10">奶蛙</text>
+  <text x="540" y="280" fill="#8ff7ff" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="46" letter-spacing="6">遗忘档案馆</text>
+  <text x="540" y="1390" fill="#ffffff" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="28" letter-spacing="4">穿过记忆 · 找回笑声</text>
+  <text x="540" y="1450" fill="#ff8fcf" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="20" letter-spacing="3">A GODOT MEMORY ADVENTURE</text>
+</svg>

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1536" viewBox="0 0 1080 1536">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff6c9"/><stop offset="1" stop-color="#ffc6de"/></linearGradient>
+    <filter id="shadow"><feDropShadow dx="0" dy="14" stdDeviation="12" flood-opacity=".2"/></filter>
+  </defs>
+  <rect width="1080" height="1536" fill="url(#bg)"/>
+  <circle cx="130" cy="170" r="90" fill="#ffe86f"/><circle cx="930" cy="290" r="130" fill="#8be9ff" opacity=".7"/>
+  <g filter="url(#shadow)">
+    <rect x="150" y="470" width="240" height="350" rx="26" fill="#ff7e9f" transform="rotate(-12 270 645)"/>
+    <rect x="420" y="430" width="240" height="350" rx="26" fill="#67d8ef" transform="rotate(4 540 605)"/>
+    <rect x="690" y="470" width="240" height="350" rx="26" fill="#ffd968" transform="rotate(13 810 645)"/>
+  </g>
+  <g fill="#ffffff" font-family="Microsoft YaHei, sans-serif" text-anchor="middle" font-weight="700"><text x="270" y="620" font-size="34">今日热搜</text><text x="270" y="690" font-size="24">笑声已上线</text><text x="540" y="580" font-size="34">好运加载</text><text x="540" y="650" font-size="24">请保持微笑</text><text x="810" y="620" font-size="34">这条绝了</text><text x="810" y="690" font-size="24">现场限定</text></g>
+  <g transform="translate(540 1010)"><path d="M-160 70 Q-120-30 0-30 Q120-30 160 70 L135 180 Q0 240-135 180Z" fill="#6fdb71" stroke="#245b4a" stroke-width="12"/><circle cx="-58" cy="70" r="24" fill="#ffe866"/><circle cx="58" cy="70" r="24" fill="#ffe866"/><circle cx="-54" cy="70" r="10" fill="#2a4f5c"/><circle cx="54" cy="70" r="10" fill="#2a4f5c"/><path d="M-45 130 Q0 165 45 130" fill="none" stroke="#d94f77" stroke-width="10" stroke-linecap="round"/></g>
+  <text x="540" y="180" fill="#633e73" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="74" font-weight="700">热梗收集计划</text>
+  <text x="540" y="280" fill="#8d4e72" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="32" letter-spacing="4">走近一点，快乐就会掉落</text>
+  <text x="540" y="1400" fill="#633e73" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="28" font-weight="700">6 张票根 · 1 盏彩虹灯 · 一整个游乐园</text>
+</svg>

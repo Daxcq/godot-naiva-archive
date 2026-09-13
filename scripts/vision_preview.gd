@@ -149,7 +149,9 @@ func _process(_delta: float) -> void:
 	if vision != null and last_frame_at > -10.0:
 		var state: Dictionary = vision.get_observation()
 		if bool(state.get("active", false)) and String(state.get("source", "")) == "vision":
-			status_label.text = "用户画面 · 手部识别已检测"
+			var gesture := String(state.get("gesture", "none"))
+			var gesture_text: String = String({"pinch":"捏合", "open_palm":"张开手掌"}.get(gesture, "待机"))
+			status_label.text = "用户画面 · 手势：" + gesture_text
 	elif vision != null and vision.has_method("get_bridge_status"):
 		# 桥接还没出帧时，把后台进程状态显示出来，方便现场排查。
 		placeholder.text = "\n                 ◉\n       正在后台启动\n         MediaPipe 识别"

@@ -157,7 +157,7 @@ def main():
             result = detector.detect(mp.Image(image_format=mp.ImageFormat.SRGB, data=rgb))
 
             payload = {"active": False, "x": .5, "y": .5, "grab": 0.,
-                       "spread": .5, "confidence": 0.}
+                       "spread": .5, "confidence": 0., "gesture": "none"}
             if result.hand_landmarks:
                 h = result.hand_landmarks[0]
                 ring = [0, 5, 9, 13, 17]
@@ -173,11 +173,17 @@ def main():
                 center = _P()
                 center.x, center.y = px, py
                 spread = sum(d(h[i], center) for i in tips) / 5 / palm
+                grab_score = max(0., min(1., 1 - (pinch - .35) / .9))
+                spread_score = max(0., min(1., (spread - .6) / 1.1))
+                gesture = "none"
+                if pinch <= .72:
+                    gesture = "pinch"
+                elif spread >= 1.02 and pinch >= .78:
+                    gesture = "open_palm"
                 payload.update(
                     active=True, x=px, y=py,
-                    grab=max(0., min(1., 1 - (pinch - .35) / .9)),
-                    spread=max(0., min(1., (spread - .6) / 1.1)),
-                    confidence=1.,
+                    grab=grab_score, spread=spread_score,
+                    confidence=1., gesture=gesture,
                 )
                 # 骨架坐标按实际帧尺寸算，别再硬编码 640x480。
                 fh, fw = frame.shape[:2]
