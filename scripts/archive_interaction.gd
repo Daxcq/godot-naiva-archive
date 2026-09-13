@@ -39,18 +39,30 @@ var completion_screen: Label3D
 var card_time := 0.0
 var sync_visual_until := 0.0
 var action_row: HBoxContainer
+var distortion_overlay: ColorRect
+var distortion_material: ShaderMaterial
+var distortion_strength := 0.0
 var main_ids := ["seen_2016", "imitated_2020", "covered_2024"]
 var nodes := [
 	{"id":"seen_2016", "pos":Vector3(-1.0,1.1,-2.5), "title":"2016 / 第一次被看见", "text":"那时候，只要有人笑了，就算被看见。"},
 	{"id":"imitated_2020", "pos":Vector3(11.4,1.1,-2.5), "title":"2020 / 被模仿", "text":"当所有人都跳同一个动作，最先跳的人还在画面里吗？"},
 	{"id":"covered_2024", "pos":Vector3(23.8,1.1,-2.5), "title":"2024 / 被覆盖", "text":"被忘记不等于没有发生，只是后来的人看不到了。"}
 ]
+## 队友迁移：梗知识问答（原 seen_2024/imitated_2025/covered_2026 三题，
+## 映射到当前记忆点）。每种记忆小玩法成功后追加"考一考"，答对才算找回记忆。
+var question_data := {
+	"seen_2016": {"question": "当两个角色同时争夺“奶龙”这个身份时，最符合原梗的说法是？", "options": ["我是奶龙，我才是奶龙，你凭什么也是奶龙？", "我是奶龙，你是奶龙，那我们都是奶龙。", "我是奶龙，但经过讨论后决定暂时不当奶龙。"], "correct": 0},
+	"imitated_2020": {"question": "如果一个 B 站视频突然开始连续逼问，最可能接哪句话？", "options": ["回答我！你为什么不回答我！", "回答我！你回答得非常有建设性！", "回答我！算了，你不用回答了！"], "correct": 0},
+	"covered_2024": {"question": "下面哪种场景最适合突然配上“原神 NB”？", "options": ["角色完成史诗级逆转，弹幕集体欢呼。", "角色站在原地三分钟，什么也没做，但视频作者宣布“原神 NB”。", "游戏弹出维护公告，玩家认真阅读更新说明。"], "correct": 1}
+}
 
 func setup(owner: Node3D) -> void:
 	world = owner
 	player = owner.player
 	var layer := owner.get_node("Interface")
 	router = owner.get_node_or_null("InteractionRouter")
+	# 队友迁移：梗问答期间的全屏故障失真(模糊+抖动+扫描线)。
+	_create_distortion_overlay(layer)
 	# 左上档案卡:标题 + 正文,统一样式与锚位(UIKit 卡片区)。
 	var card_ui := UIKit.make_card(layer)
 	card = card_ui.body
@@ -93,6 +105,46 @@ func setup(owner: Node3D) -> void:
 	_build_memory_displays()
 	set_active(false)
 	update_count()
+
+## 队友迁移：全屏故障失真 overlay，交互进行中淡入、结束淡出。
+func _create_distortion_overlay(layer: CanvasLayer) -> void:
+	distortion_overlay = ColorRect.new()
+	distortion_overlay.name = "ArchiveQuestionDistortion"
+	distortion_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	distortion_overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	var shader := Shader.new()
+	shader.code = """
+shader_type canvas_item;
+render_mode unshaded;
+uniform sampler2D screen_texture : hint_screen_texture, filter_linear_mipmap;
+uniform float blur_amount = 0.0;
+uniform float glitch_amount = 0.0;
+uniform vec4 tint_color : source_color = vec4(0.18, 0.08, 0.28, 1.0);
+
+void fragment() {
+	vec2 uv = SCREEN_UV;
+	vec2 px = SCREEN_PIXEL_SIZE * (1.0 + blur_amount * 13.0);
+	vec2 jitter = vec2(sin(TIME * 18.0 + uv.y * 90.0), cos(TIME * 14.0 + uv.x * 70.0)) * px * glitch_amount * 2.5;
+	vec4 color = textureLod(screen_texture, uv + jitter, 0.0) * 0.28;
+	color += textureLod(screen_texture, uv + vec2(px.x, 0.0) + jitter, 0.0) * 0.12;
+	color += textureLod(screen_texture, uv - vec2(px.x, 0.0) + jitter, 0.0) * 0.12;
+	color += textureLod(screen_texture, uv + vec2(0.0, px.y) + jitter, 0.0) * 0.12;
+	color += textureLod(screen_texture, uv - vec2(0.0, px.y) + jitter, 0.0) * 0.12;
+	color += textureLod(screen_texture, uv + px + jitter, 0.0) * 0.06;
+	color += textureLod(screen_texture, uv - px + jitter, 0.0) * 0.06;
+	color += textureLod(screen_texture, uv + vec2(px.x, -px.y) + jitter, 0.0) * 0.06;
+	color += textureLod(screen_texture, uv + vec2(-px.x, px.y) + jitter, 0.0) * 0.06;
+	float scan = sin((uv.y + TIME * 0.08) * 900.0) * 0.025 * glitch_amount;
+	color.rgb = mix(color.rgb, color.rgb * 0.72 + tint_color.rgb * 0.28, glitch_amount * 0.72);
+	color.rgb += scan;
+	COLOR = vec4(color.rgb, glitch_amount * 0.92);
+}
+"""
+	distortion_material = ShaderMaterial.new()
+	distortion_material.shader = shader
+	distortion_overlay.material = distortion_material
+	distortion_overlay.visible = false
+	layer.add_child(distortion_overlay)
 
 func _build_stage_markers() -> void:
 	var root := world.archive_root.get_node_or_null("MemoryNodes") as Node3D
@@ -223,6 +275,11 @@ func set_active(value: bool) -> void:
 		network_button.visible = false
 		action_row.visible = false
 		beat_buttons.visible = false
+	if not value:
+		# 队友迁移：交互结束把失真一起收回。
+		distortion_strength = 0.0
+		if distortion_overlay:
+			distortion_overlay.visible = false
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not active or ending_done:
@@ -249,6 +306,14 @@ func tick(delta: float) -> void:
 	if not active or player == null or ending_done:
 		return
 	display_time += delta
+	# 队友迁移：交互进行中逐渐失真，结束自动淡出。
+	var distortion_target := 1.0 if active_id != "" else 0.0
+	distortion_strength = move_toward(distortion_strength, distortion_target, delta * 0.72)
+	if distortion_material:
+		distortion_material.set_shader_parameter("blur_amount", distortion_strength)
+		distortion_material.set_shader_parameter("glitch_amount", distortion_strength)
+	if distortion_overlay:
+		distortion_overlay.visible = distortion_strength > 0.01
 	_update_displays()
 	if card_time > 0:
 		card_time -= delta
@@ -347,7 +412,7 @@ func interact() -> void:
 		return
 	if active_id != "":
 		if active_id == "covered_2024" and active_state == "pause" and state_elapsed <= pause_window:
-			_solve(_item_by_id(active_id))
+			_begin_quiz()
 		return
 	if _at_exit():
 		_finish_ending("save")
@@ -381,18 +446,23 @@ func _begin(item: Dictionary) -> void:
 
 func _process_active(delta: float) -> void:
 	state_elapsed += delta
+	# 队友迁移：梗问答环节——三段小玩法成功后统一进入，答对才 solve。
+	if active_state == "quiz":
+		_offer("", "选择你记得的答案", 0.0, true)
+		beat_buttons.visible = _can_show()
+		return
 	if active_id == "seen_2016":
 		if drawer:
 			drawer.position.z = lerpf(-2.58, -2.02, smoothstep(0.0, 1.15, state_elapsed))
 		seen_frog.visible = state_elapsed > 0.7
 		_offer("", "低清影像恢复中…" if state_elapsed > 1.15 else "抽屉正在打开…", 0.0, true)
 		if state_elapsed >= 1.15:
-			_solve(_item_by_id(active_id))
+			_begin_quiz()
 	elif active_id == "imitated_2020":
 		if active_state == "sync":
 			_offer("", "原始动作与模仿重合了…", 0.0, true)
 			if state_elapsed >= 1.8:
-				_solve(_item_by_id(active_id))
+				_begin_quiz()
 		else:
 			_offer("", "选择与原始记录一致的节拍", 0.0, true)
 			beat_buttons.visible = _can_show()
@@ -409,17 +479,39 @@ func _process_active(delta: float) -> void:
 			card_time = 6.0
 
 func choose_beat(choice: int) -> void:
-	if not active or active_id != "imitated_2020" or active_state != "beat":
+	if not active:
 		return
-	if choice == 2:
-		interaction_feedback.emit(active_id, "beat_correct")
-		card.text = "原始节拍被找到了。三个剪影开始同步……"
-		sync_visual_until = display_time + 1.8
-		active_state = "sync"
-		state_elapsed = 0.0
-	else:
-		interaction_feedback.emit(active_id, "beat_wrong")
-		card.text = "节拍偏移了，屏幕只留下短暂噪声。\n再试一次，不会清空进度。"
+	# 原节拍玩法：imitated_2020 的节拍选择。
+	if active_state == "beat" and active_id == "imitated_2020":
+		if choice == 2:
+			interaction_feedback.emit(active_id, "beat_correct")
+			card.text = "原始节拍被找到了。三个剪影开始同步……"
+			sync_visual_until = display_time + 1.8
+			active_state = "sync"
+			state_elapsed = 0.0
+		else:
+			interaction_feedback.emit(active_id, "beat_wrong")
+			card.text = "节拍偏移了，屏幕只留下短暂噪声。\n再试一次，不会清空进度。"
+	# 队友迁移：梗问答的选择处理。
+	elif active_state == "quiz" and question_data.has(active_id):
+		var data: Dictionary = question_data[active_id]
+		if choice - 1 == int(data.correct):
+			interaction_feedback.emit(active_id, "beat_correct")
+			_solve(_item_by_id(active_id))
+		else:
+			interaction_feedback.emit(active_id, "beat_wrong")
+			card.text = "选错了。档案出现短暂噪声，再试一次。"
+
+## 队友迁移：进入梗问答——复用节拍按钮行显示三个选项。
+func _begin_quiz() -> void:
+	active_state = "quiz"
+	state_elapsed = 0.0
+	var data: Dictionary = question_data[active_id]
+	card_title.text = "梗知识考一考"
+	card.text = String(data.question)
+	card_time = 0.0
+	for i in range(beat_buttons.get_child_count()):
+		(beat_buttons.get_child(i) as Button).text = "%d  %s" % [i + 1, String(data.options[i])]
 
 func _update_displays() -> void:
 	var synced := display_time < sync_visual_until

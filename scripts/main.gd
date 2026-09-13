@@ -14,6 +14,7 @@ extends Node3D
 var story_phase := 0
 var phase_time := 0.0
 var skeleton: Skeleton3D
+var animation_player: AnimationPlayer
 var animated_parts: Array[Node3D] = []
 var animated_part_base: Dictionary = {}
 var frog_visual_base_y := 0.0
@@ -25,6 +26,7 @@ var archive_fx: Node
 var archive_npc: Node
 var archive_arcade: Node
 var archive_entrance_npc: Node
+var archive_video_screen: Node
 var interaction_router: Node
 var gallery_easel: Node3D
 var display_board: Node
@@ -60,6 +62,17 @@ func _ready() -> void:
 	_collect_animated_parts(frog_visual)
 	if skeleton == null:
 		push_warning("未在 CharacterVisual 下找到 Skeleton3D，走路摆腿效果将不可见")
+	# 队友迁移：动画版奶蛙模型(yellow_character_animated.glb)自带 AnimationPlayer，
+	# idle/walk/run/jump/fall 六套动作由动画接管；找不到时仍回落程序化摆骨骼。
+	animation_player = _find_animation_player(frog_visual)
+	if animation_player == null:
+		push_warning("未在 CharacterVisual 下找到 AnimationPlayer，角色将使用程序化摆骨骼")
+	else:
+		for anim_name in ["idle", "walk", "run"]:
+			var animation := animation_player.get_animation(anim_name)
+			if animation:
+				animation.loop_mode = Animation.LOOP_LINEAR
+		animation_player.play("idle")
 	# 档案走廊玩法栈：三段记忆交互、氛围 FX、柜前 NPC、霓虹海报与三台街机。
 	meme_room = null
 	# 交互焦点仲裁器:必须先于各交互系统创建,它们 setup 时会来认领。
@@ -102,6 +115,8 @@ func _ready() -> void:
 	archive_entrance_npc.setup(self)
 	archive_entrance_npc.set_active(false)
 	preload("res://scripts/archive_posters.gd").new().setup(archive_root)
+	# 队友迁移：真图轮播相框（背墙第二排），与程序化霓虹海报并存。
+	preload("res://scripts/archive_photo_frames.gd").new().setup(archive_root)
 	archive_arcade = preload("res://scripts/archive_arcade.gd").new()
 	archive_arcade.name = "ArchiveArcade"
 	add_child(archive_arcade)
@@ -130,11 +145,20 @@ func _ready() -> void:
 	if text_archive_station != null:
 		text_archive_station.setup(self)
 		text_archive_station.set_active(false)
+	# 队友迁移：走廊旧显示屏(DeadScreen)，靠近按 E 播放奶蛙合成影像，Esc 退出。
+	archive_video_screen = preload("res://scripts/archive_video_screen.gd").new()
+	archive_video_screen.name = "ArchiveVideoScreen"
+	add_child(archive_video_screen)
+	archive_video_screen.setup(self)
 
 func _physics_process(delta: float) -> void:
 	# InputState 全局每帧轮询:街机 / 画廊 / 记忆房间打开时也要喂手势数据,
 	# 否则 cancel_just_pressed / confirm_just_pressed 会永远不更新。
 	input_state.poll(delta)
+	# 队友迁移:显示屏播放中冻结世界移动(Esc 退出由显示屏自己处理)。
+	if archive_video_screen and archive_video_screen.is_playing():
+		player.velocity = Vector3.ZERO
+		return
 	if arcade_active or board_active:
 		return
 	if destination_active or in_destination:
@@ -342,6 +366,16 @@ func _find_skeleton_recursive(node: Node) -> Skeleton3D:
 			return r
 	return null
 
+## 队友迁移：递归找 AnimationPlayer（动画版奶蛙模型自带）。
+func _find_animation_player(root_node: Node) -> AnimationPlayer:
+	if root_node is AnimationPlayer:
+		return root_node as AnimationPlayer
+	for child in root_node.get_children():
+		var hit := _find_animation_player(child)
+		if hit != null:
+			return hit
+	return null
+
 func _collect_animated_parts(node: Node) -> void:
 	# 某些 GLB 导入设置会把骨骼展开成普通 Node3D；兼容这类模型，
 	# 通过节点名找到手臂/腿部并保留它们的原始旋转。
@@ -362,6 +396,19 @@ func apply_locomotion_pose() -> void:
 	else:
 		frog_visual.rotation.x = lerp(frog_visual.rotation.x, 0.0, 0.16)
 		frog_visual.scale = frog_visual.scale.lerp(Vector3.ONE, 0.16)
+	# 队友迁移:动画版模型由 AnimationPlayer 接管动作(空中自动 jump/fall),
+	# 不再程序化摆骨骼,避免动画轨道与 set_bone_pose_rotation 互相打架。
+	if animation_player != null:
+		var target := "idle"
+		if not player.is_on_floor():
+			target = "jump" if player.velocity.y > 0.0 else "fall"
+		elif locomotion == "run":
+			target = "run"
+		elif locomotion == "walk" or locomotion == "crawl":
+			target = "walk"
+		if animation_player.current_animation != target:
+			animation_player.play(target, 0.12)
+		return
 	var bob: float = abs(phase) * (0.045 if moving else 0.008)
 	frog_visual.position.y = frog_visual_base_y + bob
 	var stride := 0.0 if locomotion == "idle" else (0.28 if locomotion == "walk" else (0.55 if locomotion == "run" else 0.18))

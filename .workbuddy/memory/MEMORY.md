@@ -3,7 +3,7 @@
 ## 工程基本信息
 - Godot **4.6.3** + GDScript，`gl_compatibility`，1280×720 `canvas_items`，主场景 main.tscn。exe：`E:\Godot\Godot_v4.6.3-stable_win64.exe`（不在 PATH，用全路径）。
 - 远程：`git@github.com:Daxcq/godot-naiva-archive.git`（**必须 SSH**，HTTPS 会报 could not read Username；变了就 `git remote set-url`）。
-- **⚠️ ref 被外力反复删（GitHubDesktop 嫌疑）**：`git rev-parse HEAD` 返回字面量 "HEAD" = ref 丢失。抢救：已知短 sha `git rev-parse <短sha>^{commit}` 取**全长 sha** 写回 `.git/refs/heads/<branch>`（绝不写字面量"HEAD"），随后立即 push + ls-remote 终验。**本地 src ref 损坏时 `push src:dst` 会变成请求删除远端 dst**。commit 后必须马上 push。
+- **⚠️ ref 被外力反复删（已到第 11 次，GitHubDesktop 嫌疑，后期升级为写回后几秒内实时删）**：症状 = `git rev-parse HEAD` 返回字面量 "HEAD"、push 报 `src refspec does not match any`、refs/heads/feat/ 目录整个消失。**有效抢救 = python 写回 ref 后同一进程内立即 push**（`os.makedirs` 建目录 + 写全长 sha + 马上 `subprocess git push`，间隔 <1s 必成），随后 ls-remote 终验。**本地 src ref 损坏时 `push src:dst` 会变成请求删除远端 dst**。commit 后必须马上 push。
 - Blender：`E:\Blender 5.1\blender.exe`（`--background --factory-startup --python`；渲染枚举 `BLENDER_EEVEE`）。
 
 ## ⚠️ 引擎/工具坑（踩过多次）

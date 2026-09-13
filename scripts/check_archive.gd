@@ -30,6 +30,9 @@ func check() -> void:
 	scene.archive_root.visible = true
 	assert(scene.meme_room == null)
 	var fx := scene.archive_root.get_node_or_null("FX") as Node3D
+	if fx == null:
+		# 烘焙模式：氛围层以 BakedVisuals_atmosphere 挂载（archive_fx.gd 双来源兼容）。
+		fx = scene.archive_root.get_node_or_null("BakedVisuals_atmosphere") as Node3D
 	assert(fx != null)
 	assert(fx.get_node_or_null("ArchiveDust") != null)
 	assert(fx.get_node_or_null("ArchiveScreenShaft") != null)
@@ -41,6 +44,10 @@ func check() -> void:
 		assert(drawers.get_node_or_null("Drawer_" + id) != null, "Drawer missing: " + id)
 	var interaction = scene.archive_interaction
 	assert(interaction != null)
+	# 队友迁移:走廊显示屏——素材已接入、默认未播放。
+	assert(scene.archive_video_screen != null)
+	assert(scene.archive_video_screen.video.stream != null)
+	assert(not scene.archive_video_screen.video_surface.visible)
 	interaction.set_active(true)
 	assert(interaction.active)
 	assert(scene.archive_arcade != null)
@@ -89,11 +96,14 @@ func check() -> void:
 		await capture("dest_" + String(dest_id))
 		room.queue_free()
 		await process_frame
-	# Required memories: drawer, beat retry + delayed sync, pause then save.
+	# Required memories: drawer → quiz, beat retry + delayed sync → quiz, pause then save → quiz.
 	scene.player.position = Vector3(-1.0, 0.65, -1.7)
 	interaction.interact()
 	for frame in range(80):
 		interaction.tick(1.0 / 60.0)
+	# 队友迁移:小玩法成功后进入梗问答,答对(选项 1)才算找回。
+	assert(interaction.active_state == "quiz", "seen_2016 应进入梗问答")
+	interaction.choose_beat(1)
 	assert(interaction.get_node_state("seen_2016") == "solved")
 	scene.player.position = Vector3(11.4, 0.65, -1.7)
 	interaction.interact()
@@ -103,13 +113,20 @@ func check() -> void:
 	assert(interaction.get_node_state("imitated_2020") == "active")
 	for frame in range(120):
 		interaction.tick(1.0 / 60.0)
+	assert(interaction.active_state == "quiz", "imitated_2020 应进入梗问答")
+	interaction.choose_beat(1)
 	assert(interaction.get_node_state("imitated_2020") == "solved")
 	scene.player.position = Vector3(23.8, 0.65, -1.7)
 	interaction.interact()
 	interaction.tick(interaction.pause_window + 0.1)
+	# 暂停窗口超时 = 错过,刷新恢复,交互被清空(可靠近重试)。
 	assert(interaction.get_node_state("covered_2024") == "nearby")
 	interaction.interact()
+	assert(interaction.active_state == "pause", "covered_2024 重新开始暂停窗口")
 	interaction.interact()
+	# 窗口内按 E(保存旧版本)才进入梗问答。
+	assert(interaction.active_state == "quiz", "covered_2024 暂停窗口内按 E 应进入梗问答")
+	interaction.choose_beat(2)
 	assert(interaction.get_node_state("covered_2024") == "solved")
 	assert(interaction.main_count() == 3)
 	var endings: Array[String] = []
@@ -138,6 +155,21 @@ func check() -> void:
 	assert(not interaction.ending_done)
 	interaction.tick(0.2)
 	assert(interaction.ending_done and endings.back() == "stay")
+	# 队友迁移:显示屏播放测试——走近按 E 开始播放,再手动停回。
+	scene.player.position = Vector3(14.0, 0.65, -1.7)
+	await process_frame
+	await process_frame
+	var play_video := InputEventKey.new()
+	play_video.physical_keycode = KEY_E
+	play_video.pressed = true
+	scene.archive_video_screen._unhandled_input(play_video)
+	assert(scene.archive_video_screen.is_playing(), "显示屏应开始播放")
+	assert(scene.archive_video_screen.video_surface.visible)
+	for frame in range(30):
+		await process_frame
+	await capture("video_screen")
+	scene.archive_video_screen._stop_video()
+	assert(not scene.archive_video_screen.is_playing())
 	print("PASS: three cabinet memories with one NPC and portal each")
 	print("PASS: E save, Q network and 12-second stay endings")
 	print("Archive checkpoints loaded successfully")

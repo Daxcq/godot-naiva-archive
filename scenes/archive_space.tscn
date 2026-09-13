@@ -2,6 +2,11 @@
 [gd_scene format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/gallery_easel.tscn" id="gallery_easel_scene"]
+[ext_resource type="Texture2D" path="res://assets/textures/floors/floor_scifi_ship.png" id="1_floor_texture"]
+[ext_resource type="Texture2D" path="res://assets/textures/walls/wall_scifi_ship_0.png" id="2_wall_texture"]
+[ext_resource type="PackedScene" path="res://scenes/funny_props.tscn" id="12_funny"]
+[ext_resource type="PackedScene" path="res://assets/models/props/Prop_Shelves_WideTall.fbx" id="3_shelf"]
+[ext_resource type="PackedScene" path="res://assets/models/props/Prop_Locker.fbx" id="7_locker"]
 
 [sub_resource type="Gradient" id="Gradient_0rl1p"]
 colors = PackedColorArray(0.59607846, 0.6156863, 0.61960787, 1, 0.7254902, 0.7372549, 0.7294118, 1)
@@ -17,19 +22,20 @@ noise = SubResource("FastNoiseLite_ok6jj")
 color_ramp = SubResource("Gradient_0rl1p")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b1qrp"]
-albedo_color = Color(0.12, 0.1, 0.2, 1)
-albedo_texture = SubResource("NoiseTexture2D_facbu")
+albedo_color = Color(1, 1, 1, 1)
+albedo_texture = ExtResource("1_floor_texture")
 metallic = 0.25
-roughness = 0.78
-uv1_scale = Vector3(0.6, 0.6, 0.6)
-uv1_triplanar = true
+roughness = 0.72
+uv1_scale = Vector3(6, 6, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_come4"]
 size = Vector3(46, 0.9, 9)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h8e4i"]
-albedo_color = Color(0.05, 0.028, 0.1, 1)
-roughness = 0.85
+albedo_color = Color(1, 1, 1, 1)
+albedo_texture = ExtResource("2_wall_texture")
+roughness = 0.78
+uv1_scale = Vector3(3, 3, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_4lmeg"]
 size = Vector3(42, 15, 0.7)
@@ -3107,3 +3113,25 @@ mesh = SubResource("BoxMesh_x02ym")
 
 [node name="GalleryEasel" parent="." instance=ExtResource("gallery_easel_scene")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 7.9, 0, 1.55)
+
+[node name="SciFiProps" type="Node3D" parent="."]
+
+[node name="Shelf_Back_Left" parent="SciFiProps" instance=ExtResource("3_shelf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -5)
+
+[node name="Shelf_Back_Center" parent="SciFiProps" instance=ExtResource("3_shelf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 0, -5)
+
+[node name="Shelf_Back_Right" parent="SciFiProps" instance=ExtResource("3_shelf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, -5)
+
+[node name="Locker_Left_01" parent="SciFiProps" instance=ExtResource("7_locker")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 1)
+
+[node name="Locker_Left_02" parent="SciFiProps" instance=ExtResource("7_locker")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 2.5)
+
+[node name="Locker_Left_03" parent="SciFiProps" instance=ExtResource("7_locker")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 4)
+
+[node name="FunnyPropsInstance" parent="." instance=ExtResource("12_funny")]

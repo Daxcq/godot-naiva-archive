@@ -1,0 +1,282 @@
+[gd_scene load_steps=33 format=3 uid="uid://funny_props_scene"]
+
+[ext_resource type="Script" path="res://scenes/funny_props.gd" id="1"]
+
+[sub_resource type="SphereMesh" id="basketball_mesh"]
+radius = 0.3
+height = 0.6
+
+[sub_resource type="StandardMaterial3D" id="basketball_material"]
+albedo_color = Color(1, 0.5, 0.1, 1)
+roughness = 0.4
+
+[sub_resource type="CapsuleMesh" id="chicken_body"]
+radius = 0.15
+height = 0.4
+
+[sub_resource type="StandardMaterial3D" id="chicken_material"]
+albedo_color = Color(1, 0.95, 0.8, 1)
+roughness = 0.7
+
+[sub_resource type="SphereMesh" id="watermelon_mesh"]
+radius = 0.5
+height = 0.7
+
+[sub_resource type="StandardMaterial3D" id="watermelon_material"]
+albedo_color = Color(0.05, 0.6, 0.1, 1)
+roughness = 0.3
+
+[sub_resource type="StandardMaterial3D" id="watermelon_stripe_material"]
+albedo_color = Color(0.02, 0.3, 0.05, 1)
+roughness = 0.3
+
+[sub_resource type="StandardMaterial3D" id="knife_material"]
+albedo_color = Color(0.82, 0.85, 0.9, 1)
+metallic = 0.7
+roughness = 0.2
+
+[sub_resource type="SphereMesh" id="km_head_mesh"]
+radius = 0.19
+height = 0.38
+
+[sub_resource type="CapsuleMesh" id="km_torso_mesh"]
+radius = 0.24
+height = 1.0
+
+[sub_resource type="CapsuleMesh" id="km_arm_mesh"]
+radius = 0.075
+height = 0.55
+
+[sub_resource type="CapsuleMesh" id="km_leg_mesh"]
+radius = 0.1
+height = 0.6
+
+[sub_resource type="BoxMesh" id="km_shoe_mesh"]
+size = Vector3(0.16, 0.1, 0.26)
+
+[sub_resource type="SphereMesh" id="km_eye_mesh"]
+radius = 0.035
+height = 0.07
+
+[sub_resource type="SphereMesh" id="km_mouth_mesh"]
+radius = 0.045
+height = 0.09
+
+[sub_resource type="BoxMesh" id="km_brow_mesh"]
+size = Vector3(0.09, 0.022, 0.02)
+
+[sub_resource type="BoxMesh" id="km_blade_mesh"]
+size = Vector3(0.05, 0.44, 0.014)
+
+[sub_resource type="PrismMesh" id="km_tip_mesh"]
+size = Vector3(0.05, 0.15, 0.014)
+
+[sub_resource type="BoxMesh" id="km_guard_mesh"]
+size = Vector3(0.15, 0.03, 0.04)
+
+[sub_resource type="CylinderMesh" id="km_handle_mesh"]
+top_radius = 0.022
+bottom_radius = 0.026
+height = 0.16
+
+[sub_resource type="StandardMaterial3D" id="km_skin_material"]
+albedo_color = Color(1, 0.85, 0.7, 1)
+roughness = 0.8
+
+[sub_resource type="StandardMaterial3D" id="km_shirt_material"]
+albedo_color = Color(0.2, 0.35, 0.85, 1)
+roughness = 0.7
+
+[sub_resource type="StandardMaterial3D" id="km_pants_material"]
+albedo_color = Color(0.18, 0.18, 0.24, 1)
+roughness = 0.8
+
+[sub_resource type="StandardMaterial3D" id="km_shoe_material"]
+albedo_color = Color(0.12, 0.1, 0.1, 1)
+roughness = 0.6
+
+[sub_resource type="StandardMaterial3D" id="km_dark_material"]
+albedo_color = Color(0.02, 0.02, 0.02, 1)
+roughness = 0.4
+
+[sub_resource type="StandardMaterial3D" id="km_mouth_material"]
+albedo_color = Color(0.55, 0.1, 0.12, 1)
+roughness = 0.6
+
+[sub_resource type="StandardMaterial3D" id="km_guard_material"]
+albedo_color = Color(0.25, 0.25, 0.3, 1)
+metallic = 0.6
+roughness = 0.35
+
+[sub_resource type="StandardMaterial3D" id="km_handle_material"]
+albedo_color = Color(0.42, 0.24, 0.1, 1)
+roughness = 0.7
+
+[sub_resource type="StandardMaterial3D" id="chicken_beak_material"]
+albedo_color = Color(1, 0.6, 0, 1)
+roughness = 0.6
+
+[sub_resource type="StandardMaterial3D" id="chicken_eye_material"]
+albedo_color = Color(0, 0, 0, 1)
+roughness = 0.4
+
+[sub_resource type="StandardMaterial3D" id="chicken_leg_material"]
+albedo_color = Color(1, 0.7, 0, 1)
+roughness = 0.6
+
+[node name="FunnyProps" type="Node3D"]
+script = ExtResource("1")
+
+[node name="Basketball" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0.3, 3)
+mesh = SubResource("basketball_mesh")
+surface_material_override/0 = SubResource("basketball_material")
+
+[node name="Chicken" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.5, 0.3, 3)
+
+[node name="Body" type="MeshInstance3D" parent="Chicken"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("chicken_body")
+surface_material_override/0 = SubResource("chicken_material")
+
+[node name="Head" type="MeshInstance3D" parent="Chicken"]
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0, 0.25, 0.05)
+mesh = SubResource("basketball_mesh")
+surface_material_override/0 = SubResource("chicken_material")
+
+[node name="Beak" type="MeshInstance3D" parent="Chicken/Head"]
+transform = Transform3D(0.3, 0, 0, 0, 0.2, 0, 0, 0, 0.5, 0, 0, 0.25)
+mesh = SubResource("chicken_body")
+surface_material_override/0 = SubResource("chicken_beak_material")
+
+[node name="Eye1" type="MeshInstance3D" parent="Chicken/Head"]
+transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 0.08, 0.05, 0.15)
+mesh = SubResource("basketball_mesh")
+surface_material_override/0 = SubResource("chicken_eye_material")
+
+[node name="Eye2" type="MeshInstance3D" parent="Chicken/Head"]
+transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, -0.08, 0.05, 0.15)
+mesh = SubResource("basketball_mesh")
+surface_material_override/0 = SubResource("chicken_eye_material")
+
+[node name="Leg1" type="MeshInstance3D" parent="Chicken"]
+transform = Transform3D(0.08, 0, 0, 0, 0.25, 0, 0, 0, 0.08, 0.08, -0.2, 0)
+mesh = SubResource("chicken_body")
+surface_material_override/0 = SubResource("chicken_leg_material")
+
+[node name="Leg2" type="MeshInstance3D" parent="Chicken"]
+transform = Transform3D(0.08, 0, 0, 0, 0.25, 0, 0, 0, 0.08, -0.08, -0.2, 0)
+mesh = SubResource("chicken_body")
+surface_material_override/0 = SubResource("chicken_leg_material")
+
+[node name="Watermelon" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.7, 0, 0, 0, 1, 24, 0.35, 3)
+mesh = SubResource("watermelon_mesh")
+surface_material_override/0 = SubResource("watermelon_material")
+
+[node name="Stripe1" type="MeshInstance3D" parent="Watermelon"]
+transform = Transform3D(0.95, 0, 0, 0, 1, 0, 0, 0, 0.15, 0, 0, 0)
+mesh = SubResource("watermelon_mesh")
+surface_material_override/0 = SubResource("watermelon_stripe_material")
+
+[node name="Stripe2" type="MeshInstance3D" parent="Watermelon"]
+transform = Transform3D(0.95, 0, 0, 0, 1, 0, 0, 0, 0.15, 0, 0, 0.3)
+mesh = SubResource("watermelon_mesh")
+surface_material_override/0 = SubResource("watermelon_stripe_material")
+
+[node name="Stripe3" type="MeshInstance3D" parent="Watermelon"]
+transform = Transform3D(0.95, 0, 0, 0, 1, 0, 0, 0, 0.15, 0, 0, -0.3)
+mesh = SubResource("watermelon_mesh")
+surface_material_override/0 = SubResource("watermelon_stripe_material")
+
+[node name="KnifeMan" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.5, 0, 3)
+
+[node name="LegRight" type="MeshInstance3D" parent="KnifeMan"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.13, 0.3, 0)
+mesh = SubResource("km_leg_mesh")
+surface_material_override/0 = SubResource("km_pants_material")
+
+[node name="LegLeft" type="MeshInstance3D" parent="KnifeMan"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.13, 0.3, 0)
+mesh = SubResource("km_leg_mesh")
+surface_material_override/0 = SubResource("km_pants_material")
+
+[node name="ShoeRight" type="MeshInstance3D" parent="KnifeMan"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.13, 0.05, 0.05)
+mesh = SubResource("km_shoe_mesh")
+surface_material_override/0 = SubResource("km_shoe_material")
+
+[node name="ShoeLeft" type="MeshInstance3D" parent="KnifeMan"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.13, 0.05, 0.05)
+mesh = SubResource("km_shoe_mesh")
+surface_material_override/0 = SubResource("km_shoe_material")
+
+[node name="Torso" type="MeshInstance3D" parent="KnifeMan"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, 0)
+mesh = SubResource("km_torso_mesh")
+surface_material_override/0 = SubResource("km_shirt_material")
+
+[node name="ArmRight" type="MeshInstance3D" parent="KnifeMan"]
+transform = Transform3D(0.8629, -0.5055, 0, 0.5055, 0.8629, 0, 0, 0, 1, 0.34, 1.24, 0)
+mesh = SubResource("km_arm_mesh")
+surface_material_override/0 = SubResource("km_skin_material")
+
+[node name="ArmLeft" type="MeshInstance3D" parent="KnifeMan"]
+transform = Transform3D(0.9928, 0.1197, 0, -0.1197, 0.9928, 0, 0, 0, 1, -0.34, 1.24, 0)
+mesh = SubResource("km_arm_mesh")
+surface_material_override/0 = SubResource("km_skin_material")
+
+[node name="Head" type="MeshInstance3D" parent="KnifeMan"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.78, 0)
+mesh = SubResource("km_head_mesh")
+surface_material_override/0 = SubResource("km_skin_material")
+
+[node name="Eye1" type="MeshInstance3D" parent="KnifeMan/Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.07, 0.03, 0.165)
+mesh = SubResource("km_eye_mesh")
+surface_material_override/0 = SubResource("km_dark_material")
+
+[node name="Eye2" type="MeshInstance3D" parent="KnifeMan/Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.07, 0.03, 0.165)
+mesh = SubResource("km_eye_mesh")
+surface_material_override/0 = SubResource("km_dark_material")
+
+[node name="BrowRight" type="MeshInstance3D" parent="KnifeMan/Head"]
+transform = Transform3D(0.9553, -0.2955, 0, 0.2955, 0.9553, 0, 0, 0, 1, 0.07, 0.095, 0.16)
+mesh = SubResource("km_brow_mesh")
+surface_material_override/0 = SubResource("km_dark_material")
+
+[node name="BrowLeft" type="MeshInstance3D" parent="KnifeMan/Head"]
+transform = Transform3D(0.9553, 0.2955, 0, -0.2955, 0.9553, 0, 0, 0, 1, -0.07, 0.095, 0.16)
+mesh = SubResource("km_brow_mesh")
+surface_material_override/0 = SubResource("km_dark_material")
+
+[node name="Mouth" type="MeshInstance3D" parent="KnifeMan/Head"]
+transform = Transform3D(1, 0, 0, 0, 0.45, 0, 0, 0, 0.5, 0, -0.075, 0.16)
+mesh = SubResource("km_mouth_mesh")
+surface_material_override/0 = SubResource("km_mouth_material")
+
+[node name="Knife" type="Node3D" parent="KnifeMan"]
+transform = Transform3D(0.9553, -0.2955, 0, 0.2955, 0.9553, 0, 0, 0, 1, 0.48, 1.0, 0.05)
+
+[node name="Handle" type="MeshInstance3D" parent="KnifeMan/Knife"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08, 0)
+mesh = SubResource("km_handle_mesh")
+surface_material_override/0 = SubResource("km_handle_material")
+
+[node name="Guard" type="MeshInstance3D" parent="KnifeMan/Knife"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.175, 0)
+mesh = SubResource("km_guard_mesh")
+surface_material_override/0 = SubResource("km_guard_material")
+
+[node name="Blade" type="MeshInstance3D" parent="KnifeMan/Knife"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.41, 0)
+mesh = SubResource("km_blade_mesh")
+surface_material_override/0 = SubResource("knife_material")
+
+[node name="Tip" type="MeshInstance3D" parent="KnifeMan/Knife"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.705, 0)
+mesh = SubResource("km_tip_mesh")
+surface_material_override/0 = SubResource("knife_material")

@@ -1,6 +1,6 @@
 [gd_scene format=3]
 
-[ext_resource type="PackedScene" path="res://assets/character/yellow_character.glb" id="1_3vyb7"]
+[ext_resource type="PackedScene" path="res://assets/character/yellow_character_animated.glb" id="1_3vyb7"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xmwoi"]
 radius = 0.32
