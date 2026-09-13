@@ -16,6 +16,8 @@ const LOST_TIMEOUT := 0.35
 ## 视觉依赖放在工程内的 vision/ 目录，随仓库一起搬迁，不再依赖工程外的相对路径。
 const VISION_DIR := "res://vision"
 const BRIDGE_SCRIPT_NAMES := ["mediapipe_camera_bridge.py", "godot_camera_bridge.py"]
+## 桥接进程把壳/工作两个 PID 写进这个文件；下次启动前据此清场（见 _kill_stale_bridges）。
+const BRIDGE_PID_FILE := ".bridge.pid"
 const SETUP_SCRIPT_NAME := "setup_vision_env.py"
 ## 优先用随工程携带的 venv，其次回落工程外的旧位置。
 ## 注意：venv 的路径是绑死创建机器的（pyvenv.cfg 里的 executable/command 是绝对路径），
@@ -74,19 +76,45 @@ func _resolve_bridge() -> Array:
 	return [python_path, script_path]
 
 func _start_bridge() -> void:
+	_kill_stale_bridges()
 	var resolved := _resolve_bridge()
 	if String(resolved[0]).is_empty() or String(resolved[1]).is_empty():
 		# 换了电脑后最常见的情况：venv 不在（它无法随仓库迁移），
 		# 这里自动拉一个安装器后台重建环境，装完由 _process 自动重试。
 		_install_env()
 		return
-	bridge_pid = OS.create_process(resolved[0], [resolved[1]], false)
+	# 第二个参数 = 本进程 PID：桥接用它做宿主存活自检。
+	# 不能靠桥接自己 os.getppid()——venv 转发壳隔在中间，拿到的是壳的 PID。
+	bridge_pid = OS.create_process(resolved[0], [resolved[1], str(OS.get_process_id())], false)
 	if bridge_pid <= 0:
 		push_warning("MediaPipe 桥接启动失败，使用鼠标模式")
 		bridge_status = "桥接启动失败"
 		return
 	bridge_ready = true
 	bridge_status = "摄像头已在后台启动"
+
+## 上一次游戏异常退出（崩溃/被任务管理器结束）时，桥接进程可能来不及回收：
+## 摄像头被占着、残帧还在往 6402 乱发——多桥并存正是预览卡顿的一大元凶。
+## 桥接启动时会把 PID 写进 .bridge.pid，这里在拉起新桥前先按记录清场。
+func _kill_stale_bridges() -> void:
+	var path := ProjectSettings.globalize_path("%s/%s" % [VISION_DIR, BRIDGE_PID_FILE])
+	if not FileAccess.file_exists(path):
+		return
+	var text := FileAccess.get_file_as_string(path).strip_edges()
+	# 先删文件再杀：万一 taskkill 卡住，也不会把同一批 PID 重复杀。
+	DirAccess.remove_absolute(path)
+	if text.is_empty():
+		return
+	for pid_str in text.split(" ", false):
+		var pid := int(pid_str)
+		if pid <= 0 or not OS.is_process_running(pid):
+			continue
+		if OS.get_name() == "Windows":
+			# 壳进程要 /T 递归带走真正干活的子进程（venv 转发壳结构）。
+			OS.execute("taskkill", ["/PID", pid_str, "/T", "/F"], [], true)
+		else:
+			OS.kill(pid)
+	print("[vision] 已按 %s 清理残留桥接进程：%s" % [BRIDGE_PID_FILE, text])
 
 ## 找一个可用的系统 Python 来执行安装脚本。
 ## 直接跑 `<cmd> --version` 探测，避免选到不存在的命令。

@@ -10,6 +10,9 @@ var frame_socket := PacketPeerUDP.new()
 const FRAME_PORT := 6402
 var frame_parts: Dictionary = {}
 var last_frame_at := -100.0
+# 性能关键：UDP 分片只组装不解码，每 _process 至多解码最新一张 JPEG，
+# 积压旧帧直接丢弃；GPU 纹理复用（ImageTexture.update 原地刷新）。
+var latest_jpeg := PackedByteArray()
 
 func _ready() -> void:
 	_preview_ui()
@@ -100,34 +103,41 @@ func _connect_camera() -> void:
 	status_label.text = "用户画面 · 手部识别已连接"
 
 func _process(_delta: float) -> void:
+	# 只组装不解码：把积压的 UDP 分片拼成帧，但只保留最新一张 JPEG。
+	# 旧做法在 while 循环里逐帧解码，积压越多单帧耗时越长，恶性循环导致卡顿。
+	var assembled := false
 	while frame_socket.get_available_packet_count() > 0:
 		var packet := frame_socket.get_packet()
 		if packet.size() > 8:
 			var frame_id := (int(packet[0]) << 24) | (int(packet[1]) << 16) | (int(packet[2]) << 8) | int(packet[3])
 			var index := (int(packet[4]) << 8) | int(packet[5])
 			var total := (int(packet[6]) << 8) | int(packet[7])
+			if total <= 0 or total > 512:
+				continue
 			if not frame_parts.has(frame_id): frame_parts[frame_id] = {"total": total, "parts": {}}
 			frame_parts[frame_id]["parts"][index] = packet.slice(8)
 			if frame_parts[frame_id]["parts"].size() == total:
 				var jpeg := PackedByteArray()
 				for i in range(total): jpeg.append_array(frame_parts[frame_id]["parts"][i])
 				frame_parts.erase(frame_id)
-				var image := Image.new()
-				if image.load_jpg_from_buffer(jpeg) == OK:
-					preview.texture = ImageTexture.create_from_image(image)
-					placeholder.visible = false
-					status_label.text = "用户画面 · 摄像头桥接已连接"
-					last_frame_at = Time.get_ticks_msec() / 1000.0
-			# 丢弃过期帧，防止桥接重启后缓存增长。
-			if frame_parts.size() > 4:
+				latest_jpeg = jpeg
+				assembled = true
+			# 丢弃过期分片帧（阈值收紧：挂着的不完整帧越少，越不容易显示旧画面）。
+			if frame_parts.size() > 2:
 				frame_parts.erase(frame_parts.keys()[0])
 			continue
 		if packet.size() > 4 and packet[0] == 255 and packet[1] == 216:
-			var image := Image.new()
-			if image.load_jpg_from_buffer(packet) == OK:
-				preview.texture = ImageTexture.create_from_image(image)
-				placeholder.visible = false
-				status_label.text = "用户画面 · 摄像头桥接已连接"
+			latest_jpeg = packet
+			assembled = true
+	# 每 _process 至多解码 1 帧：只解最新的，其余积压帧全部跳过。
+	if assembled and not latest_jpeg.is_empty():
+		var image := Image.new()
+		if image.load_jpg_from_buffer(latest_jpeg) == OK:
+			_apply_frame(image)
+			placeholder.visible = false
+			status_label.text = "用户画面 · 摄像头桥接已连接"
+			last_frame_at = Time.get_ticks_msec() / 1000.0
+		latest_jpeg = PackedByteArray()
 	if feed != null and preview != null:
 		var texture = feed.get_texture()
 		if texture != null and preview.texture != texture:
@@ -144,3 +154,13 @@ func _process(_delta: float) -> void:
 		# 桥接还没出帧时，把后台进程状态显示出来，方便现场排查。
 		placeholder.text = "\n                 ◉\n       正在后台启动\n         MediaPipe 识别"
 		status_label.text = String(vision.get_bridge_status())
+
+func _apply_frame(image: Image) -> void:
+	# 复用同一张 GPU 纹理原地刷新，避免每帧 create_from_image 新建纹理
+	# 造成的 GPU 资源 churn（接收端卡顿根因）。
+	if preview.texture is ImageTexture:
+		var tex := preview.texture as ImageTexture
+		if tex.get_width() == image.get_width() and tex.get_height() == image.get_height():
+			tex.update(image)
+			return
+	preview.texture = ImageTexture.create_from_image(image)

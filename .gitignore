@@ -27,3 +27,6 @@ test_shot.gd
 test_shot.gd.uid
 test_shot.tscn
 
+
+# 桥接进程 PID 标记（运行时生成，用于下次启动清场）
+vision/.bridge.pid

@@ -29,8 +29,20 @@ MODEL_CANDIDATES = [
 
 HAND_PORT = 6401
 FRAME_PORT = 6402
-# 每隔多少帧检查一次父进程是否还活着（约 2 秒一次）
+# 每隔多少帧检查一次宿主进程是否还活着（约 2 秒一次）
 PARENT_CHECK_INTERVAL = 60
+# 宿主（Godot 游戏进程）PID 由 visual_recognition.gd 通过 argv 显式传入。
+# 千万不能用 os.getppid() 判断宿主：venv 的 python.exe 是转发壳，桥代码跑在
+# 它的子进程里，os.getppid() 拿到的是壳的 PID——壳永远活着，宿主死了桥也
+# 不知道，于是产生僵尸桥（多桥抢摄像头/交错发帧 = 预览卡顿元凶）。
+PARENT_PID = 0
+if len(sys.argv) > 1:
+    try:
+        PARENT_PID = int(sys.argv[1])
+    except ValueError:
+        PARENT_PID = 0
+# 桥接 PID 标记文件：游戏下次启动前据此清理本次残留（异常退出时来不及回收）。
+PID_FILE = VISION_DIR / ".bridge.pid"
 _running = True
 
 
@@ -41,19 +53,21 @@ def _stop(*_args):
 
 
 def parent_alive() -> bool:
-    """检查父进程是否还在。拿不到父进程信息时视为存活，避免误退出。"""
+    """检查宿主进程是否还在。拿不到宿主 PID 时视为存活，避免调试时误退出。"""
+    if PARENT_PID <= 0:
+        return True
     if os.name != "nt":
-        # 类 Unix：父进程被回收后会变成 1（init），此时说明原父进程已退出
         try:
-            return os.getppid() != 1
-        except OSError:
+            os.kill(PARENT_PID, 0)
             return True
+        except OSError:
+            return False
     try:
         import ctypes
 
         # 传 0 句柄即可查询；PROCESS_QUERY_LIMITED_INFORMATION = 0x1000
         kernel32 = ctypes.windll.kernel32
-        handle = kernel32.OpenProcess(0x1000, False, os.getppid())
+        handle = kernel32.OpenProcess(0x1000, False, PARENT_PID)
         if not handle:
             return False
         try:
@@ -65,6 +79,21 @@ def parent_alive() -> bool:
             kernel32.CloseHandle(handle)
     except Exception:
         return True
+
+
+def write_pid_file() -> None:
+    """记录壳进程与工作进程两个 PID，游戏下次启动前据此清场。"""
+    try:
+        PID_FILE.write_text("%d %d" % (os.getppid(), os.getpid()), encoding="ascii")
+    except OSError:
+        pass  # 导出 exe / 只读目录下写不进去就算了，清理是尽力而为
+
+
+def clear_pid_file() -> None:
+    try:
+        PID_FILE.unlink()
+    except OSError:
+        pass
 
 
 def d(a, b):
@@ -83,11 +112,16 @@ def resolve_model() -> Path:
 def main():
     signal.signal(signal.SIGINT, _stop)
     signal.signal(signal.SIGTERM, _stop)
+    write_pid_file()
 
     model_path = resolve_model()
     cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
-    cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
-    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+    # 预览框只有 248x132，320x240 绰绰有余；分辨率减半让整条链路
+    # （read -> MediaPipe -> JPEG 编码 -> UDP）都快一倍以上。
+    cap.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
+    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
+    # 关键：驱动缓冲只留 1 帧。旧帧在驱动层堆积是"画面延迟、越看越卡"的最大元凶。
+    cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
     if not cap.isOpened():
         raise SystemExit("无法打开笔记本摄像头")
 
@@ -103,8 +137,8 @@ def main():
     frame_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     frame_id = 0
 
-    print("[mediapipe-bridge] 摄像头已启动 -> udp 127.0.0.1:%d / %d"
-          % (HAND_PORT, FRAME_PORT), flush=True)
+    print("[mediapipe-bridge] 摄像头已启动 (宿主PID=%d) -> udp 127.0.0.1:%d / %d"
+          % (PARENT_PID, HAND_PORT, FRAME_PORT), flush=True)
 
     try:
         tick = 0
@@ -145,16 +179,19 @@ def main():
                     spread=max(0., min(1., (spread - .6) / 1.1)),
                     confidence=1.,
                 )
+                # 骨架坐标按实际帧尺寸算，别再硬编码 640x480。
+                fh, fw = frame.shape[:2]
                 for a, b in [(0, 5), (5, 9), (9, 13), (13, 17), (0, 17),
                              (5, 8), (9, 12), (13, 16), (17, 20)]:
-                    cv2.line(frame, (int(h[a].x * 640), int(h[a].y * 480)),
-                             (int(h[b].x * 640), int(h[b].y * 480)), (125, 217, 255), 2)
+                    cv2.line(frame, (int(h[a].x * fw), int(h[a].y * fh)),
+                             (int(h[b].x * fw), int(h[b].y * fh)), (125, 217, 255), 2)
                 for p in h:
-                    cv2.circle(frame, (int(p.x * 640), int(p.y * 480)), 4, (255, 243, 196), -1)
+                    cv2.circle(frame, (int(p.x * fw), int(p.y * fh)), 3, (255, 243, 196), -1)
 
             hand_sock.sendto(json.dumps(payload).encode(), ("127.0.0.1", HAND_PORT))
 
-            ok, enc = cv2.imencode(".jpg", frame, [cv2.IMWRITE_JPEG_QUALITY, 75])
+            # q60：预览画面足够，且体积更小 = UDP 分片更少 = 丢包更少。
+            ok, enc = cv2.imencode(".jpg", frame, [cv2.IMWRITE_JPEG_QUALITY, 60])
             if ok:
                 data = enc.tobytes()
                 size = 1200
@@ -168,6 +205,7 @@ def main():
     except KeyboardInterrupt:
         pass
     finally:
+        clear_pid_file()
         cap.release()
         detector.close()
         hand_sock.close()
