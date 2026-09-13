@@ -27,6 +27,8 @@ var npc_groups: Dictionary = {}
 var portal_consumed: Dictionary = {}
 var line_delay := 0.0
 var dialogue_button: Button
+var input_state: Node
+const INTERACTION_RADIUS := 3.2
 
 var groups := [
 	{"id":"seen_2016", "pos":Vector3(-1.0, 0.0, 0.55), "names":["游乐场档案员"], "lines":["这里保存着第一次被看见的那一秒。", "风会把旧热梗吹回草地，也会把新的笑声带过来。", "收集齐广场上的贴纸，记忆就会完整。"]}
@@ -35,6 +37,9 @@ var groups := [
 func setup(owner: Node3D) -> void:
 	world = owner
 	player = owner.player
+	input_state = owner.input_state
+	if input_state != null and not input_state.confirm_triggered.is_connected(_on_confirm_gesture):
+		input_state.confirm_triggered.connect(_on_confirm_gesture)
 	layer = owner.get_node_or_null("Interface") as CanvasLayer
 	if layer == null:
 		layer = CanvasLayer.new()
@@ -69,6 +74,7 @@ func _build_groups() -> void:
 		group_root.position = group.pos
 		group_root.position.z = -0.65
 		root.add_child(group_root)
+		_build_interaction_boundary(group_root)
 		var members: Array[Node3D] = []
 		var names: Array = group.names
 		for i in range(names.size()):
@@ -135,6 +141,24 @@ func _part(parent: Node3D, title: String, position: Vector3, size: Vector3, mate
 	parent.add_child(mesh_node)
 	return mesh_node
 
+func _build_interaction_boundary(parent: Node3D) -> void:
+	var boundary := MeshInstance3D.new()
+	boundary.name = "InteractionRange"
+	boundary.position.y = 0.035
+	var torus := TorusMesh.new()
+	torus.inner_radius = INTERACTION_RADIUS - 0.06
+	torus.outer_radius = INTERACTION_RADIUS
+	torus.rings = 64
+	boundary.mesh = torus
+	var mat := StandardMaterial3D.new()
+	mat.albedo_color = Color(0.25, 0.88, 1.0, 0.24)
+	mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	mat.emission_enabled = true
+	mat.emission = Color("48cde8")
+	mat.emission_energy_multiplier = 0.8
+	boundary.material_override = mat
+	parent.add_child(boundary)
+
 func set_active(value: bool) -> void:
 	active = value
 	set_process(value)
@@ -155,6 +179,14 @@ func _input(event: InputEvent) -> void:
 			if active_id != "" or _can_act():
 				get_viewport().set_input_as_handled()
 				_interact()
+
+func _on_confirm_gesture() -> void:
+	if not active or player == null or not _can_act():
+		return
+	if active_id == "" and _nearest_group() == "":
+		return
+	input_state.consume_confirm()
+	_interact()
 
 func _can_act() -> bool:
 	return router == null or router.can_interact("keeper")
@@ -187,13 +219,13 @@ func _process(delta: float) -> void:
 	var nearest := _nearest_group()
 	if nearest != "" and _can_act():
 		var distance := _distance_to_group(nearest)
-		var to_portal: bool = portals.has(nearest) and distance <= 2.5
+		var to_portal: bool = portals.has(nearest) and distance <= INTERACTION_RADIUS
 		if to_portal:
-			_offer("E", "进入记忆传送门", distance)
+			_offer("E", "捏合确定 / E · 进入记忆传送门", distance)
 		else:
-			_offer("E", "与档案员交谈", distance)
+			_offer("E", "捏合确定 / E · 与档案员交谈", distance)
 		dialogue_button.visible = true
-		dialogue_button.text = "E  进入记忆传送门" if to_portal else "E  与档案员交谈"
+		dialogue_button.text = "捏合 / E  进入记忆传送门" if to_portal else "捏合 / E  与档案员交谈"
 	for id in portals.keys():
 		var portal: Node3D = portals[id]
 		var ring := portal.get_node("SignalRing") as Node3D
@@ -210,7 +242,7 @@ func _interact() -> void:
 	var nearest := _nearest_group()
 	if nearest == "":
 		return
-	if portals.has(nearest) and _distance_to_group(nearest) <= 2.5:
+	if portals.has(nearest) and _distance_to_group(nearest) <= INTERACTION_RADIUS:
 		_enter_portal(nearest)
 		return
 	_start_dialogue(nearest)
@@ -238,7 +270,7 @@ func _show_line() -> void:
 	dialogue_card.visible = true
 	card_panel.visible = true
 	dialogue_button.visible = true
-	dialogue_button.text = "E  下一句" if active_line < data.lines.size() - 1 else "E  打开记忆通道"
+	dialogue_button.text = "捏合 / E  下一句" if active_line < data.lines.size() - 1 else "捏合 / E  打开记忆通道"
 	dialogue_line.emit(active_id, active_line)
 	line_delay = 0.18
 
@@ -296,7 +328,7 @@ func _spawn_portal(id: String) -> void:
 	core_mat.cull_mode = BaseMaterial3D.CULL_DISABLED
 	portal.add_child(core)
 	var label := Label3D.new()
-	label.text = "记忆通道  //  E 进入"
+	label.text = "记忆通道  //  捏合确定进入"
 	label.position = Vector3(0, 1.35, 0)
 	label.font_size = 22
 	label.pixel_size = 0.005
@@ -317,10 +349,6 @@ func _spawn_portal(id: String) -> void:
 	trigger_shape.shape = capsule
 	trigger_shape.position.y = 1.0
 	trigger.add_child(trigger_shape)
-	trigger.body_entered.connect(func(body: Node3D):
-		if body == player:
-			_enter_portal(id)
-	)
 	portal.add_child(trigger)
 	var members: Array = entry.members
 	for i in range(members.size()):
@@ -336,7 +364,7 @@ func _enter_portal(id: String) -> void:
 
 func _nearest_group() -> String:
 	var best_id := ""
-	var best := 2.5
+	var best := INTERACTION_RADIUS
 	for group in groups:
 		var id := String(group.id)
 		var distance := _distance_to_group(id)

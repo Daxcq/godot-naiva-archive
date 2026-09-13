@@ -33,7 +33,7 @@ const BRIDGE_RELAUNCH_COOLDOWN := 6.0
 var socket := PacketPeerUDP.new()
 var observation: Dictionary = {
 	"active": false, "x": 0.5, "y": 0.5, "grab": 0.0,
-	"spread": 0.5, "confidence": 0.0, "source": "fallback"
+	"spread": 0.5, "confidence": 0.0, "gesture": "none", "source": "fallback"
 }
 var last_packet_at := -100.0
 var enabled := true
@@ -242,6 +242,8 @@ func _accept_packet(data: Dictionary) -> bool:
 	observation["grab"] = clampf(float(data.get("grab", 0.0)), 0.0, 1.0)
 	observation["spread"] = clampf(float(data.get("spread", 0.5)), 0.0, 1.0)
 	observation["confidence"] = confidence
+	var gesture := String(data.get("gesture", "none"))
+	observation["gesture"] = gesture if gesture in ["pinch", "open_palm"] else "none"
 	return true
 
 func _update_fallback() -> void:
@@ -254,6 +256,7 @@ func _update_fallback() -> void:
 	observation["grab"] = 1.0 if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) else 0.0
 	observation["spread"] = 0.5
 	observation["confidence"] = 0.0
+	observation["gesture"] = "none"
 	observation["source"] = "fallback"
 
 func get_observation() -> Dictionary:

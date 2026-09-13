@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1536" viewBox="0 0 1080 1536">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#121431"/><stop offset="1" stop-color="#182c5b"/></linearGradient>
+    <linearGradient id="cyan" x1="0" x2="1"><stop stop-color="#7cf6ff"/><stop offset="1" stop-color="#6e9bff"/></linearGradient>
+  </defs>
+  <rect width="1080" height="1536" fill="url(#bg)"/>
+  <circle cx="540" cy="730" r="350" fill="none" stroke="#63efff" stroke-width="18" opacity=".3"/>
+  <circle cx="540" cy="730" r="280" fill="none" stroke="url(#cyan)" stroke-width="14" stroke-dasharray="20 24"/>
+  <g transform="translate(280 400)">
+    <path d="M210 520 C190 425 175 340 185 255 L215 72 C220 46 248 32 270 50 C283 60 288 77 284 96 L267 225 L295 40 C300 12 328-2 350 16 C365 28 369 45 365 64 L348 230 L385 58 C390 31 418 22 438 39 C452 51 456 68 451 87 L421 245 L468 118 C477 94 504 88 521 105 C535 120 535 138 528 157 L477 335 C455 414 410 480 357 537Z" fill="#f7c8ad" stroke="#fff2df" stroke-width="10"/>
+    <path d="M187 255 L120 212 C94 195 65 204 55 230 C47 252 57 275 77 287 L199 364" fill="#f7c8ad" stroke="#fff2df" stroke-width="10"/>
+    <path d="M220 532 Q280 590 365 555" fill="none" stroke="#ff7eb7" stroke-width="18" stroke-linecap="round"/>
+  </g>
+  <g transform="translate(210 1120)"><circle cx="0" cy="0" r="36" fill="#ff8fb8"/><circle cx="360" cy="0" r="36" fill="#6aefff"/><path d="M60 0H300" stroke="#ffffff" stroke-width="8" stroke-dasharray="18 18"/><path d="M290-18L320 0 290 18" fill="none" stroke="#ffffff" stroke-width="8"/></g>
+  <text x="540" y="180" fill="#ffffff" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="70" font-weight="700">手势穿越记忆</text>
+  <text x="540" y="285" fill="#8ff8ff" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="32" letter-spacing="5">捏合进入 · 张掌返回</text>
+  <text x="540" y="1330" fill="#ffffff" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="26">拇指 + 食指：确认进入</text>
+  <text x="540" y="1385" fill="#ffffff" text-anchor="middle" font-family="Microsoft YaHei, sans-serif" font-size="26">抬手张掌：返回档案长廊</text>
+</svg>

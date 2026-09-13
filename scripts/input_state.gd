@@ -13,9 +13,11 @@ const SWIPE_DISTANCE := 0.16
 const SWIPE_COOLDOWN := 0.34
 const AXIS_DEADZONE := 0.08
 const KEYBOARD_OVERRIDE := 0.05
-const POINTER_RESPONSE := 14.0
-const RESYNC_RESPONSE := 3.5
-const RESYNC_DURATION := 0.45
+const POINTER_RESPONSE := 30.0
+const RESYNC_RESPONSE := 14.0
+const RESYNC_DURATION := 0.18
+const RAISED_HAND_Y := 0.30
+const RAISED_HAND_MAX_GRAB := 0.35
 
 @export var visual_recognition_path: NodePath = ^"../VisualRecognition"
 
@@ -27,6 +29,7 @@ var pointer := Vector2(0.5, 0.5)
 var grab := 0.0
 var spread := 0.5
 var confidence := 0.0
+var gesture := "none"
 var confirm_pressed := false
 var confirm_just_pressed := false
 var confirm_just_released := false
@@ -64,6 +67,7 @@ func poll(delta: float) -> void:
 	grab = clampf(float(observation.get("grab", 0.0)), 0.0, 1.0)
 	spread = clampf(float(observation.get("spread", 0.5)), 0.0, 1.0)
 	confidence = clampf(float(observation.get("confidence", 0.0)), 0.0, 1.0)
+	gesture = String(observation.get("gesture", "none"))
 
 	var raw_pointer := Vector2(
 		clampf(float(observation.get("x", 0.5)), 0.0, 1.0),
@@ -93,6 +97,14 @@ func consume_confirm() -> bool:
 func is_vision_driven() -> bool:
 	return source == "vision" and active
 
+## “确定”手势：拇指与食指捏合，沿用 confirm_triggered 作为 E 键等价输入。
+func is_confirm_gesture() -> bool:
+	return is_vision_driven() and (gesture == "pinch" or grab >= GRAB_ON)
+
+## 返回手势：把松开的手掌举到摄像头画面上方。
+func is_raised_open_hand() -> bool:
+	return is_vision_driven() and pointer.y <= RAISED_HAND_Y and (gesture == "open_palm" or (grab <= RAISED_HAND_MAX_GRAB and spread >= CANCEL_ON))
+
 func reset() -> void:
 	_latched = false
 	_cooldown = 0.0
@@ -110,6 +122,7 @@ func reset() -> void:
 	confirm_just_pressed = false
 	confirm_just_released = false
 	cancel_just_pressed = false
+	gesture = "none"
 
 func _read_observation() -> Dictionary:
 	if _vision != null and _vision.has_method("peek_observation"):
@@ -139,7 +152,7 @@ func _resolve_confirm(delta: float) -> void:
 	if _latched:
 		if grab < GRAB_OFF:
 			_latched = false
-	elif grab > GRAB_ON:
+	elif gesture == "pinch" or grab > GRAB_ON:
 		_latched = true
 	confirm_pressed = _latched
 	if _latched and not was_latched:

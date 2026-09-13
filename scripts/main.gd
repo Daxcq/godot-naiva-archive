@@ -40,6 +40,8 @@ var destination_id := ""
 var destination_active := false
 var destination_elapsed := 0.0
 var in_destination := false
+var exit_gesture_hold := 0.0
+const EXIT_GESTURE_SECONDS := 0.65
 
 func _ready() -> void:
 	archive_root.visible = false
@@ -161,12 +163,15 @@ func _physics_process(delta: float) -> void:
 		return
 	if arcade_active or board_active:
 		return
+	# 传送过程和记忆空间内也持续刷新摄像头输入。
+	input_state.poll(delta)
 	if destination_active or in_destination:
 		if destination_active:
 			_update_memory_tunnel(delta)
 		else:
 			_update_destination_room(delta)
 		return
+	# InputState 已在本帧入口刷新，剧情和移动读取同一份状态。
 	camera_director.process_shake(delta)
 	if opening.update(delta):
 		return
@@ -296,6 +301,10 @@ func _update_destination_room(delta: float) -> void:
 		return
 	destination_root.tick(delta)
 	var direction: Vector2 = input_state.axis
+	var before_move := player.position - destination_root.position
+	var return_gesture_active: bool = before_move.distance_to(destination_root.return_position) < 2.4 and input_state.has_method("is_raised_open_hand") and bool(input_state.is_raised_open_hand())
+	if return_gesture_active:
+		direction = Vector2.ZERO
 	var move := Vector3(direction.x, 0, direction.y)
 	player.velocity.x = move.x * 3.2
 	player.velocity.z = move.z * 3.2
@@ -309,20 +318,34 @@ func _update_destination_room(delta: float) -> void:
 	camera.look_at(focus + Vector3(0, 0, -1.0), Vector3.UP)
 	var cue := get_node("Interface/StoryCue") as Label
 	var local_pos := player.position - destination_root.position
+	var confirm_action: bool = Input.is_action_just_pressed("interact") or input_state.consume_confirm()
 	if local_pos.distance_to(destination_root.return_position) < 2.4:
 		# 返回点是可交互目标:走共享提示条,与其他系统一样做焦点仲裁。
 		if interaction_router:
 			interaction_router.offer("destination", "返回档案长廊", 0.0, "E")
 		cue.text = ""
 		var gate: bool = interaction_router == null or interaction_router.can_interact("destination")
-		if gate and (Input.is_action_just_pressed("interact") or input_state.confirm_just_pressed):
+		if input_state.has_method("is_raised_open_hand") and input_state.is_raised_open_hand():
+			exit_gesture_hold += delta
+		else:
+			exit_gesture_hold = maxf(0.0, exit_gesture_hold - delta * 2.5)
+		var gesture_percent := mini(100, roundi(exit_gesture_hold / EXIT_GESTURE_SECONDS * 100.0))
+		if interaction_router:
+			interaction_router.offer("destination", "举起松开的手掌返回  %d%%" % gesture_percent, 0.0, "E")
+		if exit_gesture_hold >= EXIT_GESTURE_SECONDS:
+			exit_gesture_hold = 0.0
+			_return_from_destination()
+			return
+		if confirm_action and gate:
 			_return_from_destination()
 	else:
+		exit_gesture_hold = 0.0
 		cue.text = destination_root.get_prompt(local_pos) if destination_root.has_method("get_prompt") else destination_root.title + "  ·  探索记忆空间"
-		if (Input.is_action_just_pressed("interact") or input_state.confirm_just_pressed) and destination_root.has_method("interact"):
+		if confirm_action and destination_root.has_method("interact"):
 			destination_root.interact(local_pos)
 
 func _return_from_destination() -> void:
+	exit_gesture_hold = 0.0
 	if destination_root:
 		destination_root.queue_free()
 		destination_root = null

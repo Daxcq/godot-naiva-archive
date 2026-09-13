@@ -117,3 +117,7 @@ enabled=PackedStringArray("res://addons/godot_mcp/plugin.cfg")
 
 端口占用：编辑器的 MCP 用 `6400`（TCP，仅插件启用时占用）。运行时视觉链路用 `6401`（UDP 手部状态接收）与 `6402`（UDP 摄像头帧），互不冲突——`6400` 只在编辑器进程内监听，游戏运行时并不监听它。
 
+## 项目海报
+
+`assets/posters/` 提供 4 张可直接导入 Godot 的 SVG 海报：项目主视觉、平原游乐园、传送门手势说明和热梗票根收集玩法。
+
